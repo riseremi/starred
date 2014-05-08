@@ -113,26 +113,42 @@ public class Entity {
         x += 1;
     }
 
+    /**
+     * @deprecated @param xAdd
+     * @param yAdd
+     */
     public void addToPosition(int xAdd, int yAdd) {
         x += xAdd;
         y += yAdd;
     }
 
     public void setPosition(int x, int y) {
+        setPosition(x, y, true);
+    }
+
+    public void setPosition(int x, int y, boolean check) {
         this.x = x;
         this.y = y;
         Core_v1 core = Core_v1.getInstance();
-        if (id == core.getPlayer().getId()) {
+
+        //System.out.println("pid: " + core.getPlayer().getId() + "/cid: " + id);
+        if (check && id == core.getPlayer().getId()) {
             Camera camera = core.getCamera();
             camera.setX(-(x * Global.tileWidth - Global.CENTER_X * Global.tileWidth));
             camera.setY(-(y * Global.tileHeight - Global.CENTER_Y * Global.tileHeight));
         }
     }
 
+    /**
+     * @deprecated @param addX
+     */
     public void changeX(int addX) {
         x += addX;
     }
 
+    /**
+     * @deprecated @param addY
+     */
     public void changeY(int addY) {
         y += addY;
     }

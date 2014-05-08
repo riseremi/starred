@@ -38,8 +38,11 @@ public class Protocol {
                     for (Entity e : players) {
                         Server.getInstance().sendToOne(new MessageSetPlayerId(e.getId()), e.getId());
                         Server.getInstance().sendToAllExcludingOne(new MessageSetFriendId(e.getId()), e.getId());
+
+                        //MessageSetPosition msp = new MessageSetPosition(e.getId(), e.getX(), e.getY());
+                        //Server.getInstance().sendToAll(msp);
+//                        Core_v1.getInstance().setCoords();
                     }
-//                    Server.getInstance().sendToAllExcludingOne(new MessageSetFriendId(id), id);
 
                 }
                 break;

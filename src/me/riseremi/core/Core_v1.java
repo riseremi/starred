@@ -115,19 +115,12 @@ public final class Core_v1 extends JPanel {
     //inits both server and client
     //need to recode to get standalone server
     public void initServer(int imgId, String name) {
-        //world.getWorldLayer().setBlocksY(-7 + 3);
-        //world.getWorldLayer().setBlocksX(-1 + 1);
-        //
 //        player.setImage(imgId);
 //        //
-        player.setY(Global.CENTER_Y + 4);
-        player.setX(Global.CENTER_X + 5);
-        friend.setY(Global.CENTER_Y + 4);
-        friend.setX(Global.CENTER_X);
+
         //
         //entities.add(player);
         //entities.add(friend);
-
         //Creep testCreep = new Creep("testCreep", 3, entities.getEntities().size(), Entity.Type.CREEP);
         //testCreep.setY(18);
         //testCreep.setX(18);
@@ -140,25 +133,20 @@ public final class Core_v1 extends JPanel {
         Server.SERVER_IP = "localhost";
         server = Server.getInstance();
         client = Client.getInstance();
+
         //client.setId(0);
         try {
             //client.setId(1);
             client.send(new MessageConnect(player.getName()));
         } catch (IOException ex) {
         }
+        friend.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5, false);
+        player.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5);
     }
 
     public void initClient(int imgId, String ip, String name) {
-        //world.getWorldLayer().setBlocksY(-7 + 3);
-        //world.getWorldLayer().setBlocksX(-4 + 1);
-        //
         player.setImage(imgId);
-        //
-        player.setY(Global.CENTER_Y + 4);
-        player.setX(Global.CENTER_X + 5);
-        friend.setY(Global.CENTER_Y + 4);
-        friend.setX(Global.CENTER_X);
-        //
+
         //entities.add(friend);
         //entities.add(player);
         //friend.setId(entities.indexOf(friend));
@@ -171,11 +159,13 @@ public final class Core_v1 extends JPanel {
 
         //friend.setPaint(true);
         client = Client.getInstance();
+
         try {
-            //client.setId(1);
             client.send(new MessageConnect(player.getName()));
         } catch (IOException ex) {
         }
+        friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
+        player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
     }
 
     /**
@@ -361,6 +351,5 @@ public final class Core_v1 extends JPanel {
             throw new NullPointerException("Entity with specified id doesn't exist.");
         }
     }
-    
 
 }
