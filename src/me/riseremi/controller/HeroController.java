@@ -87,7 +87,7 @@ public class HeroController {
                 player.decreaseActionPoint(Entity.MOVE_COST);
             }
             //end turn
-            if (ke.getKeyCode() == KeyEvent.VK_F12) {
+            if (ke.getKeyCode() == KeyEvent.VK_F11) {
                 try {
                     core.endTurn();
                 } catch (IOException ex) {

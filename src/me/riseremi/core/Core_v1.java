@@ -79,7 +79,6 @@ public final class Core_v1 extends JPanel {
     }
 
     private Core_v1() {
-
     }
 
     public void init(int imgId, String ip, String name, boolean isServer) {
@@ -103,6 +102,7 @@ public final class Core_v1 extends JPanel {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
             waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
             player.getDeck().addCard(CardsArchive.getRandomCard());
+            player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK_ID));
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: Prepare your anus.\n\r");
         } catch (IOException | CloneNotSupportedException ex) {
@@ -117,7 +117,6 @@ public final class Core_v1 extends JPanel {
     public void initServer(int imgId, String name) {
 //        player.setImage(imgId);
 //        //
-
         //
         //entities.add(player);
         //entities.add(friend);
@@ -206,25 +205,31 @@ public final class Core_v1 extends JPanel {
         BasicCard activeCard = deck.getActiveCard();
 
         //draw card radius
-//        final BasicCard justUsedCard = player.getDeck().getJustUsedCard();
-//        if (activeCard != null || (justUsedCard != null && !justUsedCard.getEffect().equals(BasicCard.Effect.NONE))) {
-//            final int radius = activeCard != null ? activeCard.getUseRadius() : justUsedCard.getUseRadius();
-//
-//            final int x = player.getX();
-//            final int y = player.getY();
-//
+        final BasicCard justUsedCard = player.getDeck().getJustUsedCard();
+        if (activeCard != null || (justUsedCard != null && !justUsedCard.getEffect().equals(BasicCard.Effect.NONE))) {
+            final int radius = activeCard != null ? activeCard.getUseRadius() : justUsedCard.getUseRadius();
+
+            final int x = player.getX();
+            final int y = player.getY();
+
+            final int xo = x * Global.tileWidth;
+            final int yo = y * Global.tileHeight;
 //            final int xo = Global.translateX(x) * Global.tileWidth;
 //            final int yo = Global.translateY(y) * Global.tileHeight;
-//
-//            g.setColor(new Color(200, 0, 0, 40));
-//
-//            for (int w = 1; w < radius * 2 + 1; w += 2) {
+
+            g.setColor(new Color(200, 0, 0, 40));
+
+            camera.translate(g);
+            for (int w = 1; w < radius * 2 + 1; w += 2) {
+                g.fillRect(xo - w / 2 * 32, yo - (radius - w / 2) * 32, w * 32, 32);
 //                g.fillRect(xo - w / 2 * 32, yo - (radius - w / 2) * 32, w * 32, 32);
-//            }
-//            for (int w = radius * 2 + 1; w > 0; w -= 2) {
-//                g.fillRect(xo - w / 2 * 32, yo + (radius - w / 2) * 32, w * 32, 32);
-//            }
-//        }
+            }
+
+            for (int w = radius * 2 + 1; w > 0; w -= 2) {
+                g.fillRect(xo - w / 2 * 32, yo + (radius - w / 2) * 32, w * 32, 32);
+            }
+            camera.untranslate(g);
+        }
 //        if (isConnected()) {
 //            synchronized (entities.getEntities()) {
 //                for (Entity e : entities.getEntities()) {
