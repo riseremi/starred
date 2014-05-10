@@ -49,8 +49,6 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final int cursorX = (int) core.getSelectionCursor().getX() / 32;
         final int cursorY = (int) core.getSelectionCursor().getY() / 32;
 
-        //final int mapX = core.getWorld().getX();
-        //final int mapY = core.getWorld().getY();
         final int mX = cursorX - core.getCamera().getX() / Global.tileWidth;
         final int mY = cursorY - core.getCamera().getY() / Global.tileHeight;
 
@@ -71,19 +69,10 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
         //check if there are entity
         int entitiesThere = 0;
-
-//        for (Entity ee : core.getEntities().getEntities()) {
-//            if (mX == ee.getX() && mY == ee.getY()) {
-//                entitiesThere++;
-//                target = ee;
-//            }
-//        }
         if (entitiesThere > 0) {
             thereIsFriend = thereIsPlayer = true;
         }
 
-        //final int addX = (cursorX - mapX) - user.getX();
-        //final int addY = (cursorY - mapY) - user.getY();
         //
         if (e.getButton() == MouseEvent.BUTTON3 && !core.isTileSelectionMode() /*&& core.isConnected()*/) {
             if (deck.getActiveCard() != null) {
@@ -140,71 +129,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         if (e.getButton() == MouseEvent.BUTTON1 && deck.getActiveCard() != null
                 && !core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
             deck.getActiveCard().useByTo(user, target);
-            System.out.println("selection mode activated");
-        } /*else if (e.getButton() == MouseEvent.BUTTON1 && core.isTileSelectionMode()
-         && core.isTheyNear(user, mX, mY, deck.getJustUsedCard().getUseRadius())) {
-         if (core.getWorld().getNullLayer().getTile(cursorX, cursorY) != 0) {
-         System.out.println("HERE BLAH");
-         String attackMessage = user.getId() + ":" + target.getId() + ":" + deck.getJustUsedCard().getId();
-
-         System.out.println(attackMessage);
-         switch (deck.getJustUsedCard().getEffect()) {
-         case BLINK:
-         if (!thereIsFriend && !thereIsPlayer) {
-         //user.addToPosition(addX, addY);
-         user.setPosition(cursorX, cursorY);
-         //core.getWorld().changePosition(addX, addY);
-         //network.sendData(new SetPositionMessage(user.getId(), mX, mY));
-         }
-         break;
-         case MAGICAL_DAMAGE:
-         if (thereIsFriend || thereIsPlayer) {
-         //network.sendData(new NetworkMessage(NetworkMessage.ATTACK_TEST, attackMessage));
-         target.dealMagicalDamage(deck.getJustUsedCard().getPower());
-         }
-         break;
-         case PHYSICAL_DAMAGE:
-         if (thereIsFriend || thereIsPlayer) {
-         //network.sendData(new NetworkMessage(NetworkMessage.ATTACK_TEST, attackMessage));
-         target.dealPhysicalDamage(deck.getJustUsedCard().getPower());
-         }
-         break;
-         case HEAL:
-         if (thereIsFriend || thereIsPlayer) {
-         //network.sendData(new NetworkMessage(NetworkMessage.ATTACK_TEST, attackMessage));
-         target.heal(deck.getJustUsedCard().getPower());
-         }
-         break;
-         case AP:
-         if (thereIsFriend || thereIsPlayer) {
-         //network.sendData(new NetworkMessage(NetworkMessage.ATTACK_TEST, attackMessage));
-         target.addAPInNextTurn(deck.getJustUsedCard().getPower());
-         }
-         break;
-         }//blink must be here
-         Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
-         deck.getJustUsedCard().setEffect(BasicCard.Effect.NONE);
-         user.decreaseActionPoint(deck.getJustUsedCard().getCost());
-
-         user.decreaseBloodCostHP(deck.getJustUsedCard().getBloodCost());
-         //network.sendData(new NetworkMessage(NetworkMessage.PURE_ATTACK_TEST, user.getClass().getSimpleName() + ":" + deck.getJustUsedCard().getBloodCost()));
-         //network.sendData(new PureDamageMessage(user.getId(), deck.getJustUsedCard().getBloodCost()));
-
-         try {
-         MessageAttack message;
-         message = new MessageAttack(user.getId(), target.getId(), deck.getJustUsedCard().getId());
-         Client.getInstance().send(message);
-         } catch (IOException ex) {
-         }
-
-         user.setCanMove(true);
-         core.setCardJustUsed(true);
-         core.setTileSelectionMode(false);
-         user.getDeck().removeCard(deck.getJustUsedCard());
-         user.getDeck().setJustUsedCard(null);
-         }
-         }*/
-
+        }
     }
 
     @Override

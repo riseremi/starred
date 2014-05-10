@@ -73,7 +73,6 @@ public final class BasicCard {
             core.setTileSelectionMode(true);
             player.getDeck().setJustUsedCard(this);
         }
-
     }
 
     public void use(Entity user, Entity target, boolean justApplyEffect) {

@@ -7,6 +7,7 @@ import java.util.Random;
  * @author Riseremi
  */
 public class CardsArchive {
+
     static final Random rnd = new Random();
     //power, cost, bloodCost, radius
     static final BasicCard testPhysAttackOn7Damage = new BasicCard(BasicCard.TEST_PHYS_ID, "/res/card_physical.png", "Test P-Card (7)",
@@ -24,6 +25,7 @@ public class CardsArchive {
     static final BasicCard testBlood1Card = new BasicCard(BasicCard.TEST_BLOOD1, "/res/card_blood1.png", "Test B1-Card",
             BasicCard.Effect.BLOODY, BasicCard.Type.NONE, 14, 8, 10, 4);
 
+    @Otsylka
     public static BasicCard getRandomCard() throws CloneNotSupportedException {
         int id = rnd.nextInt(8) + 1;
         //int id = 4;
