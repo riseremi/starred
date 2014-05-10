@@ -72,47 +72,16 @@ public final class BasicCard {
             player.setCanMove(false);
             core.setTileSelectionMode(true);
             player.getDeck().setJustUsedCard(this);
-//            switch (effect) {
-//                case PHYSICAL_DAMAGE:
-//                    core.setTileSelectionMode(true);
-//                    player.getDeck().setJustUsedCard(this);
-//                    break;
-//                case MAGICAL_DAMAGE:
-//                    core.setTileSelectionMode(true);
-//                    player.getDeck().setJustUsedCard(this);
-//                    break;
-//                case BLINK:
-//                    core.setTileSelectionMode(true);
-//                    player.getDeck().setJustUsedCard(this);
-//                    break;
-//                case HEAL:
-//                    core.setTileSelectionMode(true);
-//                    player.getDeck().setJustUsedCard(this);
-//                    break;
-//            }
         }
 
     }
 
-    public void applyEffectTo(Entity player) {
-        use(player, true);
-    }
-
-    public void use(Entity player, boolean justApplyEffect) {
-        if (player.canDoIt(cost) && !justApplyEffect) {
-            player.decreaseActionPoint(cost);
-            switchIt(effect, player);
+    public void use(Entity user, Entity target, boolean justApplyEffect) {
+        if (user.canDoIt(cost) && !justApplyEffect) {
+            user.decreaseActionPoint(cost);
+            switchIt(effect, user, target);
         } else if (justApplyEffect) {
-            switchIt(effect, player);
-        }
-    }
-
-    public void use(Entity player, Entity target, boolean justApplyEffect) {
-        if (player.canDoIt(cost) && !justApplyEffect) {
-            player.decreaseActionPoint(cost);
-            switchIt(effect, player, target);
-        } else if (justApplyEffect) {
-            switchIt(effect, player, target);
+            switchIt(effect, user, target);
         }
     }
 
@@ -139,28 +108,6 @@ public final class BasicCard {
             case BLOODY:
                 target.dealMagicalDamage(power);
                 user.decreaseBloodCostHP(bloodCost);
-                break;
-        }
-    }
-    private void switchIt(Effect effect, Entity target) {
-        switch (effect) {
-            case PHYSICAL_DAMAGE:
-                target.dealPhysicalDamage(power);
-                break;
-            case MAGICAL_DAMAGE:
-                target.dealMagicalDamage(power);
-                break;
-            case BLINK:
-                break;
-            case HEAL:
-                target.heal(power);
-                break;
-            case AP:
-                target.addAPInNextTurn(power);
-                break;
-            case BLOODY:
-                target.dealMagicalDamage(power);
-                target.decreaseBloodCostHP(bloodCost);
                 break;
         }
     }

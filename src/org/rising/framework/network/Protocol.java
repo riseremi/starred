@@ -38,12 +38,7 @@ public class Protocol {
                     for (Entity e : players) {
                         Server.getInstance().sendToOne(new MessageSetPlayerId(e.getId()), e.getId());
                         Server.getInstance().sendToAllExcludingOne(new MessageSetFriendId(e.getId()), e.getId());
-
-                        //MessageSetPosition msp = new MessageSetPosition(e.getId(), e.getX(), e.getY());
-                        //Server.getInstance().sendToAll(msp);
-//                        Core_v1.getInstance().setCoords();
                     }
-
                 }
                 break;
             case CHAT_MESSAGE:
@@ -83,12 +78,6 @@ public class Protocol {
                 final Entity entity = core.getEntity(msgSP.getId());
                 final int x = msgSP.getX();
                 final int y = msgSP.getY();
-//                if (msgSP.getId() == 0) {
-//                    core.getPlayer().addToPosition(msgSP.getX(), msgSP.getY());
-//                } else {
-//                    core.getFriend().addToPosition(msgSP.getX(), msgSP.getY());
-//                }
-//                entity.addToPosition(x, y);
                 System.out.println("x: " + x + " y:" + y);
                 entity.setPosition(x, y);
                 break;
@@ -97,25 +86,13 @@ public class Protocol {
                 break;
             case ATTACK_TEST:
                 MessageAttack msgA = ((MessageAttack) message);
-//                Entity user;
-//                Entity target;
-//
-//                if (msgA.getUserId() == 0) { //0 is for player, 1 is for friend, temporary
-//                    user = core.getPlayer();
-//                    target = core.getFriend();
-//                } else {
-//                    user = core.getFriend();
-//                    target = core.getPlayer();
-//                }
                 BasicCard card;
                 try {
+                    System.out.println(msgA.getCardId());
                     card = CardsArchive.get(msgA.getCardId());
-                    //card2.applyEffectFromTo(user, target);
                     card.applyEffectFromTo(core.getEntity(msgA.getUserId()), core.getEntity(msgA.getTargetId()));
                 } catch (CloneNotSupportedException ex) {
                 }
-
-                //System.out.println("tried to use card from " + user.getId() + " to " + target.getId());
                 break;
         }
     }

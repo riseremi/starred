@@ -47,7 +47,7 @@ public class HPBar {
         g2.fillRect(indent, indent / 2 + (barHeight - barHeight / 4), hp, barHeight / 4);
 
         g2.setColor(Color.WHITE);
-        g2.drawString(target.getName(), indent, indent);
+        g2.drawString(target.getName() + " " + curHP + "/" + maxHP, indent, indent);
 
         g2.translate(-x, -y);
     }

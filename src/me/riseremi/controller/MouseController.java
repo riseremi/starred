@@ -6,8 +6,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Getter;
 import me.riseremi.cards.BasicCard;
 import me.riseremi.cards.Deck;
@@ -115,6 +113,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
                         }
                         break;
                     case AP:
+                    case BLOODY:
                     case MAGICAL_DAMAGE:
                     case PHYSICAL_DAMAGE:
                     case HEAL:
@@ -129,8 +128,6 @@ public class MouseController implements MouseListener, MouseMotionListener {
             Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
             deck.getJustUsedCard().setEffect(BasicCard.Effect.NONE);
             user.decreaseActionPoint(deck.getJustUsedCard().getCost());
-
-            user.decreaseBloodCostHP(deck.getJustUsedCard().getBloodCost());
 
             user.setCanMove(true);
             core.setCardJustUsed(true);

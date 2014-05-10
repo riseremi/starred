@@ -22,7 +22,7 @@ public class CardsArchive {
     static final BasicCard testAPCard = new BasicCard(BasicCard.ADD_AP_ID, "/res/card_blink.png", "Test AP-Card",
             BasicCard.Effect.AP, BasicCard.Type.NONE, 5, 3, 0, 8);
     static final BasicCard testBlood1Card = new BasicCard(BasicCard.TEST_BLOOD1, "/res/card_blood1.png", "Test B1-Card",
-            BasicCard.Effect.MAGICAL_DAMAGE, BasicCard.Type.NONE, 14, 8, 10, 4);
+            BasicCard.Effect.BLOODY, BasicCard.Type.NONE, 14, 8, 10, 4);
 
     public static BasicCard getRandomCard() throws CloneNotSupportedException {
         int id = rnd.nextInt(8) + 1;
