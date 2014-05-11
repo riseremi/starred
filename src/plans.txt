@@ -1,0 +1,9 @@
+FEATURE LIST
+11.05.2013
+- 3 free steps before card used
+- Classes
+    - mage
+    - blood mage
+    - treasure hunter
+* Increase movement cost from 0.5 to 1
+- 

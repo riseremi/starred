@@ -33,7 +33,7 @@ public class Entity {
     @Getter @Setter protected int invSize = 20;
     @Getter @Setter protected float actionPoints;
     //action costs
-    public static final float MOVE_COST = 0.5F;
+    public static final float MOVE_COST = 1F;
     @Getter protected Deck deck;
     @Getter @Setter private boolean canMove = true;
     @Getter @Setter private HPBar hpBar;
@@ -42,6 +42,8 @@ public class Entity {
     @Setter @Getter int id;
     @Getter int imgId;
     @Getter @Setter Type type;
+    @Getter @Setter int classId;
+    private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "TH (temp)"};
 
     public enum Type {
 
@@ -83,7 +85,7 @@ public class Entity {
             g.drawImage(sprite.getScaledInstance(Global.tileWidth, Global.tileHeight, 0), xo, yo, null);
             g.setColor(Color.WHITE);
             int nameLen2 = g.getFontMetrics().stringWidth(name + " (id: " + id + ")") / 2;
-            g.drawString(name + " (id: " + id + ") + x/y: " + x + "/" + y + " : " + instance.getPlayer().getId(), xo + 16 - nameLen2, yo - 8);
+            g.drawString(name + " (id: " + id + ") + x/y: " + x + "/" + y + " : " + instance.getPlayer().getId() + " " + CLASS_NAMES[classId], xo + 16 - nameLen2, yo - 8);
         }
         instance.getCamera().untranslate(g);
         hpBar.paint(g, this);
@@ -162,7 +164,7 @@ public class Entity {
     }
 
     public void decreaseActionPoint(float cost) {
-        //actionPoints -= cost;
+        actionPoints -= cost;
     }
 
     public void decreaseBloodCostHP(int cost) {

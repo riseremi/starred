@@ -25,19 +25,19 @@ import me.riseremi.ui.RTextField;
  */
 public class LoginScreen extends JPanel implements ActionListener {
 
-    private BufferedImage heroPreview;
+    private final BufferedImage heroPreview;
     private BufferedImage back;
-    private final int NUM_OF_HEROES = 4;
-    private BufferedImage[] heroPreviews = new BufferedImage[NUM_OF_HEROES];
+    private final int NUM_OF_HEROES = 3;
+    private final BufferedImage[] heroPreviews = new BufferedImage[NUM_OF_HEROES];
     private final String PREFIX = "/res/sprites/hero";
     private final String POSTFIX = "";
-    private JButton preview;
-    private RButton next, previous;
+    private final JButton preview;
+    private final RButton next, previous;
     @Getter private int previewIndex = 0;
     //
-    @Getter private static JButton server = new RButton("Host"),
+    @Getter private static final JButton server = new RButton("Host"),
             client = new RButton("Connect");
-    @Getter private static JTextField nick = new RTextField("Player"),
+    @Getter private static final JTextField nick = new RTextField("Player"),
             ip = new RTextField("127.0.0.1");
 
     public LoginScreen() {
