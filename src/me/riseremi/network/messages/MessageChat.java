@@ -9,10 +9,16 @@ import org.rising.framework.network.Message;
 public class MessageChat extends Message {
 
     private final String text;
+    private final int id;
 
-    public MessageChat(String text) {
+    public int getId() {
+        return id;
+    }
+
+    public MessageChat(String text, int id) {
         super(Message.Type.CHAT_MESSAGE);
         this.text = text;
+        this.id = id;
     }
 
     public String getText() {

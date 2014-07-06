@@ -73,11 +73,15 @@ public final class Core_v1 extends JPanel {
 
     public void init(int imgId, String ip, String name, boolean isServer) {
         iAmServer = isServer;
+        player.setName(name);
+        friend.setName(name);
         if (isServer) {
             initServer(imgId, name);
         } else {
+            Server.SERVER_IP = ip;
             initClient(imgId, ip, name);
         }
+
     }
 
     public synchronized void initBase() {
@@ -94,7 +98,7 @@ public final class Core_v1 extends JPanel {
             player.getDeck().addCard(CardsArchive.getRandomCard());
             player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK_ID));
             Main.addToChat("System: Listen closely.\n\r");
-            Main.addToChat("System: Prepare your anus.\n\r");
+            Main.addToChat("System: The highways call my name.\n\r");
         } catch (IOException | CloneNotSupportedException ex) {
             System.out.println(ex.toString());
         }
@@ -106,7 +110,7 @@ public final class Core_v1 extends JPanel {
     //need to recode to get standalone server
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
-        player.setName(name.isEmpty() ? "Server" : name);
+        //player.setName(name.isEmpty() ? "Server" : name);
         Main.game.setTitle("Server");
 
         Server.SERVER_IP = "localhost";
@@ -294,7 +298,7 @@ public final class Core_v1 extends JPanel {
         return (xDif + yDif <= radius);
     }
 
-    public Entity getEntity(int id) {
+    public Entity getPlayerById(int id) {
         System.out.println("pl: " + player.getId() + " fr: " + friend.getId() + " id: " + id);
         if (player.getId() == id) {
             return player;

@@ -11,7 +11,9 @@ import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
 import me.riseremi.network.messages.MessageAttack;
 import me.riseremi.network.messages.MessageChat;
+import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageSetFriendId;
+import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.network.messages.MessageSetPlayerId;
 import me.riseremi.network.messages.MessageSetPosition;
 
@@ -30,7 +32,7 @@ public class Protocol {
         switch (type) {
             case CONNECT:
                 System.out.println("Connection id: " + id);
-                Player p = new Player("test1", 0, id, Entity.Type.PLAYER);
+                Player p = new Player(((MessageConnect) message).getName(), 0, id, Entity.Type.PLAYER);
 
                 players.add(p);
 
@@ -38,6 +40,10 @@ public class Protocol {
                     for (Entity e : players) {
                         Server.getInstance().sendToOne(new MessageSetPlayerId(e.getId()), e.getId());
                         Server.getInstance().sendToAllExcludingOne(new MessageSetFriendId(e.getId()), e.getId());
+
+                        Server.getInstance().sendToAll(new MessageSetName(e.getName(), e.getId()));
+                        //Server.getInstance().sendToOne(new MessageSetName(e.getName(), e.getId()), e.getId());
+
                     }
                 }
                 break;
@@ -61,6 +67,8 @@ public class Protocol {
     public static void processMessageOnClientSide(Message message) {
         Message.Type type = message.getType();
         Core_v1 core = Core_v1.getInstance();
+        int id;
+        String name, text;
 
         switch (type) {
             case SET_PLAYER_ID:
@@ -70,12 +78,21 @@ public class Protocol {
                 core.getFriend().setId(((MessageSetFriendId) message).getId());
                 break;
             case CHAT_MESSAGE:
-                Main.addToChat(Core_v1.getInstance().getFriend().getName() + ": " + ((MessageChat) message).getText());
+                id = ((MessageChat) message).getId();
+                text = ((MessageChat) message).getText();
+
+                Main.addToChat(core.getPlayerById(id).getName() + ": " + text);
+                break;
+            case SET_NAME:
+                id = ((MessageSetName) message).getId();
+                name = ((MessageSetName) message).getName();
+
+                core.getPlayerById(id).setName(name);
                 break;
             case SET_POSITION:
                 MessageSetPosition msgSP = ((MessageSetPosition) message);
                 System.out.println(msgSP.getId());
-                final Entity entity = core.getEntity(msgSP.getId());
+                final Entity entity = core.getPlayerById(msgSP.getId());
                 final int x = msgSP.getX();
                 final int y = msgSP.getY();
                 System.out.println("x: " + x + " y:" + y);
@@ -90,7 +107,7 @@ public class Protocol {
                 try {
                     System.out.println(msgA.getCardId());
                     card = CardsArchive.get(msgA.getCardId());
-                    card.applyEffectFromTo(core.getEntity(msgA.getUserId()), core.getEntity(msgA.getTargetId()));
+                    card.applyEffectFromTo(core.getPlayerById(msgA.getUserId()), core.getPlayerById(msgA.getTargetId()));
                 } catch (CloneNotSupportedException ex) {
                 }
                 break;

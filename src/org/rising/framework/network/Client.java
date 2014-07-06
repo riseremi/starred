@@ -19,6 +19,7 @@ public class Client {
     public static Client getInstance() {
         if (instance == null) {
             try {
+                System.out.println("Connecting to " + Server.SERVER_IP + "...");
                 instance = new Client(7777, Server.SERVER_IP);
                 return instance;
             } catch (IOException ex) {
