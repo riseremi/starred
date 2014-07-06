@@ -53,6 +53,7 @@ public class Entity {
     public Entity(String name, /*String pathToSprite,*/ int imgId, int id, int barX, int barY, int maxWidth, Type type) {
         hpBar = new HPBar(barX, barY, HPBar.INDENT, maxWidth, HPBar.BAR_HEIGHT);
         this.imgId = imgId;
+        this.classId = imgId;
         this.id = id;
         this.deck = new Deck();
         this.actionPoints = 10;
@@ -95,6 +96,8 @@ public class Entity {
     public void setImage(int imgId) {
         try {
             this.setSprite(ImageIO.read(getClass().getResourceAsStream("/res/sprites/hero" + imgId + ".png")));
+            this.imgId = imgId;
+            this.classId = imgId;
         } catch (IOException ex) {
         }
     }

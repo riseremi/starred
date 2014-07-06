@@ -11,13 +11,17 @@ import lombok.Setter;
 
 /**
  * Колода карт, которые находятся на руках у героя.
- * 
+ *
  * @author Riseremi
  */
 public final class Deck {
+
     public static final int SIZE = 8;
-    @Getter private final ArrayList<BasicCard> cards = new ArrayList<>();
-    @Getter @Setter private BasicCard justUsedCard;
+    @Getter
+    private final ArrayList<BasicCard> cards = new ArrayList<>();
+    @Getter
+    @Setter
+    private BasicCard justUsedCard;
 
     public void paint(Graphics2D g) {
         for (int i = 0; i < cards.size(); i++) {

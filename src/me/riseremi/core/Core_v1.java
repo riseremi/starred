@@ -85,7 +85,7 @@ public final class Core_v1 extends JPanel {
 
         world = new World(Global.tileWidth, Global.tileHeight, Global.horizontalTiles, Global.verticalTiles);
         player = new Player("Server", 0, -1, Entity.Type.PLAYER);
-        friend = new Friend("Client", 1, -1, Entity.Type.PLAYER);
+        friend = new Friend("Client", 0, -1, Entity.Type.PLAYER);
         camera = new Camera();
 
         try {
