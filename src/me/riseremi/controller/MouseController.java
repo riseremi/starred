@@ -15,6 +15,7 @@ import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
 import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
+import me.riseremi.map.world.CheckObstacles;
 import me.riseremi.network.messages.MessageAttack;
 import me.riseremi.network.messages.MessageSetPosition;
 import org.rising.framework.network.Client;
@@ -56,6 +57,11 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
         boolean thereIsFriend = (mX == friendX) && (mY == friendY);
         boolean thereIsPlayer = (mX == playerX) && (mY == playerY);
+        boolean thereIsObstacle = true;
+        try {
+            thereIsObstacle = CheckObstacles.checkObstacle(core.getWorld(), mX, mY);//mX == playerX) && (mY == playerY);
+        } catch (CloneNotSupportedException ex) {
+        }
 
         if (thereIsPlayer) {
             System.out.println("PLAYER DETECTED");
@@ -65,6 +71,9 @@ public class MouseController implements MouseListener, MouseMotionListener {
         if (thereIsFriend) {
             System.out.println("FRIEND DETECTED");
             target = friend;
+        }
+        if (thereIsObstacle) {
+            System.out.println("OBSTACLE DETECTED");
         }
 
         //check if there are entity
@@ -89,7 +98,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
         final BasicCard justUsedCard = deck.getJustUsedCard();
         boolean near = justUsedCard != null ? core.isTheyNear(user, mX, mY, justUsedCard.getUseRadius()) : false;
-        if (near) {
+        if (near && !thereIsObstacle) {
             try {
                 final Client instance = Client.getInstance();
                 final int justUsedCardId = justUsedCard.getId();

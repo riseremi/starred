@@ -157,7 +157,6 @@ public class Main extends JFrame implements ActionListener {
                             break;
                     }
                 } else {
-                    //textArea.append(core2.getPlayer().getName() + ": " + msgText + "\n\r");
                     try {
                         Client.getInstance().send(new MessageChat(msgText + "\n\r", core.getPlayer().getId()));
                     } catch (IOException ex) {
