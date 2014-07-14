@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -154,7 +152,6 @@ public class Main extends JFrame implements ActionListener {
                     String command = msgText.substring(0, firstSpace).toLowerCase();
                     String msgBody = msgText.substring(firstSpace + 1).replaceAll(" ", "_");
                     msgBody = msgBody.length() >= MAX_NAME_LENGTH ? msgBody.substring(0, MAX_NAME_LENGTH) : msgBody;
-                   
 
                     switch (command) {
                         case "/setname":
