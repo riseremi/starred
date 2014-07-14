@@ -10,3 +10,10 @@ FEATURE LIST
 06.07.14
 -- chat cloud above the head
 ~+ obstacles (with teleport card)
+
+07.07.14
+*+ change AP type from float to int
+
+09.07.14 
+-- NEW UI
+

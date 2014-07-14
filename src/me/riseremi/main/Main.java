@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,8 +21,11 @@ import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
 import me.riseremi.network.messages.MessageChat;
+import me.riseremi.network.messages.MessagePing;
+import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.ui.windows.LoginScreen;
 import org.rising.framework.network.Client;
+import org.rising.framework.network.Server;
 
 /**
  *
@@ -149,11 +154,24 @@ public class Main extends JFrame implements ActionListener {
                     String command = msgText.substring(0, firstSpace).toLowerCase();
                     String msgBody = msgText.substring(firstSpace + 1).replaceAll(" ", "_");
                     msgBody = msgBody.length() >= MAX_NAME_LENGTH ? msgBody.substring(0, MAX_NAME_LENGTH) : msgBody;
+                   
 
                     switch (command) {
-                        case "/trytoguesslol":
+                        case "/setname":
                             core2.getPlayer().setName(msgBody);
-                            //core2.getNetwork().sendData(new NetworkMessage(NetworkMessage.SET_FRIEND_NAME, msgBody));
+                            try {
+                                //core2.getNetwork().sendData(new NetworkMessage(NetworkMessage.SET_FRIEND_NAME, msgBody));
+                                MessageSetName msgSetName = new MessageSetName(msgBody, Core_v1.getInstance().getPlayer().getId());
+                                Client.getInstance().send(msgSetName);
+                            } catch (IOException ex) {
+                            }
+                            break;
+                        case "/ping":
+                            MessagePing msg = new MessagePing(System.currentTimeMillis(), false);
+                            try {
+                                Server.getInstance().sendToAll(msg);
+                            } catch (IOException ex) {
+                            }
                             break;
                     }
                 } else {

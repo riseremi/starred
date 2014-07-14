@@ -30,6 +30,8 @@ public final class BasicCard {
     @Getter @Setter private boolean paintBig = false;
     public static final int TEST_MAGIC_STRONG_ID = 1, TEST_PHYS_ID = 2,
             TEST_MAGIC_WEAK_ID = 3, BLINK_ID = 4, HEAL_ID = 6, ADD_AP_ID = 7, TEST_BLOOD1 = 8;
+    public static final int TEST_TI4 = 9;
+
     public static final int WIDTH = 42, HEIGHT = 60;
 
     public BasicCard(int id, String pathToBigCard, String name, Effect effect,
@@ -85,7 +87,7 @@ public final class BasicCard {
     }
 
     public void applyEffectFromTo(Entity user, Entity targetI) {
-         use(user, targetI, true);
+        use(user, targetI, true);
     }
 
     private void switchIt(Effect effect, Entity user, Entity target) {

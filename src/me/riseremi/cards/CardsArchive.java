@@ -24,10 +24,13 @@ public class CardsArchive {
             BasicCard.Effect.AP, BasicCard.Type.NONE, 5, 3, 0, 8);
     static final BasicCard testBlood1Card = new BasicCard(BasicCard.TEST_BLOOD1, "/res/card_blood1.png", "Test B1-Card",
             BasicCard.Effect.BLOODY, BasicCard.Type.NONE, 14, 8, 10, 4);
+    //TI4 reserved
+    static final BasicCard CARD_TI4_RESERVED = new BasicCard(BasicCard.TEST_TI4, "/res/card_TI4.png", "Watch \"The International 4\"",
+            BasicCard.Effect.NONE, BasicCard.Type.NONE, 0, 0, 0, 0);
 
     @Otsylka
     public static BasicCard getRandomCard() throws CloneNotSupportedException {
-        int id = rnd.nextInt(8) + 1;
+        int id = rnd.nextInt(9) + 1;
         //int id = 4;
         return get(id);
     }
@@ -50,6 +53,8 @@ public class CardsArchive {
                 return testAPCard.clone();
             case BasicCard.TEST_BLOOD1:
                 return testBlood1Card.clone();
+            case BasicCard.TEST_TI4:
+                return CARD_TI4_RESERVED.clone();
             default:
                 return null;
         }

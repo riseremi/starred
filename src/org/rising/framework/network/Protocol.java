@@ -12,6 +12,7 @@ import me.riseremi.main.Main;
 import me.riseremi.network.messages.MessageAttack;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageConnect;
+import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetFriendId;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.network.messages.MessageSetPlayerId;
@@ -58,6 +59,9 @@ public class Protocol {
                 break;
             case ATTACK_TEST:
                 Server.getInstance().sendToAll(message);
+                break;
+            case PING_MESSAGE:
+                Server.getInstance().sendToAllExcludingOne(message, id);
                 break;
             default:
                 Server.getInstance().sendToAll(message);
@@ -110,6 +114,11 @@ public class Protocol {
                     card.applyEffectFromTo(core.getPlayerById(msgA.getUserId()), core.getPlayerById(msgA.getTargetId()));
                 } catch (CloneNotSupportedException ex) {
                 }
+                break;
+            case PING_MESSAGE:
+                MessagePing msgP = ((MessagePing) message);
+
+                System.out.println("Ping: " + (System.currentTimeMillis() - msgP.getStartTime()));
                 break;
         }
     }

@@ -31,7 +31,7 @@ public class Entity {
     @Getter @Setter protected BufferedImage sprite;
     @Getter @Setter protected boolean isPaint = false;
     @Getter @Setter protected int invSize = 20;
-    @Getter @Setter protected float actionPoints;
+    @Getter @Setter protected int actionPoints;
     //action costs
     public static final float MOVE_COST = 1F;
     @Getter protected Deck deck;
