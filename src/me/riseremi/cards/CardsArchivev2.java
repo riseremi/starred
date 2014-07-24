@@ -8,9 +8,15 @@ import java.util.HashMap;
  */
 public class CardsArchivev2 {
 
-    private HashMap<String, BasicCard> allCards;
+    private static final HashMap<Integer, BasicCard> allCards = new HashMap<>();
 
-    public CardsArchivev2(HashMap<String, String> hashMap) {
+    public static BasicCard getCard(int id) {
+
+        return allCards.get(id);
+    }
+
+    //create a BasicCard with recieved data and put in into archive
+    public void addCard(HashMap<String, String> hashMap) {
         String allCardsKey = hashMap.get("name");
 
         int id = getInt(hashMap.get("id"));
@@ -19,8 +25,14 @@ public class CardsArchivev2 {
         int bloodcost = getInt(hashMap.get("bloodcost"));
         int range = getInt(hashMap.get("range"));
 
-        BasicCard card = new BasicCard(id, hashMap.get("image"), allCardsKey,
-                BasicCard.Effect.HEAL, BasicCard.Type.PHYS, power, apcost, bloodcost, range);
+        BasicCard card = new BasicCard(hashMap.get("description"), id, hashMap.get("image"),
+                hashMap.get("art"), allCardsKey,
+                getEffect(hashMap.get("effect")), getType(hashMap.get("type")),
+                power, apcost, bloodcost, range);
+
+        allCards.put(id, card);
+
+        System.out.println(allCards.toString());
     }
 
     private int getInt(String str) {
@@ -28,8 +40,11 @@ public class CardsArchivev2 {
     }
 
     private BasicCard.Effect getEffect(String str) {
-        assert (BasicCard.Effect.valueOf(str) == null);
         return BasicCard.Effect.valueOf(str);
+    }
+
+    private BasicCard.Type getType(String str) {
+        return BasicCard.Type.valueOf(str);
     }
 
 }

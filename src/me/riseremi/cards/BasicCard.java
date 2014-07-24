@@ -1,5 +1,6 @@
 package me.riseremi.cards;
 
+import java.awt.Color;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import java.awt.Graphics2D;
@@ -17,6 +18,9 @@ import lombok.Setter;
  */
 public final class BasicCard {
 
+    private BufferedImage back, art;
+    //private String description;
+    //
     @Getter private final int id;
     @Getter private final String name;
     @Getter @Setter private Effect effect;
@@ -28,15 +32,22 @@ public final class BasicCard {
     @Getter private BufferedImage bigCard, smallCard;
     @Getter @Setter private Rectangle rect;
     @Getter @Setter private boolean paintBig = false;
-    public static final int TEST_MAGIC_STRONG_ID = 1, TEST_PHYS_ID = 2,
-            TEST_MAGIC_WEAK_ID = 3, BLINK_ID = 4, HEAL_ID = 6, ADD_AP_ID = 7, TEST_BLOOD1 = 8;
-    public static final int TEST_TI4 = 9;
+    public static final int //
+            MAGICAL_SLAIN = 1,
+            SWORD_ATTACK = 2,
+            FIREBALL = 3,
+            BLINK = 4,
+            HEAL_ID = 6,
+            ADD_AP_ID = 7,
+            TEST_BLOOD1 = 8,
+            TEST_TI4 = 9;
 
     public static final int WIDTH = 42, HEIGHT = 60;
 
-    public BasicCard(int id, String pathToBigCard, String name, Effect effect,
+    public BasicCard(String description, int id, String pathToBigCard, String pathToArt, String name, Effect effect,
             Type type, int power, int cost, int bloodCost, int useRadius) {
         try {
+            this.art = ImageIO.read(getClass().getResourceAsStream(pathToArt));
             this.bigCard = ImageIO.read(getClass().getResourceAsStream(pathToBigCard));
             this.smallCard = scaleImage(bigCard, WIDTH, HEIGHT);
         } catch (IOException ex) {
@@ -50,6 +61,8 @@ public final class BasicCard {
         this.bloodCost = bloodCost;
         this.useRadius = useRadius;
         this.rect = new Rectangle();
+
+        this.bigCard = wwTest(bigCard, art, description);
     }
 
     public BasicCard(int id, BufferedImage bigCard, String name, Effect effect,
@@ -144,6 +157,7 @@ public final class BasicCard {
         return new BasicCard(id, bigCard, name, effect, type, power, cost, bloodCost, useRadius);
     }
 
+    //uses for card preview
     private BufferedImage scaleImage(BufferedImage img, int width, int height) {
         int imgWidth = img.getWidth();
         int imgHeight = img.getHeight();
@@ -165,6 +179,35 @@ public final class BasicCard {
             g.dispose();
         }
         return newImage;
+    }
+
+    private BufferedImage wwTest(BufferedImage img, BufferedImage art, String s) {
+        StringBuilder sb = new StringBuilder(s);
+
+        int i = 0;
+        while (i + 30 < sb.length() && (i = sb.lastIndexOf(" ", i + 30)) != -1) {
+            sb.replace(i, i + 1, "\n");
+        }
+
+        System.out.println(sb.toString());
+
+        String[] strings = sb.toString().split("\n");
+
+        BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = newImage.createGraphics();
+
+        g.drawImage(img, null, 0, 0);
+        g.drawImage(art, null, 36, 36);
+
+        g.setColor(Color.WHITE);
+        //g.drawString(sb.toString(), 40, 300);
+
+        for (int j = 0; j < strings.length; j++) {
+            g.drawString(strings[j], 40, 305 + j * 14);
+        }
+
+        return newImage;
+
     }
 
 }

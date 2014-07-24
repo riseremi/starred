@@ -18,6 +18,7 @@ import javax.swing.text.DefaultCaret;
 import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
+import me.riseremi.json.StringUtils;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
@@ -107,6 +108,9 @@ public class Main extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) throws Exception {
+        StringUtils su = new StringUtils();
+        su.bleh();
+        
         game = new Main("Game");
         core = Core_v1.getInstance();
         loginScreen1 = new LoginScreen();
