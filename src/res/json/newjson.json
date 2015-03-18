@@ -1,0 +1,26 @@
+[
+    {
+        "type": "MAGIC",
+        "range": "2",
+        "effects": [
+            {
+                "name": "MDMG",
+                "value": "11"
+            },
+            {
+                "name": "bloodcost",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "type": "NONE",
+        "range": "8",
+        "effects": [
+            {
+                "name": "BLINK",
+                "value": "0"
+            }
+        ]
+    }
+]

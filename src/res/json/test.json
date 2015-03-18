@@ -10,7 +10,7 @@
         "bloodcost": "0",
         "range": "2",
         "effect": "MAGICAL_DAMAGE",
-        "type": "MAGI"
+        "type": "MAGIC"
     },
     {
         "name": "Sword Attack",
@@ -36,7 +36,7 @@
         "bloodcost": "0",
         "range": "5",
         "effect": "MAGICAL_DAMAGE",
-        "type": "MAGI"
+        "type": "MAGIC"
     },
     {
         "name": "Blink",

@@ -25,9 +25,13 @@ public class CardsArchivev2 {
         int bloodcost = getInt(hashMap.get("bloodcost"));
         int range = getInt(hashMap.get("range"));
 
-        BasicCard card = new BasicCard(hashMap.get("description"), id, hashMap.get("image"),
-                hashMap.get("art"), allCardsKey,
-                getEffect(hashMap.get("effect")), getType(hashMap.get("type")),
+        BasicCard card = new BasicCard(hashMap.get("description"),
+                id,
+                hashMap.get("image"),
+                hashMap.get("art"),
+                allCardsKey,
+                getEffects(hashMap.get("effects")),
+                getType(hashMap.get("type")),
                 power, apcost, bloodcost, range);
 
         allCards.put(id, card);
@@ -39,8 +43,9 @@ public class CardsArchivev2 {
         return Integer.parseInt(str);
     }
 
-    private BasicCard.Effect getEffect(String str) {
-        return BasicCard.Effect.valueOf(str);
+    private BasicCard.Effect[] getEffects(Object str) {
+        BasicCard.Effect[] effects = (BasicCard.Effect[]) str;
+        return effects;
     }
 
     private BasicCard.Type getType(String str) {

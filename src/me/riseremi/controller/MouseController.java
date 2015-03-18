@@ -26,7 +26,8 @@ import org.rising.framework.network.Client;
  */
 public class MouseController implements MouseListener, MouseMotionListener {
 
-    @Getter private static final Rectangle mouseRect = new Rectangle(1, 1);
+    @Getter
+    private static final Rectangle mouseRect = new Rectangle(1, 1);
     private static Random rnd = new Random();
 
     @Override
@@ -104,27 +105,32 @@ public class MouseController implements MouseListener, MouseMotionListener {
                 final int justUsedCardId = justUsedCard.getId();
                 final int userId = user.getId();
                 final int targetId = target.getId();
-                switch (justUsedCard.getEffect()) {
-                    case BLINK:
-                        if (!thereIsFriend && !thereIsPlayer) {
-                            instance.send(new MessageSetPosition(userId, mX, mY));
-                        }
-                        break;
-                    case AP:
-                    case BLOODY:
-                    case MAGICAL_DAMAGE:
-                    case PHYSICAL_DAMAGE:
-                    case HEAL:
-                        if (thereIsFriend || thereIsPlayer) {
-                            instance.send(new MessageAttack(userId, targetId, justUsedCardId));
-                        }
-                        break;
 
+                final BasicCard.Effect[] effects = justUsedCard.getEffects();
+
+                for (BasicCard.Effect effect : effects) {
+                    switch (effect) {
+                        case BLINK:
+                            if (!thereIsFriend && !thereIsPlayer) {
+                                instance.send(new MessageSetPosition(userId, mX, mY));
+                            }
+                            break;
+                        case AP:
+                        case BLOOD:
+                        case MDMG:
+                        case PDMG:
+                        case HEAL:
+                            if (thereIsFriend || thereIsPlayer) {
+                                instance.send(new MessageAttack(userId, targetId, justUsedCardId));
+                            }
+                            break;
+
+                    }
                 }
             } catch (IOException ex) {
             }
             Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
-            deck.getJustUsedCard().setEffect(BasicCard.Effect.NONE);
+            deck.getJustUsedCard().setEffects(new BasicCard.Effect[]{BasicCard.Effect.NONE});
             user.decreaseActionPoint(deck.getJustUsedCard().getCost());
 
             user.setCanMove(true);

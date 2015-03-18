@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -174,7 +175,7 @@ public final class Core_v1 extends JPanel {
 
         //draw card radius
         final BasicCard justUsedCard = player.getDeck().getJustUsedCard();
-        if (activeCard != null || (justUsedCard != null && !justUsedCard.getEffect().equals(BasicCard.Effect.NONE))) {
+        if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.Effect[]{BasicCard.Effect.NONE}))) {
             final int radius = activeCard != null ? activeCard.getUseRadius() : justUsedCard.getUseRadius();
 
             final int x = player.getX();

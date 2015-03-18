@@ -21,17 +21,29 @@ public final class BasicCard {
     private BufferedImage back, art;
     //private String description;
     //
-    @Getter private final int id;
-    @Getter private final String name;
-    @Getter @Setter private Effect effect;
-    @Getter private final Type type;
-    @Getter private final int power;
-    @Getter private final int cost;
-    @Getter private final int bloodCost;
-    @Getter private final int useRadius;
-    @Getter private BufferedImage bigCard, smallCard;
-    @Getter @Setter private Rectangle rect;
-    @Getter @Setter private boolean paintBig = false;
+    @Getter
+    private final int id;
+    @Getter
+    private final String name;
+//    @Getter @Setter private Effect effect;
+    @Getter
+    private final Type type;
+    @Getter
+    private final int power;
+    @Getter
+    private final int cost;
+    @Getter
+    private final int bloodCost;
+    @Getter
+    private final int useRadius;
+    @Getter
+    private BufferedImage bigCard, smallCard;
+    @Getter
+    @Setter
+    private Rectangle rect;
+    @Getter
+    @Setter
+    private boolean paintBig = false;
     public static final int //
             MAGICAL_SLAIN = 1,
             SWORD_ATTACK = 2,
@@ -41,10 +53,14 @@ public final class BasicCard {
             ADD_AP_ID = 7,
             TEST_BLOOD1 = 8,
             TEST_TI4 = 9;
+    //
+    @Getter
+    @Setter
+    private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
 
-    public BasicCard(String description, int id, String pathToBigCard, String pathToArt, String name, Effect effect,
+    public BasicCard(String description, int id, String pathToBigCard, String pathToArt, String name, Effect[] effects,
             Type type, int power, int cost, int bloodCost, int useRadius) {
         try {
             this.art = ImageIO.read(getClass().getResourceAsStream(pathToArt));
@@ -54,7 +70,7 @@ public final class BasicCard {
         }
         this.id = id;
         this.name = name;
-        this.effect = effect;
+        this.effects = effects;
         this.type = type;
         this.power = power;
         this.cost = cost;
@@ -65,13 +81,13 @@ public final class BasicCard {
         this.bigCard = wwTest(bigCard, art, description);
     }
 
-    public BasicCard(int id, BufferedImage bigCard, String name, Effect effect,
+    public BasicCard(int id, BufferedImage bigCard, String name, Effect[] effects,
             Type type, int power, int cost, int bloodCost, int useRadius) {
         this.id = id;
         this.bigCard = bigCard;
         this.smallCard = scaleImage(bigCard, WIDTH, HEIGHT);
         this.name = name;
-        this.effect = effect;
+        this.effects = effects;
         this.type = type;
         this.power = power;
         this.cost = cost;
@@ -93,9 +109,9 @@ public final class BasicCard {
     public void use(Entity user, Entity target, boolean justApplyEffect) {
         if (user.canDoIt(cost) && !justApplyEffect) {
             user.decreaseActionPoint(cost);
-            switchIt(effect, user, target);
+            switchIt(effects, user, target);
         } else if (justApplyEffect) {
-            switchIt(effect, user, target);
+            switchIt(effects, user, target);
         }
     }
 
@@ -103,37 +119,39 @@ public final class BasicCard {
         use(user, targetI, true);
     }
 
-    private void switchIt(Effect effect, Entity user, Entity target) {
-        switch (effect) {
-            case PHYSICAL_DAMAGE:
-                target.dealPhysicalDamage(power);
-                break;
-            case MAGICAL_DAMAGE:
-                target.dealMagicalDamage(power);
-                break;
-            case BLINK:
-                break;
-            case HEAL:
-                target.heal(power);
-                break;
-            case AP:
-                target.addAPInNextTurn(power);
-                break;
-            case BLOODY:
-                target.dealMagicalDamage(power);
-                user.decreaseBloodCostHP(bloodCost);
-                break;
+    private void switchIt(Effect[] effects, Entity user, Entity target) {
+        for (Effect effect : effects) {
+            switch (effect) {
+                case PDMG:
+                    target.dealPhysicalDamage(power);
+                    break;
+                case MDMG:
+                    target.dealMagicalDamage(power);
+                    break;
+                case BLINK:
+                    break;
+                case HEAL:
+                    target.heal(power);
+                    break;
+                case AP:
+                    target.addAPInNextTurn(power);
+                    break;
+                case BLOOD:
+                    target.dealMagicalDamage(power);
+                    user.decreaseBloodCostHP(bloodCost);
+                    break;
+            }
         }
     }
 
     public enum Effect {
 
-        MAGICAL_DAMAGE, PHYSICAL_DAMAGE, HEAL, BLINK, WAIT, AP, BLOODY, NONE
+        MDMG, PDMG, HEAL, BLINK, WAIT, AP, BLOOD, NONE
     }
 
     public enum Type {
 
-        PHYS, MAGI, NONE
+        PHYS, MAGIC, NONE
     }
 
     public int getWidth() {
@@ -154,7 +172,7 @@ public final class BasicCard {
 
     @Override
     protected BasicCard clone() throws CloneNotSupportedException {
-        return new BasicCard(id, bigCard, name, effect, type, power, cost, bloodCost, useRadius);
+        return new BasicCard(id, bigCard, name, effects, type, power, cost, bloodCost, useRadius);
     }
 
     //uses for card preview

@@ -19,6 +19,7 @@ import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
 import me.riseremi.json.StringUtils;
+import me.riseremi.json.StringUtilsv2;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
@@ -109,14 +110,16 @@ public class Main extends JFrame implements ActionListener {
 
     public static void main(String[] args) throws Exception {
         StringUtils su = new StringUtils();
-        su.bleh();
+        StringUtilsv2 su2 = new StringUtilsv2();
+//        su.bleh();
+        su2.process();
         
         game = new Main("Game");
         core = Core_v1.getInstance();
         loginScreen1 = new LoginScreen();
 
-        //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
         game.add(loginScreen1, BorderLayout.CENTER);
         loginScreen1.setVisible(true);

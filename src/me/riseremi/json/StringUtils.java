@@ -36,7 +36,7 @@ public class StringUtils {
 
     public void bleh() throws WrongJSONFormatException {
 
-        try /*(BufferedReader br = new BufferedReader(new FileReader("C:\\testing.txt")))*/ {
+        try {
             InputStream reader = IOManager.class.getResourceAsStream("/res/json/test.json");
             BufferedReader br = new BufferedReader(new InputStreamReader(reader));
             String currentLine;
@@ -74,7 +74,6 @@ public class StringUtils {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         //here we are: filled hashmap

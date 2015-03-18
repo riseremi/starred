@@ -1,4 +1,7 @@
 FEATURE LIST
+
+
+
 11.05.2014
 -- 3 free steps before card used
 -- Classes
