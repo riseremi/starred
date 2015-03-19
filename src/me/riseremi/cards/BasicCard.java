@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,11 +30,9 @@ public final class BasicCard {
     @Getter
     private final Type type;
     @Getter
-    private final int power;
-    @Getter
     private final int cost;
-    @Getter
-    private final int bloodCost;
+//    @Getter
+//    private final int bloodCost;
     @Getter
     private final int useRadius;
     @Getter
@@ -56,12 +55,13 @@ public final class BasicCard {
     //
     @Getter
     @Setter
-    private Effect[] effects;
+    //private Effect[] effects;
+    private HashMap<String, Object> effectsMap;
 
     public static final int WIDTH = 42, HEIGHT = 60;
 
     public BasicCard(String description, int id, String pathToBigCard, String pathToArt, String name, Effect[] effects,
-            Type type, int power, int cost, int bloodCost, int useRadius) {
+            Type type, int cost, int useRadius) {
         try {
             this.art = ImageIO.read(getClass().getResourceAsStream(pathToArt));
             this.bigCard = ImageIO.read(getClass().getResourceAsStream(pathToBigCard));
@@ -72,9 +72,9 @@ public final class BasicCard {
         this.name = name;
         this.effects = effects;
         this.type = type;
-        this.power = power;
+//        this.power = power;
         this.cost = cost;
-        this.bloodCost = bloodCost;
+//        this.bloodCost = bloodCost;
         this.useRadius = useRadius;
         this.rect = new Rectangle();
 
@@ -82,16 +82,16 @@ public final class BasicCard {
     }
 
     public BasicCard(int id, BufferedImage bigCard, String name, Effect[] effects,
-            Type type, int power, int cost, int bloodCost, int useRadius) {
+            Type type, int cost, int useRadius) {
         this.id = id;
         this.bigCard = bigCard;
         this.smallCard = scaleImage(bigCard, WIDTH, HEIGHT);
         this.name = name;
         this.effects = effects;
         this.type = type;
-        this.power = power;
+//        this.power = power;
         this.cost = cost;
-        this.bloodCost = bloodCost;
+//        this.bloodCost = bloodCost;
         this.useRadius = useRadius;
         this.rect = new Rectangle();
     }
@@ -123,22 +123,22 @@ public final class BasicCard {
         for (Effect effect : effects) {
             switch (effect) {
                 case PDMG:
-                    target.dealPhysicalDamage(power);
+                    target.dealPhysicalDamage(0);
                     break;
                 case MDMG:
-                    target.dealMagicalDamage(power);
+                    target.dealMagicalDamage(0);
                     break;
                 case BLINK:
                     break;
                 case HEAL:
-                    target.heal(power);
+                    target.heal(0);
                     break;
                 case AP:
-                    target.addAPInNextTurn(power);
+                    target.addAPInNextTurn(0);
                     break;
                 case BLOOD:
-                    target.dealMagicalDamage(power);
-                    user.decreaseBloodCostHP(bloodCost);
+                    target.dealMagicalDamage(0);
+                    user.decreaseBloodCostHP(0);
                     break;
             }
         }
@@ -172,7 +172,7 @@ public final class BasicCard {
 
     @Override
     protected BasicCard clone() throws CloneNotSupportedException {
-        return new BasicCard(id, bigCard, name, effects, type, power, cost, bloodCost, useRadius);
+        return new BasicCard(id, bigCard, name, effects, type, cost, useRadius);
     }
 
     //uses for card preview

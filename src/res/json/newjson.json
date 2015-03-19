@@ -7,7 +7,7 @@
         "description": "The Gods summon pure magic power upon your enemy.",
         "apcost": "8",
         "range": "2",
-        "comment": "WAZUUP",
+        "type": "NONE",
         "effects": [
             {
                 "name": "MDMG",

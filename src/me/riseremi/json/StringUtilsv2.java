@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import me.riseremi.cards.CardsArchivev2;
 import me.riseremi.map.layer.IOManager;
 
 /**
@@ -18,9 +19,9 @@ public class StringUtilsv2 {
     private boolean inObject, inInnerObject;
     private final HashMap<String, Object> hashMap = new HashMap<>();
     private String effects = "effects";
-    private final String[] keys = {"name", "id", "image", "art", "description", "apcost", "range"};
-    private ArrayList<HashMap<String, String>> effectsList = new ArrayList<>();
-    private HashMap<String, String> tempEffect = new HashMap<>();
+    private final String[] keys = {"name", "id", "image", "art", "description", "apcost", "range", "type"};
+    private ArrayList<HashMap<String, Object>> effectsList = new ArrayList<>();
+    private HashMap<String, Object> tempEffect = new HashMap<>();
 
     public void process() throws WrongJSONFormatException {
         try {
@@ -145,13 +146,16 @@ public class StringUtilsv2 {
                     System.out.println();
 
                     System.out.println("Effects:");
-                    for (HashMap<String, String> map : effectsList) {
+                    for (HashMap<String, Object> map : effectsList) {
                         for (int i = 0; i < map.size(); i++) {
                             final String key = (String) map.keySet().toArray()[i];
                             System.out.print(map.get(key) + (i == map.size() - 1 ? "" : " = "));
                         }
                         System.out.println();
                     }
+                    
+                    CardsArchivev2 cav2 = new CardsArchivev2();
+                    cav2.addCard(hashMap);
 
                     System.exit(0);
                     break;

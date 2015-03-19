@@ -16,23 +16,23 @@ public class CardsArchivev2 {
     }
 
     //create a BasicCard with recieved data and put in into archive
-    public void addCard(HashMap<String, String> hashMap) {
-        String allCardsKey = hashMap.get("name");
+    public void addCard(HashMap<String, Object> hashMap) {
+        String allCardsKey = (String) hashMap.get("name");
 
-        int id = getInt(hashMap.get("id"));
-        int power = getInt(hashMap.get("power"));
-        int apcost = getInt(hashMap.get("apcost"));
-        int bloodcost = getInt(hashMap.get("bloodcost"));
-        int range = getInt(hashMap.get("range"));
+        int id = getInt((String) hashMap.get("id"));
+//        int power = getInt((String) hashMap.get("power"));
+        int apcost = getInt((String) hashMap.get("apcost"));
+//        int bloodcost = getInt((String) hashMap.get("bloodcost"));
+        int range = getInt((String) hashMap.get("range"));
 
-        BasicCard card = new BasicCard(hashMap.get("description"),
+        BasicCard card = new BasicCard((String) hashMap.get("description"),
                 id,
-                hashMap.get("image"),
-                hashMap.get("art"),
+                (String) hashMap.get("image"),
+                (String) hashMap.get("art"),
                 allCardsKey,
                 getEffects(hashMap.get("effects")),
-                getType(hashMap.get("type")),
-                power, apcost, bloodcost, range);
+                getType((String) hashMap.get("type")),
+                apcost, range);
 
         allCards.put(id, card);
 

@@ -97,7 +97,7 @@ public final class Core_v1 extends JPanel {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
             waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
             player.getDeck().addCard(CardsArchive.getRandomCard());
-            player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK));
+//            player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK));
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
         } catch (IOException | CloneNotSupportedException ex) {
