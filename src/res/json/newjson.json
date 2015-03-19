@@ -1,7 +1,13 @@
 [
     {
-        "type": "MAGIC",
+        "name": "Magical Slain",
+        "id": "1",
+        "image": "/res/cards/backs/card_magic.png",
+        "art": "/res/cards/arts/magic1.png",
+        "description": "The Gods summon pure magic power upon your enemy.",
+        "apcost": "8",
         "range": "2",
+        "comment": "WAZUUP",
         "effects": [
             {
                 "name": "MDMG",
@@ -9,16 +15,6 @@
             },
             {
                 "name": "bloodcost",
-                "value": "0"
-            }
-        ]
-    },
-    {
-        "type": "NONE",
-        "range": "8",
-        "effects": [
-            {
-                "name": "BLINK",
                 "value": "0"
             }
         ]
