@@ -97,7 +97,7 @@ public class StringUtils {
         //System.out.println(hashMap.toString());
         
         CardsArchivev2 cav2 = new CardsArchivev2();
-        cav2.addCard(hashMap);
+        //cav2.addCard(hashMap);
     }
 
     //single string key:value

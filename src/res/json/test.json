@@ -5,11 +5,11 @@
         "image": "/res/cards/backs/card_magic.png",
         "art": "/res/cards/arts/magic1.png",
         "description": "The Gods summon pure magic power upon your enemy.",
-        "power": "11",
         "apcost": "8",
         "bloodcost": "0",
         "range": "2",
         "effect": "MAGICAL_DAMAGE",
+        "power": "11",
         "type": "MAGIC"
     },
     {

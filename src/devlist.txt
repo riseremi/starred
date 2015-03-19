@@ -1,5 +1,8 @@
 FEATURE LIST
 
+- to implement/fix
++ implemented
+~ fixed
 
 
 11.05.2014
@@ -20,3 +23,10 @@ FEATURE LIST
 09.07.14 
 -- NEW UI
 
+/* BREAK */
+
+19.03.2015
++ JSONS system
++ loading cards
++ rewrite MouseController
+- 

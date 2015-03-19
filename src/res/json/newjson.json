@@ -7,15 +7,27 @@
         "description": "The Gods summon pure magic power upon your enemy.",
         "apcost": "8",
         "range": "2",
-        "type": "NONE",
+        "type": "MAGIC",
         "effects": [
             {
                 "name": "MDMG",
                 "value": "11"
-            },
+            }
+        ]
+    },
+    {
+        "name": "Sword Attack",
+        "id": "2",
+        "image": "/res/cards/backs/card_physical.png",
+        "art": "/res/cards/arts/phys1.png",
+        "description": "You use your sword to cut your enemy.",
+        "apcost": "4",
+        "range": "1",
+        "type": "PHYS",
+        "effects": [
             {
-                "name": "bloodcost",
-                "value": "0"
+                "name": "PDMG",
+                "value": "7"
             }
         ]
     }

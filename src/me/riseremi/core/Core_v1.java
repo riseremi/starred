@@ -175,7 +175,7 @@ public final class Core_v1 extends JPanel {
 
         //draw card radius
         final BasicCard justUsedCard = player.getDeck().getJustUsedCard();
-        if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.Effect[]{BasicCard.Effect.NONE}))) {
+        if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.EffectType[]{BasicCard.EffectType.NONE}))) {
             final int radius = activeCard != null ? activeCard.getUseRadius() : justUsedCard.getUseRadius();
 
             final int x = player.getX();

@@ -26,7 +26,7 @@ public final class BasicCard {
     private final int id;
     @Getter
     private final String name;
-//    @Getter @Setter private Effect effect;
+//    @Getter @Setter private EffectType effect;
     @Getter
     private final Type type;
     @Getter
@@ -55,13 +55,15 @@ public final class BasicCard {
     //
     @Getter
     @Setter
-    //private Effect[] effects;
-    private HashMap<String, Object> effectsMap;
+    //private EffectType[] effects;
+    //    private HashMap<String, Object> effectsMap;
+    private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
 
-    public BasicCard(String description, int id, String pathToBigCard, String pathToArt, String name, Effect[] effects,
-            Type type, int cost, int useRadius) {
+    public BasicCard(String description, int id, String pathToBigCard, String pathToArt,
+            String name, Effect[] effects, Type type, int cost,
+            int useRadius) {
         try {
             this.art = ImageIO.read(getClass().getResourceAsStream(pathToArt));
             this.bigCard = ImageIO.read(getClass().getResourceAsStream(pathToBigCard));
@@ -81,8 +83,8 @@ public final class BasicCard {
         this.bigCard = wwTest(bigCard, art, description);
     }
 
-    public BasicCard(int id, BufferedImage bigCard, String name, Effect[] effects,
-            Type type, int cost, int useRadius) {
+    public BasicCard(int id, BufferedImage bigCard, String name,
+            Effect[] effects, Type type, int cost, int useRadius) {
         this.id = id;
         this.bigCard = bigCard;
         this.smallCard = scaleImage(bigCard, WIDTH, HEIGHT);
@@ -120,33 +122,37 @@ public final class BasicCard {
     }
 
     private void switchIt(Effect[] effects, Entity user, Entity target) {
-        for (Effect effect : effects) {
+        for (Effect effect1 : effects) {
+            EffectType effect = effect1.getEffectType();
+            int value = Integer.parseInt((String) effect1.getValue());
             switch (effect) {
                 case PDMG:
-                    target.dealPhysicalDamage(0);
+                    target.dealPhysicalDamage(value);
                     break;
                 case MDMG:
-                    target.dealMagicalDamage(0);
+                    target.dealMagicalDamage(value);
                     break;
                 case BLINK:
                     break;
                 case HEAL:
-                    target.heal(0);
+                    target.heal(value);
                     break;
                 case AP:
-                    target.addAPInNextTurn(0);
+                    target.addAPInNextTurn(value);
                     break;
-                case BLOOD:
-                    target.dealMagicalDamage(0);
-                    user.decreaseBloodCostHP(0);
+                case BLOODDMG:
+                    target.dealMagicalDamage(value);
+                    break;
+                case BLOODCOST:
+                    user.decreaseBloodCostHP(value);
                     break;
             }
         }
     }
 
-    public enum Effect {
+    public enum EffectType {
 
-        MDMG, PDMG, HEAL, BLINK, WAIT, AP, BLOOD, NONE
+        MDMG, PDMG, HEAL, BLINK, WAIT, AP, BLOODDMG, BLOODCOST, NONE
     }
 
     public enum Type {
@@ -207,7 +213,7 @@ public final class BasicCard {
             sb.replace(i, i + 1, "\n");
         }
 
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
 
         String[] strings = sb.toString().split("\n");
 

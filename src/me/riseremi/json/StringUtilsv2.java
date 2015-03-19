@@ -17,11 +17,11 @@ public class StringUtilsv2 {
 
     private boolean inJSON, inInnerArray, inKeyValueString;
     private boolean inObject, inInnerObject;
-    private final HashMap<String, Object> hashMap = new HashMap<>();
-    private String effects = "effects";
+    private HashMap<String, String> hashMap = new HashMap<>();
     private final String[] keys = {"name", "id", "image", "art", "description", "apcost", "range", "type"};
     private ArrayList<HashMap<String, Object>> effectsList = new ArrayList<>();
     private HashMap<String, Object> tempEffect = new HashMap<>();
+    private static final String effects = "effects";
 
     public void process() throws WrongJSONFormatException {
         try {
@@ -61,8 +61,9 @@ public class StringUtilsv2 {
 
                 switch (strStart) {
                     case '[':
-                        //JSON start
-                        inJSON = true;
+                        if (!inJSON) {
+                            inJSON = true;
+                        }
 //                        System.out.println("\t\t\t\tSTART OF JSON ^");
                         break;
                     case ']':
@@ -94,6 +95,10 @@ public class StringUtilsv2 {
                             if (inObject && !inInnerObject) {
                                 inObject = false;
 //                                System.out.println("\t\t\t\tOBJECT END");
+                                CardsArchivev2 cav2 = new CardsArchivev2();
+                                cav2.addCard(hashMap, effectsList);
+                                hashMap = new HashMap<>();
+                                effectsList = new ArrayList<>();
                             } else if (inObject && inInnerObject) {
                                 inInnerObject = false;
 //                                System.out.println("\t\t\t\tINNER OBJECT END");
@@ -105,7 +110,7 @@ public class StringUtilsv2 {
                         break;
                     case '"':
                         //key:value start
-                        if (!lineToProcess.contains("[")) {
+                        if (!lineToProcess.contains("[") && !inInnerObject) {
 //                            System.out.println("\t\tKEY:VALUE STRING ^");
 
                             lineToProcess = cleanData(lineToProcess);
@@ -122,8 +127,8 @@ public class StringUtilsv2 {
                     if (inInnerArray && inInnerObject) {
                         if (strStart == '"') {
                             //effect key:value found
-                            lineToProcess = cleanData(lineToProcess);
                             //System.out.println("before " + currentLine);
+                            lineToProcess = cleanData(lineToProcess);
                             String[] pair = lineToProcess.split(":");
                             tempEffect.put(pair[0], pair[1]);
 
@@ -136,28 +141,24 @@ public class StringUtilsv2 {
 //                    System.out.println("......END OF JSON");
 //                    System.out.println("hashMap: " + hashMap.toString());
 
-                    System.out.println("Data:");
-                    for (int i = 0; i < hashMap.size(); i++) {
-                        final String key = (String) hashMap.keySet().toArray()[i];
-                        System.out.println(key + " = " + hashMap.get(key));
-                    }
-
-                    //System.out.println("list: " + effectsList.toString());
-                    System.out.println();
-
-                    System.out.println("Effects:");
-                    for (HashMap<String, Object> map : effectsList) {
-                        for (int i = 0; i < map.size(); i++) {
-                            final String key = (String) map.keySet().toArray()[i];
-                            System.out.print(map.get(key) + (i == map.size() - 1 ? "" : " = "));
-                        }
-                        System.out.println();
-                    }
-                    
-                    CardsArchivev2 cav2 = new CardsArchivev2();
-                    cav2.addCard(hashMap);
-
-                    System.exit(0);
+//                    System.out.println("Data:");
+//                    for (int i = 0; i < hashMap.size(); i++) {
+//                        final String key = (String) hashMap.keySet().toArray()[i];
+//                        System.out.println(key + " = " + hashMap.get(key));
+//                    }
+//
+//                    //System.out.println("list: " + effectsList.toString());
+//                    System.out.println();
+//
+//                    System.out.println("Effects:");
+//                    for (HashMap<String, Object> map : effectsList) {
+//                        for (int i = 0; i < map.size(); i++) {
+//                            final String key = (String) map.keySet().toArray()[i];
+//                            System.out.print(map.get(key) + (i == map.size() - 1 ? "" : " = "));
+//                        }
+//                        System.out.println();
+//                    }
+                    //System.exit(0);
                     break;
                 }
             }

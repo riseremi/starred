@@ -9,6 +9,7 @@ import java.util.Random;
 import lombok.Getter;
 import me.riseremi.cards.BasicCard;
 import me.riseremi.cards.Deck;
+import me.riseremi.cards.Effect;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
 import me.riseremi.entities.Entity;
@@ -106,17 +107,17 @@ public class MouseController implements MouseListener, MouseMotionListener {
                 final int userId = user.getId();
                 final int targetId = target.getId();
 
-                final BasicCard.Effect[] effects = justUsedCard.getEffects();
+                final Effect[] effects = justUsedCard.getEffects();
 
-                for (BasicCard.Effect effect : effects) {
-                    switch (effect) {
+                for (Effect effect : effects) {
+                    switch (effect.getEffectType()) {
                         case BLINK:
                             if (!thereIsFriend && !thereIsPlayer) {
                                 instance.send(new MessageSetPosition(userId, mX, mY));
                             }
                             break;
                         case AP:
-                        case BLOOD:
+                        case BLOODDMG:
                         case MDMG:
                         case PDMG:
                         case HEAL:
@@ -130,7 +131,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
             } catch (IOException ex) {
             }
             Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
-            deck.getJustUsedCard().setEffects(new BasicCard.Effect[]{BasicCard.Effect.NONE});
+            deck.getJustUsedCard().setEffects(new Effect[]{new Effect()});
             user.decreaseActionPoint(deck.getJustUsedCard().getCost());
 
             user.setCanMove(true);

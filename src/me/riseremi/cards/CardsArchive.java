@@ -13,7 +13,7 @@ public class CardsArchive {
     @Otsylka
     public static BasicCard getRandomCard() throws CloneNotSupportedException {
 //        return get(rnd.nextInt(4) + 1);
-        return get(1);
+        return get(rnd.nextInt(2) + 1);
     }
 
     public static BasicCard get(int id) throws CloneNotSupportedException {
