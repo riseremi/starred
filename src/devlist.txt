@@ -38,8 +38,8 @@ FEATURE LIST
 21.03.2015
 - fix justUsedCard
     name is null for unknown reason
-- rewrite MouseController from scratch
 - fix ADD_AP not applies to Target (not to self)
 - fix chat output
 - implement first playable class (Warrior I think)
-    to implement: Bloody Mage, Head Hunter, Bearde Druid (see google sheets)
+    to implement: Bloody Mage, Head Hunter, Bearded Druid (see google sheets)
+- rewrite MouseController from scratch

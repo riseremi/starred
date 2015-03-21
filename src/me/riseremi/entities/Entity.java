@@ -37,7 +37,7 @@ public class Entity {
     @Getter protected Deck deck;
     @Getter @Setter private boolean canMove = true;
     @Getter @Setter private HPBar hpBar;
-    private int additionAP;
+    private int additionalAP;
     @Setter private boolean drawHPBar = true;
     @Setter @Getter int id;
     @Getter int imgId;
@@ -179,22 +179,22 @@ public class Entity {
     }
 
     public void resetActionPoints() {
-        actionPoints = actionPoints > 0 ? 10 + 1 + additionAP : 10;
-        additionAP = 0;
+        actionPoints = actionPoints > 0 ? 10 + 1 + additionalAP : 10;
+        additionalAP = 0;
     }
 
-    public void dealPhysicalDamage(int power) {
-        Main.addToChat("Got " + (power - pDef) + " damage\r\n");
-        hp = (hp - (power - pDef) < 0) ? 0 : (hp - (power - pDef));
+    public void dealPhysicalDamage(int amount) {
+        Main.addToChat("Got " + (amount - pDef) + " damage\r\n");
+        hp = (hp - (amount - pDef) < 0) ? 0 : (hp - (amount - pDef));
     }
 
-    public void dealMagicalDamage(int power) {
-        Main.addToChat("Got " + (power - mDef) + " damage\r\n");
-        hp = (hp - (power - mDef) < 0) ? 0 : (hp - (power - pDef));
+    public void dealMagicalDamage(int amount) {
+        Main.addToChat("Got " + (amount - mDef) + " damage\r\n");
+        hp = (hp - (amount - mDef) < 0) ? 0 : (hp - (amount - pDef));
     }
 
-    public void dealPureDamage(int power) {
-        hp = (hp - power <= maxHp) ? 0 : hp - power;
+    public void dealPureDamage(int amount) {
+        hp = (hp - amount <= maxHp) ? 0 : hp - amount;
     }
 
     public void heal(int power) {
@@ -205,8 +205,8 @@ public class Entity {
         Main.addToChat("Turn skipped.\r\n");
     }
 
-    public void addAPInNextTurn(int power) {
-        additionAP += power;
+    public void addAPInNextTurn(int value) {
+        additionalAP += value;
     }
 
 }

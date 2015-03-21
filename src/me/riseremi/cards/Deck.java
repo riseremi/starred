@@ -1,6 +1,5 @@
 package me.riseremi.cards;
 
-import me.riseremi.main.Main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -8,6 +7,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
+import me.riseremi.main.Main;
 
 /**
  * Колода карт, которые находятся на руках у героя.
@@ -45,9 +45,10 @@ public final class Deck {
             g.drawString("" + card.getCost(), ShiftEast(x, 1), ShiftNorth(y, 1));
             g.drawString("" + card.getCost(), ShiftEast(x, 1), ShiftSouth(y, 1));
             
-            Color overlayNumberColor = card.getBloodCost() == 0 ? Color.WHITE : Color.RED;
+            //red color for cards with blood cost
+            //Color overlayNumberColor = card.getBloodCost() == 0 ? Color.WHITE : Color.RED;
             
-            g.setColor(overlayNumberColor);
+            g.setColor(Color.WHITE);
             g.drawString("" + card.getCost(), x, y);
             
             g.setColor(Color.WHITE);

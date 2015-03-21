@@ -257,46 +257,6 @@ public final class Core_v1 extends JPanel {
                     : player.getName() + " wins";
             g.drawString(message, 400, 310);
         }
-//
-//        if (player.isDead()) {
-//            nextTurnAvailable = false;
-//            gameOver = true;
-//            //removeMouseMotionListener(getMouseMotionListeners()[0]);
-//
-//            int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
-//
-//            g.setColor(Color.BLACK);
-//            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
-//                    Global.WINDOW_WIDTH, overlayHeight);
-//
-//            Font trb = new Font("Arial", Font.BOLD, 28);
-//            g.setFont(trb);
-//
-//            g.setColor(Color.WHITE);
-//
-//            //g.drawString("Round end", 300, 250);
-//            g.drawString(friend.getName() + " wins", 400, 310);
-//        }
-//
-//        if (friend.isDead()) {
-//            nextTurnAvailable = false;
-//            gameOver = true;
-//            //removeMouseMotionListener(getMouseMotionListeners()[0]);
-//
-//            int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
-//
-//            g.setColor(Color.BLACK);
-//            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
-//                    Global.WINDOW_WIDTH, overlayHeight);
-//
-//            Font trb = new Font("Arial", Font.BOLD, 28);
-//            g.setFont(trb);
-//
-//            g.setColor(Color.WHITE);
-//
-//            //g.drawString("Round end", 300, 250);
-//            g.drawString(player.getName() + " wins", 400, 310);
-//        }
 
         g.setFont(walkwayBold);
 
@@ -335,7 +295,7 @@ public final class Core_v1 extends JPanel {
     }
 
     /**
-     * Starts turn, enables all actions
+     * enable all actions, add a new card
      */
     public void startTurn() {
         try {
@@ -358,7 +318,8 @@ public final class Core_v1 extends JPanel {
     }
 
     public Entity getPlayerById(int id) {
-        System.out.println("pl: " + player.getId() + " fr: " + friend.getId() + " id: " + id);
+        System.out.println("GET_ENTITY; player id: " + player.getId()
+                + ", friend id: " + friend.getId() + ", requested id: " + id);
         if (player.getId() == id) {
             return player;
         } else if (friend.getId() == id) {

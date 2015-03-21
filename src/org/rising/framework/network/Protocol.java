@@ -3,13 +3,10 @@ package org.rising.framework.network;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.CardsArchive;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
-import me.riseremi.network.messages.MessageAttack;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessagePing;
@@ -58,6 +55,7 @@ public class Protocol {
                 Server.getInstance().sendToAllExcludingOne(message, id);
                 break;
             case ATTACK_TEST:
+                System.out.println("protocol attack test");
                 Server.getInstance().sendToAll(message);
                 break;
             case PING_MESSAGE:
@@ -99,7 +97,7 @@ public class Protocol {
                 final Entity entity = core.getPlayerById(msgSP.getId());
                 final int x = msgSP.getX();
                 final int y = msgSP.getY();
-                System.out.println("x: " + x + " y:" + y);
+                System.out.println("Teleported to " + x + ":" + y);
                 entity.setPosition(x, y);
                 break;
             case TURN_ENDED:

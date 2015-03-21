@@ -62,9 +62,7 @@ public class CardsArchivev2 {
         allCards.put(id, card);
         length = allCards.size();
 
-        printCards(hashMap, effects);
-
-        //System.out.println(allCards.toString());
+        //printCards(hashMap, effects);
     }
 
     private int getInt(String str) {

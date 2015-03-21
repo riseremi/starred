@@ -1,8 +1,6 @@
 package me.riseremi.cards;
 
 import java.awt.Color;
-import me.riseremi.core.Core_v1;
-import me.riseremi.entities.Entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -11,6 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
+import me.riseremi.core.Core_v1;
+import me.riseremi.entities.Entity;
 import me.riseremi.main.Main;
 
 /**
@@ -228,6 +228,7 @@ public final class BasicCard {
     }
 
     private BufferedImage wwTest(BufferedImage img, BufferedImage art, String s) {
+        //s = s.replace("|", "\n");
         StringBuilder sb = new StringBuilder(s);
 
         int i = 0;
@@ -236,7 +237,9 @@ public final class BasicCard {
         }
 
         //System.out.println(sb.toString());
-        String[] strings = sb.toString().split("\n");
+        String temp = sb.toString().replace("|", "\n").replace("=", ": ");
+        temp = temp.replace("_", " ");
+        String[] strings = temp.split("\n");
 
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g = newImage.createGraphics();
@@ -247,13 +250,14 @@ public final class BasicCard {
         g.setColor(Color.WHITE);
         //g.drawString(sb.toString(), 40, 300);
 
-        int tempJ = 0;
+        //int tempJ = 0;
         for (int j = 0; j < strings.length; j++) {
             g.drawString(strings[j], 40, 305 + j * 14);
-            tempJ = j;
+            //tempJ = j;
         }
-        final int bloodCost = getBloodCost();
-        g.drawString(bloodCost == 0 ? "" : "Bloodcost: " + bloodCost, 40, 305 + (tempJ + 1) * 14);
+        //final int bloodCost = getBloodCost();
+        //g.drawString(bloodCost == 0 ? "" : "Bloodcost: " + bloodCost, 40, 305 + (tempJ + 1) * 14);
+
         return newImage;
 
     }

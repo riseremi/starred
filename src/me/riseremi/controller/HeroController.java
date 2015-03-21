@@ -93,48 +93,5 @@ public class HeroController {
                 }
             }
         }
-
-//        //попробуем создать вещь по нажатию C и передать её на другой конец
-//        if (ke.getKeyCode() == KeyEvent.VK_C) {
-//            if (Core_v1.getInstance().getWorld().getItems().size() < 15) {
-//                int id = rnd.nextInt(6);
-//                int x = rnd.nextInt(30);
-//                int y = rnd.nextInt(30);
-//
-//                Item itm = new Item(TempNameSwitch.switchName(id) + " (id: " + String.valueOf(id) + ")", id, x, y);
-//
-//                if (!CheckObstacles.checkObstacle(Core_v1.getInstance().getWorld(), x, y)) {
-//                    Core_v1.getInstance().getWorld().getItems().add(itm);
-//                    //готовим вещь к пересылке
-//                    synchronized (Core_v1.getInstance().getWorld().getItems()) {
-//                        Core_v1.getInstance().getNetwork().sendData(new NetworkMessage(NetworkMessage.SEND_ITEM, String.valueOf(itm.getId()) + ":" + String.valueOf(itm.getX()) + ":" + String.valueOf(itm.getY())));
-//                        System.out.println("Item sent.");
-//                    }
-//                } else {
-//                    System.out.println("Cannot spawn more than 15 items.");
-//                }
-//            }
-//        }
-//        //get item
-//        if (ke.getKeyCode() == KeyEvent.VK_G) {
-//            ArrayList<Item> inv = Core_v1.getInstance().getPlayer().getInventory();
-//            ArrayList<Item> items = Core_v1.getInstance().getWorld().getItems();
-//            Player p = Core_v1.getInstance().getPlayer();
-//            int x = p.getX(), y = p.getY();
-//
-//            synchronized (Core_v1.getInstance().getWorld().getItems()) {
-//                //поиск вещи на карте мира, добавление в инвентарь, пересылка, удаление
-//                for (Item item : items) {
-//                    if ((item.getX() == x) && (item.getY() == y)) {
-//                        if (inv.size() < p.getInvSize()) {
-//                            inv.add(item);
-//                            network.sendData(new NetworkMessage(NetworkMessage.REMOVE_ITEM, String.valueOf(items.indexOf(item))));
-//                            items.remove(item);
-//                        }
-//                        break;
-//                    }
-//                }
-//            }
-//        }
     }
 }

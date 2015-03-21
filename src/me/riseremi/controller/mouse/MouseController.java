@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import lombok.Getter;
 import me.riseremi.cards.BasicCard;
@@ -20,6 +21,7 @@ import me.riseremi.map.world.CheckObstacles;
 import me.riseremi.network.messages.MessageAttack;
 import me.riseremi.network.messages.MessageSetPosition;
 import org.rising.framework.network.Client;
+import org.rising.framework.network.Message;
 
 /**
  *
@@ -33,7 +35,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("click");
+        //System.out.println("click");
         Core_v1 core = Core_v1.getInstance();
 
         final Player user = core.getPlayer();
@@ -55,8 +57,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final int mX = cursorX - core.getCamera().getX() / Global.tileWidth;
         final int mY = cursorY - core.getCamera().getY() / Global.tileHeight;
 
-        System.out.println("cx: " + mX + "/cy: " + mY);
-
+        //System.out.println("cx: " + mX + "/cy: " + mY);
         boolean thereIsFriend = (mX == friendX) && (mY == friendY);
         boolean thereIsPlayer = (mX == playerX) && (mY == playerY);
         boolean thereIsObstacle = true;
@@ -101,35 +102,44 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final BasicCard justUsedCard = deck.getJustUsedCard();
         boolean near = justUsedCard != null ? core.isTheyNear(user, mX, mY, justUsedCard.getUseRadius()) : false;
         if (near && !thereIsObstacle) {
+
+            final Client instance = Client.getInstance();
+            final int justUsedCardId = justUsedCard.getId();
+            final int userId = user.getId();
+            final int targetId = target.getId();
+
+            final Effect[] effects = justUsedCard.getEffects();
+            ArrayList<Message> messagesToSend = new ArrayList<>();
+            boolean attackMessageSent = false;
+
+            for (Effect effect : effects) {
+                switch (effect.getEffectType()) {
+                    case BLINK:
+                        if (!thereIsFriend && !thereIsPlayer) {
+                            //instance.send(new MessageSetPosition(userId, mX, mY));
+                            messagesToSend.add(new MessageSetPosition(userId, mX, mY));
+                        }
+                        break;
+                    case ADD_AP:
+                    case BLOODDMG:
+                    case MDMG:
+                    case PDMG:
+                    case NONE:
+                    case HEAL:
+                        if ((thereIsFriend || thereIsPlayer) && !attackMessageSent) {
+                            //instance.send(new MessageAttack(userId, targetId, justUsedCardId));
+                            messagesToSend.add(new MessageAttack(userId, targetId, justUsedCardId));
+                            attackMessageSent = true;
+                        }
+                        break;
+                }
+            }
             try {
-                final Client instance = Client.getInstance();
-                final int justUsedCardId = justUsedCard.getId();
-                final int userId = user.getId();
-                final int targetId = target.getId();
-
-                final Effect[] effects = justUsedCard.getEffects();
-
-                for (Effect effect : effects) {
-                    switch (effect.getEffectType()) {
-                        case BLINK:
-                            if (!thereIsFriend && !thereIsPlayer) {
-                                instance.send(new MessageSetPosition(userId, mX, mY));
-                            }
-                            break;
-                        case ADD_AP:
-                        case BLOODDMG:
-                        case MDMG:
-                        case PDMG:
-                        case NONE:
-                        case HEAL:
-                            if (thereIsFriend || thereIsPlayer) {
-                                instance.send(new MessageAttack(userId, targetId, justUsedCardId));
-                            }
-                            break;
-
-                    }
+                for (Message message : messagesToSend) {
+                    instance.send(message);
                 }
             } catch (IOException ex) {
+                System.out.println("Cannot send network message.");
             }
             Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
             deck.getJustUsedCard().setEffects(new Effect[]{new Effect()});
