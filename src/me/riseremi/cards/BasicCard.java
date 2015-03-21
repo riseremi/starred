@@ -8,10 +8,10 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
+import me.riseremi.main.Main;
 
 /**
  *
@@ -48,10 +48,11 @@ public final class BasicCard {
             SWORD_ATTACK = 2,
             FIREBALL = 3,
             BLINK = 4,
-            HEAL_ID = 6,
-            ADD_AP_ID = 7,
-            TEST_BLOOD1 = 8,
-            TEST_TI4 = 9;
+            HEALING_WORD = 5,
+            BLOOD_CRUSH = 6,
+            TEST_TI4 = 7,
+            ADD_AP_ID = 8,
+            SACRIFICE = 9;
     //
     @Getter
     @Setter
@@ -98,7 +99,7 @@ public final class BasicCard {
         this.rect = new Rectangle();
     }
 
-    public void useByTo(Entity player, Entity friend) {
+    public void setAsSelectedCard(Entity player, Entity friend) {
         final Core_v1 core = Core_v1.getInstance();
         if (player.canDoIt(cost)) {
 
@@ -117,10 +118,12 @@ public final class BasicCard {
         }
     }
 
+    @Deprecated
     public void applyEffectFromTo(Entity user, Entity targetI) {
         use(user, targetI, true);
     }
 
+    /* use card */
     private void switchIt(Effect[] effects, Entity user, Entity target) {
         for (Effect effect1 : effects) {
             EffectType effect = effect1.getEffectType();
@@ -131,13 +134,14 @@ public final class BasicCard {
                     break;
                 case MDMG:
                     target.dealMagicalDamage(value);
+//                    System.out.println("===============================mdmg");
                     break;
                 case BLINK:
                     break;
                 case HEAL:
                     target.heal(value);
                     break;
-                case AP:
+                case ADD_AP:
                     target.addAPInNextTurn(value);
                     break;
                 case BLOODDMG:
@@ -146,13 +150,17 @@ public final class BasicCard {
                 case BLOODCOST:
                     user.decreaseBloodCostHP(value);
                     break;
+                case NONE:
+                    Main.addToChat("BUT NOTHING HAPPENS\r\n");
+                    System.out.println("none card");
+                    break;
             }
         }
     }
 
     public enum EffectType {
 
-        MDMG, PDMG, HEAL, BLINK, WAIT, AP, BLOODDMG, BLOODCOST, NONE
+        MDMG, PDMG, HEAL, BLINK, WAIT, ADD_AP, BLOODDMG, BLOODCOST, NONE
     }
 
     public enum Type {
@@ -174,6 +182,20 @@ public final class BasicCard {
 
     public int getY() {
         return (int) rect.getY();
+    }
+
+    /**
+     * Returns a blood cost value if one found.
+     *
+     * @return blood cost value
+     */
+    public int getBloodCost() {
+        for (Effect effect : effects) {
+            if (effect.getEffectType() == EffectType.BLOODCOST) {
+                return Integer.parseInt(((String) effect.getValue()));
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -214,7 +236,6 @@ public final class BasicCard {
         }
 
         //System.out.println(sb.toString());
-
         String[] strings = sb.toString().split("\n");
 
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -226,10 +247,13 @@ public final class BasicCard {
         g.setColor(Color.WHITE);
         //g.drawString(sb.toString(), 40, 300);
 
+        int tempJ = 0;
         for (int j = 0; j < strings.length; j++) {
             g.drawString(strings[j], 40, 305 + j * 14);
+            tempJ = j;
         }
-
+        final int bloodCost = getBloodCost();
+        g.drawString(bloodCost == 0 ? "" : "Bloodcost: " + bloodCost, 40, 305 + (tempJ + 1) * 14);
         return newImage;
 
     }

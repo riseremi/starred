@@ -1,8 +1,8 @@
 FEATURE LIST
 
-- to implement/fix
-+ implemented
-~ fixed
+- to do
++ done
+~ small fix
 
 
 11.05.2014
@@ -26,7 +26,20 @@ FEATURE LIST
 /* BREAK */
 
 19.03.2015
-+ JSONS system
-+ loading cards
-+ rewrite MouseController
-- 
++ JSONS (JSON Simplified) system
++ loading cards with JSONS
+~ fix MouseController
++ add Bloodcost value overlay to the big card
+
+20.03.2015
++ debug (run with --debug argument) and production configs
++ game over screen reworked
+
+21.03.2015
+- fix justUsedCard
+    name is null for unknown reason
+- rewrite MouseController from scratch
+- fix ADD_AP not applies to Target (not to self)
+- fix chat output
+- implement first playable class (Warrior I think)
+    to implement: Bloody Mage, Head Hunter, Bearde Druid (see google sheets)

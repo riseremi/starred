@@ -1,4 +1,4 @@
-package me.riseremi.controller;
+package me.riseremi.controller.mouse;
 
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -29,7 +29,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
     @Getter
     private static final Rectangle mouseRect = new Rectangle(1, 1);
-    private static Random rnd = new Random();
+    private static final Random rnd = new Random();
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -116,10 +116,11 @@ public class MouseController implements MouseListener, MouseMotionListener {
                                 instance.send(new MessageSetPosition(userId, mX, mY));
                             }
                             break;
-                        case AP:
+                        case ADD_AP:
                         case BLOODDMG:
                         case MDMG:
                         case PDMG:
+                        case NONE:
                         case HEAL:
                             if (thereIsFriend || thereIsPlayer) {
                                 instance.send(new MessageAttack(userId, targetId, justUsedCardId));
@@ -144,7 +145,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         //activate selection mode after click on a thumbnail
         if (e.getButton() == MouseEvent.BUTTON1 && deck.getActiveCard() != null
                 && !core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
-            deck.getActiveCard().useByTo(user, target);
+            deck.getActiveCard().setAsSelectedCard(user, target);
         }
     }
 

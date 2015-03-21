@@ -44,9 +44,15 @@ public final class Deck {
             g.drawString("" + card.getCost(), ShiftWest(x, 1), ShiftSouth(y, 1));
             g.drawString("" + card.getCost(), ShiftEast(x, 1), ShiftNorth(y, 1));
             g.drawString("" + card.getCost(), ShiftEast(x, 1), ShiftSouth(y, 1));
-            g.setColor(Color.WHITE);
+            
+            Color overlayNumberColor = card.getBloodCost() == 0 ? Color.WHITE : Color.RED;
+            
+            g.setColor(overlayNumberColor);
             g.drawString("" + card.getCost(), x, y);
+            
+            g.setColor(Color.WHITE);
 
+            //draw a big card preview
             if (card.isPaintBig()) {
                 g.drawImage(card.getBigCard(), 16, 24, null);
             }

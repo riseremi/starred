@@ -106,14 +106,7 @@ public class Protocol {
                 core.startTurn();
                 break;
             case ATTACK_TEST:
-                MessageAttack msgA = ((MessageAttack) message);
-                BasicCard card;
-                try {
-                    System.out.println(msgA.getCardId());
-                    card = CardsArchive.get(msgA.getCardId());
-                    card.applyEffectFromTo(core.getPlayerById(msgA.getUserId()), core.getPlayerById(msgA.getTargetId()));
-                } catch (CloneNotSupportedException ex) {
-                }
+                message.processClient(message);
                 break;
             case PING_MESSAGE:
                 MessagePing msgP = ((MessagePing) message);

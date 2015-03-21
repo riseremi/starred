@@ -26,11 +26,11 @@ public class MessageSetName extends Message {
     }
 
     @Override
-    public void processServer() {
+    public void processServer(Message message) {
     }
 
     @Override
-    public void processClient() {
+    public void processClient(Message message) {
     }
 
 }

@@ -30,12 +30,12 @@ public class MessageSetPosition extends Message {
     }
 
     @Override
-    public void processServer() {
+    public void processServer(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void processClient() {
+    public void processClient(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

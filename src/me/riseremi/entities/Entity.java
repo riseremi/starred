@@ -85,8 +85,12 @@ public class Entity {
         if (isPaint) {
             g.drawImage(sprite.getScaledInstance(Global.tileWidth, Global.tileHeight, 0), xo, yo, null);
             g.setColor(Color.WHITE);
-            int nameLen2 = g.getFontMetrics().stringWidth(name + " (id: " + id + ")") / 2;
-            g.drawString(name + " (id: " + id + ") + x/y: " + x + "/" + y + " : " + instance.getPlayer().getId() + " " + CLASS_NAMES[classId], xo + 16 - nameLen2, yo - 8);
+            //int nameLen2 = g.getFontMetrics().stringWidth(name + " (id: " + id + ")") / 2;
+
+            final String name1 = name;
+            final String name2 = name + " (id: " + id + ") + x/y: " + x + "/" + y + " : " + instance.getPlayer().getId() + " " + CLASS_NAMES[classId];
+            g.drawString(Main.ENABLE_DEBUG_TOOLS ? name2 : name1,
+                    xo + 16 - g.getFontMetrics().stringWidth(Main.ENABLE_DEBUG_TOOLS ? name2 : name1) / 2, yo - 8);
         }
         instance.getCamera().untranslate(g);
         hpBar.paint(g, this);

@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Random;
 import me.riseremi.core.Core_v1;
-import me.riseremi.core.Global;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Player;
 import me.riseremi.map.world.CheckObstacles;
@@ -21,7 +20,7 @@ public class HeroController {
     private static Random rnd = new Random();
 
     public static void heroController(Player player, World world, KeyEvent ke) throws CloneNotSupportedException, IOException {
-        System.out.println("in controller");
+        //System.out.println("in controller");
         int hero_xx = player.getX();
         final int y1 = player.getY();
         final int x1 = player.getX();

@@ -12,6 +12,7 @@ import me.riseremi.cards.BasicCard.EffectType;
 public class CardsArchivev2 {
 
     private static final HashMap<Integer, BasicCard> allCards = new HashMap<>();
+    public static int length;
 
     public static BasicCard getCard(int id) {
 
@@ -59,8 +60,9 @@ public class CardsArchivev2 {
                 apcost, range);
 
         allCards.put(id, card);
+        length = allCards.size();
 
-        //printCards(hashMap, effects);
+        printCards(hashMap, effects);
 
         //System.out.println(allCards.toString());
     }

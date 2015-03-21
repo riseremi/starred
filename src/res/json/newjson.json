@@ -30,5 +30,132 @@
                 "value": "7"
             }
         ]
+    },
+    {
+        "name": "Fireball",
+        "id": "3",
+        "image": "/res/cards/backs/card_magic.png",
+        "art": "/res/cards/arts/fireball.png",
+        "description": "Fires a fireball.",
+        "apcost": "4",
+        "range": "5",
+        "type": "MAGIC",
+        "class": "unknown",
+        "effects": [
+            {
+                "name": "MDMG",
+                "value": "3"
+            }
+        ]
+    },
+    {
+        "name": "Blink",
+        "id": "4",
+        "image": "/res/cards/backs/card_support.png",
+        "art": "/res/cards/arts/blink.png",
+        "description": "Teleports you to the desired point.",
+        "apcost": "3",
+        "range": "5",
+        "type": "NONE",
+        "class": "unknown",
+        "effects": [
+            {
+                "name": "BLINK",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "Healing Word",
+        "id": "5",
+        "image": "/res/cards/backs/card_support.png",
+        "art": "/res/cards/arts/heal1.png",
+        "description": "Restores 5 health points.",
+        "apcost": "3",
+        "range": "8",
+        "type": "NONE",
+        "class": "unknown",
+        "effects": [
+            {
+                "name": "HEAL",
+                "value": "5"
+            }
+        ]
+    },
+    {
+        "name": "Blood Crush",
+        "id": "6",
+        "image": "/res/cards/backs/card_blood.png",
+        "art": "/res/cards/arts/art_test.png",
+        "description": "Calls power of blood to crush your enemies.",
+        "apcost": "8",
+        "range": "4",
+        "type": "NONE",
+        "class": "Bloody Mage",
+        "effects": [
+            {
+                "name": "BLOODDMG",
+                "value": "14"
+            },
+            {
+                "name": "BLOODCOST",
+                "value": "10"
+            }
+        ]
+    },
+    {
+        "name": "Watch TI4",
+        "id": "7",
+        "image": "/res/cards/backs/card_special.png",
+        "art": "/res/cards/arts/ti4.png",
+        "description": "Oak and Remi watch TI4 together being unable to do anything else.",
+        "apcost": "0",
+        "range": "10",
+        "type": "NONE",
+        "class": "unknown",
+        "effects": [
+            {
+                "name": "NONE",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "OBJECTION",
+        "id": "8",
+        "image": "/res/cards/backs/card_support.png",
+        "art": "/res/cards/arts/objection.png",
+        "description": "IDK WATZ ZET M8 RLY IDK.",
+        "apcost": "0",
+        "range": "0",
+        "type": "NONE",
+        "class": "unknown",
+        "effects": [
+            {
+                "name": "ADD_AP",
+                "value": "3"
+            }
+        ]
+    },
+    {
+        "name": "Sacrifice",
+        "id": "9",
+        "image": "/res/cards/backs/card_blood.png",
+        "art": "/res/cards/arts/art_test.png",
+        "description": "Sacrifices 5 HP, but gives you 3 bonus AP.",
+        "apcost": "0",
+        "range": "20",
+        "type": "NONE",
+        "class": "Bloody Mage",
+        "effects": [
+            {
+                "name": "BLOODCOST",
+                "value": "35"
+            },
+            {
+                "name": "ADD_AP",
+                "value": "3"
+            }
+        ]
     }
 ]

@@ -25,8 +25,8 @@ public abstract class Message implements Serializable {
         return type;
     }
 
-    public abstract void processServer();
+    public abstract void processServer(Message message);
 
-    public abstract void processClient();
+    public abstract void processClient(Message message);
 
 }

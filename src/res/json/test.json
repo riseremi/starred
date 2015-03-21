@@ -1,6 +1,6 @@
 [
     {
-        "name": "Magical Slain",
+        "name": "Magical Slain +",
         "id": "1",
         "image": "/res/cards/backs/card_magic.png",
         "art": "/res/cards/arts/magic1.png",
@@ -13,7 +13,7 @@
         "type": "MAGIC"
     },
     {
-        "name": "Sword Attack",
+        "name": "Sword Attack +",
         "id": "2",
         "image": "/res/cards/backs/card_physical.png",
         "art": "/res/cards/arts/phys1.png",
@@ -26,7 +26,7 @@
         "type": "PHYS"
     },
     {
-        "name": "Fireball",
+        "name": "Fireball +",
         "id": "3",
         "image": "/res/cards/backs/card_magic.png",
         "art": "/res/cards/arts/fireball.png",
@@ -39,7 +39,7 @@
         "type": "MAGIC"
     },
     {
-        "name": "Blink",
+        "name": "Blink +",
         "id": "4",
         "image": "/res/cards/backs/card_support.png",
         "art": "/res/cards/arts/blink.png",

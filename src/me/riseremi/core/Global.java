@@ -13,6 +13,7 @@ public final class Global {
     public final static int tileWidth = 32, tileHeight = 32;
     public final static int CHAT_HEIGHT = 100;
     public final static int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 600 + CHAT_HEIGHT;
+    public final static int VIEWPORT_HEIGHT = 600;
     public final static int verticalTiles = 128, horizontalTiles = 128;
     public final static int mapWidth = tileWidth * horizontalTiles, mapHeight = tileHeight * verticalTiles;
     //высота и ширина области отрисовки в тайлах, чтобы не перерисовывать всю карту каждый тик

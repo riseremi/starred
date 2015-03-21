@@ -34,6 +34,7 @@ import org.rising.framework.network.Server;
  */
 public class Main extends JFrame implements ActionListener {
 
+    public static boolean ENABLE_DEBUG_TOOLS = false;
     public static Main game;
     private static JTextField chatField;
     private static JPanel panel;
@@ -109,11 +110,15 @@ public class Main extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) throws Exception {
+        if (args.length > 0 && "--debug".equals(args[0])) {
+            ENABLE_DEBUG_TOOLS = true;
+        }
+
         StringUtils su = new StringUtils();
         StringUtilsv2 su2 = new StringUtilsv2();
 //        su.bleh();
         su2.process();
-        
+
         game = new Main("Game");
         core = Core_v1.getInstance();
         loginScreen1 = new LoginScreen();
