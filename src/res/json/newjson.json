@@ -4,13 +4,13 @@
         "id": "1",
         "image": "/res/cards/backs/card_magic.png",
         "art": "/res/cards/arts/magic1.png",
-        "description": "The Gods summon pure magic power upon your enemy. Magical_damage=11",
+        "description": "The Gods summon pure magic power upon your enemy. Damage=11",
         "apcost": "8",
         "range": "2",
         "type": "MAGIC",
         "effects": [
             {
-                "name": "MDMG",
+                "name": "DAMAGE",
                 "value": "11"
             }
         ]
@@ -20,13 +20,13 @@
         "id": "2",
         "image": "/res/cards/backs/card_physical.png",
         "art": "/res/cards/arts/phys1.png",
-        "description": "You use your sword to cut your enemy. |Physical_damage=7",
+        "description": "You use your sword to cut your enemy. |Damage=7",
         "apcost": "4",
         "range": "1",
         "type": "PHYS",
         "effects": [
             {
-                "name": "PDMG",
+                "name": "DAMAGE",
                 "value": "7"
             }
         ]
@@ -36,14 +36,14 @@
         "id": "3",
         "image": "/res/cards/backs/card_magic.png",
         "art": "/res/cards/arts/fireball.png",
-        "description": "Fires a fireball. Magical_damage=3",
+        "description": "Fires a fireball. Damage=3",
         "apcost": "4",
         "range": "5",
         "type": "MAGIC",
         "class": "unknown",
         "effects": [
             {
-                "name": "MDMG",
+                "name": "DAMAGE",
                 "value": "3"
             }
         ]
@@ -71,7 +71,7 @@
         "image": "/res/cards/backs/card_support.png",
         "art": "/res/cards/arts/heal1.png",
         "description": "Restores 5 health points. Healing=5",
-        "apcost": "3",
+        "apcost": "2",
         "range": "8",
         "type": "NONE",
         "class": "unknown",
@@ -87,42 +87,25 @@
         "id": "6",
         "image": "/res/cards/backs/card_blood.png",
         "art": "/res/cards/arts/art_test.png",
-        "description": "Calls power of blood to crush your enemies. Blood_damage=14|Blood_cost=10",
-        "apcost": "8",
+        "description": "Calls power of blood to crush your enemies. Damage=14|Blood_cost=5",
+        "apcost": "7",
         "range": "4",
         "type": "NONE",
         "class": "Bloody Mage",
         "effects": [
             {
-                "name": "BLOODDMG",
+                "name": "DAMAGE",
                 "value": "14"
             },
             {
                 "name": "BLOODCOST",
-                "value": "10"
-            }
-        ]
-    },
-    {
-        "name": "Watch TI4",
-        "id": "7",
-        "image": "/res/cards/backs/card_special.png",
-        "art": "/res/cards/arts/ti4.png",
-        "description": "Oak and Remi watch TI4 together being unable to do anything else.",
-        "apcost": "0",
-        "range": "10",
-        "type": "NONE",
-        "class": "unknown",
-        "effects": [
-            {
-                "name": "NONE",
-                "value": "0"
+                "value": "5"
             }
         ]
     },
     {
         "name": "OBJECTION",
-        "id": "8",
+        "id": "7",
         "image": "/res/cards/backs/card_support.png",
         "art": "/res/cards/arts/objection.png",
         "description": "IDK WATZ ZET M8 RLY IDK. AP_boost=3",
@@ -139,10 +122,10 @@
     },
     {
         "name": "Sacrifice",
-        "id": "9",
+        "id": "8",
         "image": "/res/cards/backs/card_blood.png",
         "art": "/res/cards/arts/art_test.png",
-        "description": "Sacrifices 5 HP, but gives you 3 bonus AP.",
+        "description": "Sacrifices 3 HP, but gives you 3 bonus AP.",
         "apcost": "0",
         "range": "1",
         "type": "NONE",
@@ -150,11 +133,28 @@
         "effects": [
             {
                 "name": "BLOODCOST",
-                "value": "5"
+                "value": "3"
             },
             {
                 "name": "ADD_AP",
                 "value": "3"
+            }
+        ]
+    },
+    {
+        "name": "Greater Heal",
+        "id": "9",
+        "image": "/res/cards/backs/card_support.png",
+        "art": "/res/cards/arts/greater_heal.png",
+        "description": "Restores more points than a usual heal. |Healing=10",
+        "apcost": "5",
+        "range": "8",
+        "type": "NONE",
+        "class": "Bearded Druid",
+        "effects": [
+            {
+                "name": "HEAL",
+                "value": "10"
             }
         ]
     }

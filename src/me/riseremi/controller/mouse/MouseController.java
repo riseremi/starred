@@ -121,9 +121,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
                         }
                         break;
                     case ADD_AP:
-                    case BLOODDMG:
-                    case MDMG:
-                    case PDMG:
+                    case DAMAGE:
                     case NONE:
                     case HEAL:
                         if ((thereIsFriend || thereIsPlayer) && !attackMessageSent) {

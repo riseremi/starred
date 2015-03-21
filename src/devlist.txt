@@ -36,10 +36,18 @@ FEATURE LIST
 + game over screen reworked
 
 21.03.2015
+~ hide all debug messages in production mode
++ test play, several card fixed
++ remove TI4 card
+~ fix; card with two effects sends multiple network messages
+
+22.03.2015
+~ fix ADD_AP effect
+- fix; cards with ADD_AP effect adds AP at the next turn instead of current
 - fix justUsedCard
     name is null for unknown reason
 - fix ADD_AP not applies to Target (not to self)
 - fix chat output
 - implement first playable class (Warrior I think)
-    to implement: Bloody Mage, Head Hunter, Bearded Druid (see google sheets)
+    to implement: Bloody Mage, Head Hunter, Bearded Druid etc. (see google sheets)
 - rewrite MouseController from scratch

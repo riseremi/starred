@@ -21,8 +21,8 @@ import me.riseremi.network.messages.MessageSetPosition;
  */
 public class Protocol {
 
-    private static Random rnd = new Random();
-    private static ArrayList<Entity> players = new ArrayList<>();
+    private static final Random rnd = new Random();
+    private static final ArrayList<Entity> players = new ArrayList<>();
 
     public static void processMessageOnServerSide(final Message message, int id) throws IOException {
         Message.Type type = message.getType();
@@ -55,7 +55,6 @@ public class Protocol {
                 Server.getInstance().sendToAllExcludingOne(message, id);
                 break;
             case ATTACK_TEST:
-                System.out.println("protocol attack test");
                 Server.getInstance().sendToAll(message);
                 break;
             case PING_MESSAGE:
@@ -97,7 +96,9 @@ public class Protocol {
                 final Entity entity = core.getPlayerById(msgSP.getId());
                 final int x = msgSP.getX();
                 final int y = msgSP.getY();
-                System.out.println("Teleported to " + x + ":" + y);
+                if (Main.ENABLE_DEBUG_TOOLS) {
+                    System.out.println("Teleported to " + x + ":" + y);
+                }
                 entity.setPosition(x, y);
                 break;
             case TURN_ENDED:

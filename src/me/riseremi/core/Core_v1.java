@@ -283,7 +283,7 @@ public final class Core_v1 extends JPanel {
     }
 
     /**
-     * Ends current turn, resets player's ADD_AP (Action Points) to its default
+     * End current turn, reset player's ADD_AP (Action Points) to its default
      * value (10), disables all actions
      *
      * @throws java.io.IOException
@@ -318,8 +318,7 @@ public final class Core_v1 extends JPanel {
     }
 
     public Entity getPlayerById(int id) {
-        System.out.println("GET_ENTITY; player id: " + player.getId()
-                + ", friend id: " + friend.getId() + ", requested id: " + id);
+        //System.out.println("GET_ENTITY; player id: " + player.getId() + ", friend id: " + friend.getId() + ", requested id: " + id);
         if (player.getId() == id) {
             return player;
         } else if (friend.getId() == id) {

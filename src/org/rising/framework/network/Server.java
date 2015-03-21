@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import me.riseremi.main.Main;
 
 /**
  *
@@ -92,7 +93,9 @@ public class Server {
                     while (true) {
                         try {
                             Message s = (Message) in.readObject();
-                            System.out.println("SERVER RECIEVED: " + s.getType().name());
+                            if (Main.ENABLE_DEBUG_TOOLS) {
+                                System.out.println("SERVER RECIEVED: " + s.getType().name());
+                            }
                             Protocol.processMessageOnServerSide(s, id);
                         } catch (IOException | ClassNotFoundException ex) {
                         }

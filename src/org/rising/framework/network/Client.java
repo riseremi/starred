@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import me.riseremi.main.Main;
 
 /**
  *
@@ -41,7 +42,9 @@ public class Client {
                 while (true) {
                     try {
                         Message s = (Message) in.readObject();
-                        //System.out.println("CLIENT RECIEVED: " + s.getType().name());
+                        if (Main.ENABLE_DEBUG_TOOLS) {
+                            System.out.println("CLIENT RECIEVED: " + s.getType().name());
+                        }
                         Protocol.processMessageOnClientSide(s);
                     } catch (IOException | ClassNotFoundException ex) {
                     }

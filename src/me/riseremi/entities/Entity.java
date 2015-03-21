@@ -179,7 +179,8 @@ public class Entity {
     }
 
     public void resetActionPoints() {
-        actionPoints = actionPoints > 0 ? 10 + 1 + additionalAP : 10;
+        actionPoints = actionPoints > 0 ? 10 + 1 : 10;
+        actionPoints += additionalAP;
         additionalAP = 0;
     }
 

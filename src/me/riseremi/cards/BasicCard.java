@@ -50,9 +50,9 @@ public final class BasicCard {
             BLINK = 4,
             HEALING_WORD = 5,
             BLOOD_CRUSH = 6,
-            TEST_TI4 = 7,
-            ADD_AP_ID = 8,
-            SACRIFICE = 9;
+            ADD_AP_ID = 7,
+            SACRIFICE = 8,
+            GREATER_HEAL = 9;
     //
     @Getter
     @Setter
@@ -129,13 +129,12 @@ public final class BasicCard {
             EffectType effect = effect1.getEffectType();
             int value = Integer.parseInt((String) effect1.getValue());
             switch (effect) {
-                case PDMG:
+                case DAMAGE:
                     target.dealPhysicalDamage(value);
                     break;
-                case MDMG:
-                    target.dealMagicalDamage(value);
-//                    System.out.println("===============================mdmg");
-                    break;
+//                case MDMG:
+//                    target.dealMagicalDamage(value);
+//                    break;
                 case BLINK:
                     break;
                 case HEAL:
@@ -144,9 +143,9 @@ public final class BasicCard {
                 case ADD_AP:
                     target.addAPInNextTurn(value);
                     break;
-                case BLOODDMG:
-                    target.dealMagicalDamage(value);
-                    break;
+//                case BLOODDMG:
+//                    target.dealMagicalDamage(value);
+//                    break;
                 case BLOODCOST:
                     user.decreaseBloodCostHP(value);
                     break;
@@ -160,7 +159,7 @@ public final class BasicCard {
 
     public enum EffectType {
 
-        MDMG, PDMG, HEAL, BLINK, WAIT, ADD_AP, BLOODDMG, BLOODCOST, NONE
+        DAMAGE, HEAL, BLINK, WAIT, ADD_AP, BLOODCOST, NONE
     }
 
     public enum Type {
