@@ -40,7 +40,6 @@ public class MessageAttack extends Message {
 
     @Override
     public void processClient(Message message) {
-        System.out.println("===========================MessageAttack client.");
         MessageAttack msgA = ((MessageAttack) message);
         Core_v1 core = Core_v1.getInstance();
 

@@ -107,6 +107,9 @@ public class Protocol {
             case ATTACK:
                 message.processClient(message);
                 break;
+            case GAMEOVER_MESSAGE:
+                message.processClient(message);
+                break;
             case PING_MESSAGE:
                 MessagePing msgP = ((MessagePing) message);
 

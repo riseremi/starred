@@ -49,11 +49,15 @@ FEATURE LIST
 + card dump with "--dump" flag
 + simple name generator just for fun
 + fix justUsedCard
+    name is null for unknown reason
++ all damage types was replaced by one, pure and clean: DAMAGE
 
 - fix and rework world map
-    name is null for unknown reason
 - fix ADD_AP not applies to Target (not to self)
 - fix chat output
 - implement first playable class (Warrior I think)
     to implement: Bloody Mage, Head Hunter, Bearded Druid etc. (see google sheets)
 - rewrite MouseController from scratch
++ limit drawn cards to 30 per round
+~ fix host advantage
+- 

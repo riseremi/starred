@@ -95,9 +95,7 @@ public final class BasicCard {
         this.name = name;
         this.effects = effects;
         this.type = type;
-//        this.power = power;
         this.cost = cost;
-//        this.bloodCost = bloodCost;
         this.useRadius = useRadius;
         this.rect = new Rectangle();
     }

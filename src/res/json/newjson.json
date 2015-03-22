@@ -127,7 +127,7 @@
         "art": "/res/cards/arts/art_test.png",
         "description": "Sacrifices 3 HP, but gives you 3 bonus AP.",
         "apcost": "0",
-        "range": "1",
+        "range": "0",
         "type": "NONE",
         "class": "Bloody Mage",
         "effects": [

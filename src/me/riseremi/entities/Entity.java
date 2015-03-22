@@ -92,9 +92,9 @@ public class Entity {
             g.drawString(Main.ENABLE_DEBUG_TOOLS ? name2 : name1,
                     xo + 16 - g.getFontMetrics().stringWidth(Main.ENABLE_DEBUG_TOOLS ? name2 : name1) / 2, yo - 8);
         }
-        instance.getCamera().untranslate(g);
-        hpBar.paint(g, this);
-        instance.getCamera().translate(g);
+//        instance.getCamera().untranslate(g);
+//        hpBar.paint(g, this);
+//        instance.getCamera().translate(g);
     }
 
     public void setImage(int imgId) {

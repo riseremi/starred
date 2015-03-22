@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +29,7 @@ import me.riseremi.map.layer.IOManager;
 import me.riseremi.map.world.World;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageEndTurn;
+import me.riseremi.network.messages.MessageGameOver;
 import me.riseremi.ui.windows.Window;
 import org.rising.framework.network.Client;
 import org.rising.framework.network.Server;
@@ -44,7 +47,8 @@ public final class Core_v1 extends JPanel {
     private @Getter Client client;
     private ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private @Getter @Setter boolean connected = false;
+    private @Getter @Setter
+    boolean connected = false;
     private BufferedImage waitingImage;
     @Getter @Setter private boolean nextTurnAvailable;
     private Font walkwayBold;
@@ -63,6 +67,9 @@ public final class Core_v1 extends JPanel {
     @Getter @Setter private Camera camera;
     @Getter @Setter private SelectionCursor selectionCursorv2 = new SelectionCursor();
     @Getter @Setter private boolean selectionMode;
+    @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
+    @Setter private boolean gameOver;
+    @Setter private int winnerId;
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -70,7 +77,6 @@ public final class Core_v1 extends JPanel {
         }
         return instance;
     }
-    private boolean gameOver;
 
     private Core_v1() {
     }
@@ -98,7 +104,6 @@ public final class Core_v1 extends JPanel {
         try {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
             //waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
-            player.getDeck().addCard(CardsArchive.getRandomCard());
             player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK));
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
@@ -141,6 +146,11 @@ public final class Core_v1 extends JPanel {
         }
         friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
         player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
+
+        try {
+            player.getDeck().addCard(CardsArchive.getRandomCard());
+        } catch (CloneNotSupportedException ex) {
+        }
     }
 
     /**
@@ -171,6 +181,9 @@ public final class Core_v1 extends JPanel {
         friend.paint(g2, world, true);
 
         camera.untranslate(g);
+
+        player.getHpBar().paint(g2, player);
+        friend.getHpBar().paint(g2, friend);
 
         if (isSelectionMode()) {
             selectionCursorv2.paint(g);
@@ -227,6 +240,7 @@ public final class Core_v1 extends JPanel {
             g.drawString("ENEMY TURN", 32, 64);
         }
         g.drawString("AP: " + player.getActionPoints(), 32, 64 + 24 * 2);
+        g.drawString("Cards drawn: " + cardsDrawn, 32, 64 + 24 * 3);
 
         if (timeLeft <= 0) {
             try {
@@ -240,6 +254,39 @@ public final class Core_v1 extends JPanel {
         if (player.isDead() || friend.isDead()) {
             nextTurnAvailable = false;
             gameOver = true;
+            winnerId = player.isDead() ? friend.getId() : player.getId();
+//
+//            int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
+//
+//            g.setColor(new Color(0, 0, 0, 0.5f));
+//            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
+//                    Global.WINDOW_WIDTH, overlayHeight);
+//
+//            Font trb = new Font("Arial", Font.BOLD, 28);
+//            g.setFont(trb);
+//
+//            g.setColor(Color.WHITE);
+//
+//            String message = player.isDead() ? friend.getName() + " wins"
+//                    : player.getName() + " wins";
+//            g.drawString(message, 400, 310);
+        }
+
+        //game over if cardsDrawn > cardsDrawnLimit
+        if (cardsDrawn >= cardsDrawnLimit && !gameOver) {
+            int playerHP = player.getHp();
+            int friendHP = friend.getHp();
+            int winner = playerHP > friendHP ? player.getId() : friend.getId();
+            MessageGameOver message = new MessageGameOver(winner);
+
+            try {
+                Client.getInstance().send(message);
+            } catch (IOException ex) {
+            }
+        }
+
+        if (gameOver) {
+            nextTurnAvailable = false;
 
             int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
 
@@ -252,9 +299,11 @@ public final class Core_v1 extends JPanel {
 
             g.setColor(Color.WHITE);
 
-            String message = player.isDead() ? friend.getName() + " wins"
-                    : player.getName() + " wins";
-            g.drawString(message, 400, 310);
+            String message = getPlayerById(winnerId).getName() + " wins";
+            int xPosition = Global.WINDOW_WIDTH / 2
+                    - g.getFontMetrics().stringWidth(message) / 2;
+
+            g.drawString(message, xPosition, 310);
         }
 
         g.setFont(walkwayBold);
@@ -272,7 +321,7 @@ public final class Core_v1 extends JPanel {
 
         if (cardJustUsed && !gameOver) {
             g.setColor(Color.MAGENTA);
-            g.drawString("PEWPEW AMAZING EFFECTS", MouseController.getMouseRect().x - 64, MouseController.getMouseRect().y - 8);
+            g.drawString("[PEWPEW AMAZING EFFECTS]", MouseController.getMouseRect().x - 64, MouseController.getMouseRect().y - 8);
             if (System.currentTimeMillis() - effectStartTime > 2000) {
                 cardJustUsed = false;
             }
@@ -299,6 +348,7 @@ public final class Core_v1 extends JPanel {
     public void startTurn() {
         try {
             player.getDeck().addCard(CardsArchive.getRandomCard());
+            incrementCardsDrawn();
         } catch (CloneNotSupportedException ex) {
         }
         nextTurnAvailable = true;
@@ -327,6 +377,10 @@ public final class Core_v1 extends JPanel {
         } else {
             throw new NullPointerException("Entity with specified id doesn't exist.");
         }
+    }
+
+    public void incrementCardsDrawn() {
+        cardsDrawn++;
     }
 
 }
