@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.Setter;
@@ -92,13 +91,13 @@ public final class Core_v1 extends JPanel {
         walkwayBold = new Font("Arial", Font.PLAIN, 12);
 
         world = new World(Global.tileWidth, Global.tileHeight, Global.horizontalTiles, Global.verticalTiles);
-        player = new Player("Starred - Server", 0, -1, Entity.Type.PLAYER);
-        friend = new Friend("Starred - Client", 0, -1, Entity.Type.PLAYER);
+        player = new Player("Server", 0, -1, Entity.Type.PLAYER);
+        friend = new Friend("Client", 0, -1, Entity.Type.PLAYER);
         camera = new Camera();
 
         try {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
-            waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
+            //waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
             player.getDeck().addCard(CardsArchive.getRandomCard());
             player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK));
             Main.addToChat("System: Listen closely.\n\r");
@@ -117,7 +116,7 @@ public final class Core_v1 extends JPanel {
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
         //player.setName(name.isEmpty() ? "Server" : name);
-        Main.game.setTitle("Server");
+        Main.game.setTitle("Starred - Server");
 
         Server.SERVER_IP = "localhost";
         server = Server.getInstance();
@@ -133,7 +132,7 @@ public final class Core_v1 extends JPanel {
 
     public void initClient(int imgId, String ip, String name) {
         player.setImage(imgId);
-        Main.game.setTitle("Client");
+        Main.game.setTitle("Starred - Client");
         client = Client.getInstance();
 
         try {

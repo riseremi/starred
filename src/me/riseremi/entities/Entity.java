@@ -140,7 +140,6 @@ public class Entity {
         this.y = y;
         Core_v1 core = Core_v1.getInstance();
 
-        //System.out.println("pid: " + core.getPlayer().getId() + "/cid: " + id);
         if (check && id == core.getPlayer().getId()) {
             Camera camera = core.getCamera();
             camera.setX(-(x * Global.tileWidth - Global.CENTER_X * Global.tileWidth));
@@ -180,8 +179,6 @@ public class Entity {
 
     public void resetActionPoints() {
         actionPoints = actionPoints > 0 ? 10 + 1 : 10;
-        //actionPoints += additionalAP;
-        //additionalAP = 0;
     }
 
     public void dealPhysicalDamage(int amount) {
@@ -207,7 +204,6 @@ public class Entity {
     }
 
     public void addAPInNextTurn(int value) {
-        //additionalAP += value;
         actionPoints += value;
     }
 

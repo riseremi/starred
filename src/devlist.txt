@@ -43,7 +43,8 @@ FEATURE LIST
 
 22.03.2015
 ~ fix ADD_AP effect
-- fix; cards with ADD_AP effect adds AP at the next turn instead of current
+~ fix; cards with ADD_AP effect adds AP at the next turn instead of current
+~ fix; JSONS loader should not process special symbols within quotes
 - fix justUsedCard
     name is null for unknown reason
 - fix ADD_AP not applies to Target (not to self)

@@ -18,8 +18,7 @@ import javax.swing.text.DefaultCaret;
 import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
-import me.riseremi.json.StringUtils;
-import me.riseremi.json.StringUtilsv2;
+import me.riseremi.json.JSONSLoader;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
@@ -114,8 +113,11 @@ public class Main extends JFrame implements ActionListener {
             ENABLE_DEBUG_TOOLS = true;
         }
 
-        StringUtils su = new StringUtils();
-        StringUtilsv2 su2 = new StringUtilsv2();
+//        System.out.println((char) 31);
+//        System.exit(0);
+
+        //StringUtils su = new JSONSLoader();
+        JSONSLoader su2 = new JSONSLoader();
 //        su.bleh();
         su2.process();
 

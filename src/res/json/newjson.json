@@ -20,7 +20,7 @@
         "id": "2",
         "image": "/res/cards/backs/card_physical.png",
         "art": "/res/cards/arts/phys1.png",
-        "description": "You use your sword to cut your enemy. |Damage=7",
+        "description": "You use your sword to cut your enemy. |Damage: 7",
         "apcost": "4",
         "range": "1",
         "type": "PHYS",

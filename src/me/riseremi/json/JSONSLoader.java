@@ -13,15 +13,16 @@ import me.riseremi.map.layer.IOManager;
  *
  * @author riseremi
  */
-public class StringUtilsv2 {
+public class JSONSLoader {
 
-    private boolean inJSON, inInnerArray, inKeyValueString;
+    private boolean inJSON, inInnerArray;
     private boolean inObject, inInnerObject;
     private HashMap<String, String> hashMap = new HashMap<>();
     private final String[] keys = {"name", "id", "image", "art", "description", "apcost", "range", "type"};
     private ArrayList<HashMap<String, Object>> effectsList = new ArrayList<>();
     private HashMap<String, Object> tempEffect = new HashMap<>();
     private static final String effects = "effects";
+    private final String SEPARATOR = Character.toString((char) 31);
 
     public void process() throws WrongJSONFormatException {
         try {
@@ -29,8 +30,7 @@ public class StringUtilsv2 {
             BufferedReader br = new BufferedReader(new InputStreamReader(reader));
             String currentLine, lineToProcess;
 
-            StringBuilder sb = new StringBuilder();
-
+//            StringBuilder sb = new StringBuilder();
             while ((currentLine = br.readLine()) != null) {
                 //sb.append(currentLine.trim()).append("\n");
 
@@ -49,7 +49,7 @@ public class StringUtilsv2 {
 //                        System.out.println("\t\tSTART OF INNER ARRAY");
 
                         lineToProcess = cleanData(lineToProcess);
-                        String[] pair = lineToProcess.split(":");
+                        String[] pair = lineToProcess.split(SEPARATOR);
 
                         if (effects.equals(pair[0])) {
 //                            System.out.println("EFFECTS ARRAY WAS FOUND");
@@ -114,7 +114,7 @@ public class StringUtilsv2 {
 //                            System.out.println("\t\tKEY:VALUE STRING ^");
 
                             lineToProcess = cleanData(lineToProcess);
-                            String[] pair = lineToProcess.split(":");
+                            String[] pair = lineToProcess.split(SEPARATOR);
 
                             if (checkKey(pair[0])) {
                                 hashMap.put(pair[0], pair[1]);
@@ -129,7 +129,7 @@ public class StringUtilsv2 {
                             //effect key:value found
                             //System.out.println("before " + currentLine);
                             lineToProcess = cleanData(lineToProcess);
-                            String[] pair = lineToProcess.split(":");
+                            String[] pair = lineToProcess.split(SEPARATOR);
                             tempEffect.put(pair[0], pair[1]);
 
 //                            System.out.println("tempEffect: " + tempEffect.toString());
@@ -170,7 +170,28 @@ public class StringUtilsv2 {
     }
 
     public String cleanData(String str) {
-        str = str.replace(": ", ":");
+        boolean withinQuotes = false;
+        String newStr = "";
+        for (int i = 0; i < str.length() - 1; i++) {
+            String character = str.substring(i, i + 1);
+
+            if (character.equals("\"")) {
+                withinQuotes = !withinQuotes;
+            }
+
+            if (character.equals(" ") && !withinQuotes) {
+                character = "";
+            }
+
+            //replace all : outside the quotes with a separator character
+            if (character.equals(":") && !withinQuotes) {
+                character = SEPARATOR;
+            }
+
+            newStr += character;
+        }
+        str = newStr;
+
         str = str.replace("\"", "");
         if (str.endsWith(",")) {
             str = str.substring(0, str.length() - 1);
