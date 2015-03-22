@@ -22,7 +22,7 @@ public class CardsArchivev2 {
     //create a BasicCard with recieved data and put in into archive
     public void addCard(HashMap<String, String> hashMap,
             ArrayList<HashMap<String, Object>> effectsList) {
-        String name = (String) hashMap.get("title");
+        String name = (String) hashMap.get("name");
 
         int id = getInt((String) hashMap.get("id"));
         int apcost = getInt((String) hashMap.get("apcost"));

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
 import me.riseremi.main.Main;
+import me.riseremi.utils.Shift;
 
 /**
  * Колода карт, которые находятся на руках у героя.
@@ -40,17 +41,16 @@ public final class Deck {
             y += BasicCard.HEIGHT / 3;
 
             g.setColor(Color.BLACK);
-            g.drawString("" + card.getCost(), ShiftWest(x, 1), ShiftNorth(y, 1));
-            g.drawString("" + card.getCost(), ShiftWest(x, 1), ShiftSouth(y, 1));
-            g.drawString("" + card.getCost(), ShiftEast(x, 1), ShiftNorth(y, 1));
-            g.drawString("" + card.getCost(), ShiftEast(x, 1), ShiftSouth(y, 1));
-            
+            g.drawString("" + card.getCost(), Shift.ShiftWest(x, 1), Shift.ShiftNorth(y, 1));
+            g.drawString("" + card.getCost(), Shift.ShiftWest(x, 1), Shift.ShiftSouth(y, 1));
+            g.drawString("" + card.getCost(), Shift.ShiftEast(x, 1), Shift.ShiftNorth(y, 1));
+            g.drawString("" + card.getCost(), Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1));
+
             //red color for cards with blood cost
             //Color overlayNumberColor = card.getBloodCost() == 0 ? Color.WHITE : Color.RED;
-            
             g.setColor(Color.WHITE);
             g.drawString("" + card.getCost(), x, y);
-            
+
             g.setColor(Color.WHITE);
 
             //draw a big card preview
@@ -101,21 +101,5 @@ public final class Deck {
                 card.setPaintBig(false);
             }
         }
-    }
-
-    int ShiftNorth(int p, int distance) {
-        return (p - distance);
-    }
-
-    int ShiftSouth(int p, int distance) {
-        return (p + distance);
-    }
-
-    int ShiftEast(int p, int distance) {
-        return (p + distance);
-    }
-
-    int ShiftWest(int p, int distance) {
-        return (p - distance);
     }
 }

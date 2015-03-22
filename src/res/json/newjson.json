@@ -157,5 +157,22 @@
                 "value": "10"
             }
         ]
+    },
+    {
+        "name": "Scare",
+        "id": "10",
+        "image": "/res/cards/backs/card_physical.png",
+        "art": "/res/cards/arts/scare.png",
+        "description": "Scare an enemy so he will be less able to do anything (-5 AP).",
+        "apcost": "4",
+        "range": "7",
+        "type": "NONE",
+        "class": "Head Hunter",
+        "effects": [
+            {
+                "name": "ADD_AP",
+                "value": "-5"
+            }
+        ]
     }
 ]

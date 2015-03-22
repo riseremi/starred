@@ -33,7 +33,8 @@ import org.rising.framework.network.Server;
  */
 public class Main extends JFrame implements ActionListener {
 
-    public static boolean ENABLE_DEBUG_TOOLS = false;
+    public static boolean ENABLE_DEBUG_TOOLS;
+    public static boolean CARD_DUMP;
     public static Main game;
     private static JTextField chatField;
     private static JPanel panel;
@@ -111,6 +112,10 @@ public class Main extends JFrame implements ActionListener {
     public static void main(String[] args) throws Exception {
         if (args.length > 0 && "--debug".equals(args[0])) {
             ENABLE_DEBUG_TOOLS = true;
+        }
+        
+        if (args.length > 0 && "--dump".equals(args[0])) {
+            CARD_DUMP = true;
         }
 
 //        System.out.println((char) 31);

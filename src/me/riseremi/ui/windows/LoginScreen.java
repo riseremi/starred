@@ -18,6 +18,7 @@ import me.riseremi.main.Main;
 import static me.riseremi.main.Main.setUIFont;
 import me.riseremi.ui.RButton;
 import me.riseremi.ui.RTextField;
+import me.riseremi.utils.NameGenerator;
 
 /**
  *
@@ -36,28 +37,35 @@ public class LoginScreen extends JPanel implements ActionListener {
     @Getter private int previewIndex = 0;
     //
     @Getter private static final JButton server = new RButton("Host"),
-            client = new RButton("Connect");
-    @Getter private static final JTextField nick = new RTextField("Player"),
+            client = new RButton("Connect"), newNick = new RButton("<");
+    @Getter private static final JTextField nick = new RTextField(NameGenerator.getName()),
             ip = new RTextField("127.0.0.1");
 
     public LoginScreen() {
         int yOffset = 150;
+        
+        //kekeke
+        nick.setEditable(false);
 
         int frameWidth = Main.getFrames()[0].getWidth();
         setUIFont(new javax.swing.plaf.FontUIResource(Main.MAIN_FONT));
         //
-        nick.setBounds(frameWidth / 4, 100 + yOffset, frameWidth / 2, 24);
+        nick.setBounds(frameWidth / 4, 100 + yOffset, frameWidth / 2 - 32, 24);
+        newNick.setBounds(frameWidth / 4 + nick.getWidth(), 100 + yOffset, 32, 24);
+        
         ip.setBounds(frameWidth / 4, 130 + yOffset, frameWidth / 2, 24);
         server.setBounds(frameWidth / 4, 160 + yOffset, frameWidth / 4, 32);
         client.setBounds(frameWidth / 2, 160 + yOffset, frameWidth / 4, 32);
 
         add(nick);
+        add(newNick);
         add(ip);
         add(server);
         add(client);
 
         server.addActionListener(this);
         client.addActionListener(this);
+        newNick.addActionListener(this);
 
         //
         heroPreview = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
@@ -122,25 +130,13 @@ public class LoginScreen extends JPanel implements ActionListener {
             }
 
         }
-
-//        
-//        Random rnd = new Random();
-//        g.setColor(Color.LIGHT_GRAY);
-//        for (int i = 0; i < 512; i++) {
-//            g.drawLine(rnd.nextInt(getWidth()), rnd.nextInt(getHeight()), rnd.nextInt(getWidth()), rnd.nextInt(getHeight()));
-//        }
-//        g.setColor(Color.LIGHT_GRAY.brighter());
-//        for (int i = 0; i < 1024; i++) {
-//            g.drawLine(rnd.nextInt(getWidth()), rnd.nextInt(getHeight()), rnd.nextInt(getWidth()), rnd.nextInt(getHeight()));
-//        }
-//
-//        int frameWidth = Main.getFrames()[0].getWidth();
-//        g.setColor(getBackground());
-//        g.fillRect(frameWidth / 5, 150, (int) (frameWidth - frameWidth / 2.5F), 260);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+         if (e.getSource() == newNick) {
+             nick.setText(NameGenerator.getName());
+         }
         if (e.getSource() == next) {
             previewIndex = previewIndex == NUM_OF_HEROES - 1 ? 0 : previewIndex + 1;
 

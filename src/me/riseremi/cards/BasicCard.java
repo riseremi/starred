@@ -1,10 +1,12 @@
 package me.riseremi.cards;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import lombok.Getter;
@@ -12,6 +14,7 @@ import lombok.Setter;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.main.Main;
+import me.riseremi.utils.Shift;
 
 /**
  *
@@ -81,7 +84,7 @@ public final class BasicCard {
         this.useRadius = useRadius;
         this.rect = new Rectangle();
 
-        this.bigCard = wwTest(bigCard, art, description);
+        this.bigCard = wwTest(bigCard, art, description, name, id);
     }
 
     public BasicCard(int id, BufferedImage bigCard, String name,
@@ -220,7 +223,7 @@ public final class BasicCard {
         return newImage;
     }
 
-    private BufferedImage wwTest(BufferedImage img, BufferedImage art, String s) {
+    private BufferedImage wwTest(BufferedImage img, BufferedImage art, String s, String name, int id) {
         //s = s.replace("|", "\n");
         StringBuilder sb = new StringBuilder(s);
 
@@ -240,16 +243,48 @@ public final class BasicCard {
         g.drawImage(img, null, 0, 0);
         g.drawImage(art, null, 36, 36);
 
-        g.setColor(Color.WHITE);
-        //g.drawString(sb.toString(), 40, 300);
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 28));
 
-        //int tempJ = 0;
+        //determine X position to center the title
+        int cardWidth = img.getWidth();
+        int titleWidth = g.getFontMetrics().stringWidth(name);
+        int xPosition = cardWidth / 2 - titleWidth / 2;
+        int yPosition = 32;
+        int shiftValue = 2;
+        
+        
+        //outline
+        g.setColor(Color.BLACK);
+        g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue));
+        g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftSouth(yPosition, shiftValue));
+        g.drawString(name, Shift.ShiftEast(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue));
+        g.drawString(name, Shift.ShiftEast(xPosition, shiftValue), Shift.ShiftSouth(yPosition, shiftValue));
+
+        //actual title
+        g.setColor(Color.WHITE);
+        g.drawString(name, xPosition, 32);
+
+        g.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        g.setColor(Color.WHITE);
+
         for (int j = 0; j < strings.length; j++) {
             g.drawString(strings[j], 40, 305 + j * 14);
-            //tempJ = j;
         }
-        //final int bloodCost = getBloodCost();
-        //g.drawString(bloodCost == 0 ? "" : "Bloodcost: " + bloodCost, 40, 305 + (tempJ + 1) * 14);
+        if (Main.CARD_DUMP) {
+            try {
+                File card = new File("C:/cards-dump/0" + (id < 10 ? "0" + id : id) + ".png");
+
+                card.delete();
+                card.createNewFile();
+                ImageIO.write(newImage, "png", card);
+
+                System.out.println("Saved " + card.getAbsolutePath());
+            } catch (IOException ex) {
+                System.out.println("Error while saving card. " + ex.toString());
+            }
+        }
 
         return newImage;
 

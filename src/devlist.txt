@@ -45,7 +45,12 @@ FEATURE LIST
 ~ fix ADD_AP effect
 ~ fix; cards with ADD_AP effect adds AP at the next turn instead of current
 ~ fix; JSONS loader should not process special symbols within quotes
-- fix justUsedCard
+~ card's name is null for unknown reason
++ card dump with "--dump" flag
++ simple name generator just for fun
++ fix justUsedCard
+
+- fix and rework world map
     name is null for unknown reason
 - fix ADD_AP not applies to Target (not to self)
 - fix chat output
