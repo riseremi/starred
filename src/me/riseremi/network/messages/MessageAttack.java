@@ -15,7 +15,7 @@ public class MessageAttack extends Message {
     private final int userId, targetId, cardId;
 
     public MessageAttack(int userId, int targetId, int cardId) {
-        super(Message.Type.ATTACK_TEST);
+        super(Message.Type.ATTACK);
         this.userId = userId;
         this.targetId = targetId;
         this.cardId = cardId;

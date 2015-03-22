@@ -132,9 +132,6 @@ public final class BasicCard {
                 case DAMAGE:
                     target.dealPhysicalDamage(value);
                     break;
-//                case MDMG:
-//                    target.dealMagicalDamage(value);
-//                    break;
                 case BLINK:
                     break;
                 case HEAL:
@@ -143,9 +140,6 @@ public final class BasicCard {
                 case ADD_AP:
                     target.addAPInNextTurn(value);
                     break;
-//                case BLOODDMG:
-//                    target.dealMagicalDamage(value);
-//                    break;
                 case BLOODCOST:
                     user.decreaseBloodCostHP(value);
                     break;

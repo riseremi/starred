@@ -318,7 +318,9 @@ public final class Core_v1 extends JPanel {
     }
 
     public Entity getPlayerById(int id) {
-        //System.out.println("GET_ENTITY; player id: " + player.getId() + ", friend id: " + friend.getId() + ", requested id: " + id);
+        if (Main.ENABLE_DEBUG_TOOLS) {
+            System.out.println("GET_ENTITY; player id: " + player.getId() + ", friend id: " + friend.getId() + ", requested id: " + id);
+        }
         if (player.getId() == id) {
             return player;
         } else if (friend.getId() == id) {

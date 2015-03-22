@@ -9,7 +9,7 @@ import org.rising.framework.network.Message;
 public class MessageEndTurn extends Message {
 
     public MessageEndTurn() {
-        super(Message.Type.TURN_ENDED);
+        super(Message.Type.TURN_END);
     }
 
     @Override

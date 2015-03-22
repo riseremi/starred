@@ -51,10 +51,10 @@ public class Protocol {
             case SET_POSITION:
                 Server.getInstance().sendToAll(message);
                 break;
-            case TURN_ENDED:
+            case TURN_END:
                 Server.getInstance().sendToAllExcludingOne(message, id);
                 break;
-            case ATTACK_TEST:
+            case ATTACK:
                 Server.getInstance().sendToAll(message);
                 break;
             case PING_MESSAGE:
@@ -101,10 +101,10 @@ public class Protocol {
                 }
                 entity.setPosition(x, y);
                 break;
-            case TURN_ENDED:
+            case TURN_END:
                 core.startTurn();
                 break;
-            case ATTACK_TEST:
+            case ATTACK:
                 message.processClient(message);
                 break;
             case PING_MESSAGE:

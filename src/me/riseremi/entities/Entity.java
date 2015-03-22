@@ -180,8 +180,8 @@ public class Entity {
 
     public void resetActionPoints() {
         actionPoints = actionPoints > 0 ? 10 + 1 : 10;
-        actionPoints += additionalAP;
-        additionalAP = 0;
+        //actionPoints += additionalAP;
+        //additionalAP = 0;
     }
 
     public void dealPhysicalDamage(int amount) {
@@ -207,7 +207,8 @@ public class Entity {
     }
 
     public void addAPInNextTurn(int value) {
-        additionalAP += value;
+        //additionalAP += value;
+        actionPoints += value;
     }
 
 }
