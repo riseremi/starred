@@ -60,9 +60,14 @@ FEATURE LIST
 + min range support, JSONS reader fix
 + enable min range checking
 
+24.03.2015
+~ fix chat output
+~ fix ping message
+
 - fix and rework world map
 - fix ADD_AP not applies to Target (not to self)
-- fix chat output
 - implement first playable class (Warrior I think)
     to implement: Bloody Mage, Head Hunter, Bearded Druid etc. (see google sheets)
 - rewrite MouseController from scratch
+- lobby screen
+- rewrite chat alerts

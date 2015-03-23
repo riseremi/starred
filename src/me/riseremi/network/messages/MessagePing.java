@@ -20,6 +20,10 @@ public class MessagePing extends Message {
     public long getStartTime() {
         return startTime;
     }
+    
+    public boolean isSingleSide() {
+        return singleSide;
+    }
 
     @Override
     public void processServer(Message message) {

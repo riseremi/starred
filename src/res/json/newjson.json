@@ -180,12 +180,16 @@
         "id": "11",
         "image": "/res/cards/backs/card_special.png",
         "art": "/res/cards/arts/art_test.png",
-        "description": "none",
-        "apcost": "0",
+        "description": "Calls enemy to a selected cell using your blood power. |Minimal_range: 4|Maximal_range: 10",
+        "apcost": "5",
         "range": "4-10",
         "type": "NONE",
         "class": "Blood Ritual",
         "effects": [
+            {
+                "name": "BLOODCOST",
+                "value": "5"
+            },
             {
                 "name": "BLINK_OPPONENT",
                 "value": "0"

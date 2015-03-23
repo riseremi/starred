@@ -135,10 +135,10 @@ public final class BasicCard {
                 case DAMAGE:
                     target.dealPhysicalDamage(value);
                     break;
-                case BLINK:
-                    break;
-                case BLINK_OPPONENT:
-                    break;
+//                case BLINK:
+//                    break;
+//                case BLINK_OPPONENT:
+//                    break;
                 case HEAL:
                     target.heal(value);
                     break;
