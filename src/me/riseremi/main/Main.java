@@ -113,14 +113,13 @@ public class Main extends JFrame implements ActionListener {
         if (args.length > 0 && "--debug".equals(args[0])) {
             ENABLE_DEBUG_TOOLS = true;
         }
-        
+
         if (args.length > 0 && "--dump".equals(args[0])) {
             CARD_DUMP = true;
         }
 
 //        System.out.println((char) 31);
 //        System.exit(0);
-
         //StringUtils su = new JSONSLoader();
         JSONSLoader su2 = new JSONSLoader();
 //        su.bleh();
@@ -166,7 +165,7 @@ public class Main extends JFrame implements ActionListener {
                 final Core_v1 core2 = Core_v1.getInstance();
                 String[] pieces = msgText.split(" ");
 
-                if (msgText.startsWith("/") && pieces.length >= 2) {
+                if ((msgText.startsWith("/") && pieces.length >= 2)) {
                     int firstSpace = msgText.indexOf(' ');
                     String command = msgText.substring(0, firstSpace).toLowerCase();
                     String msgBody = msgText.substring(firstSpace + 1).replaceAll(" ", "_");
@@ -182,13 +181,12 @@ public class Main extends JFrame implements ActionListener {
                             } catch (IOException ex) {
                             }
                             break;
-                        case "/ping":
-                            MessagePing msg = new MessagePing(System.currentTimeMillis(), false);
-                            try {
-                                Server.getInstance().sendToAll(msg);
-                            } catch (IOException ex) {
-                            }
-                            break;
+                    }
+                } else if (msgText.equals("/ping")) {
+                    MessagePing msg = new MessagePing(System.currentTimeMillis(), false);
+                    try {
+                        Client.getInstance().send(msg);
+                    } catch (IOException ex) {
                     }
                 } else {
                     try {

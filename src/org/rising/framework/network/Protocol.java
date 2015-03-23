@@ -3,6 +3,8 @@ package org.rising.framework.network;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Player;
@@ -105,7 +107,22 @@ public class Protocol {
             case PING_MESSAGE:
                 MessagePing msgP = ((MessagePing) message);
 
-                System.out.println("Ping: " + (System.currentTimeMillis() - msgP.getStartTime()));
+                if (!msgP.isSingleSide()) {
+                    try {
+                        Client.getInstance().send(new MessagePing(System.currentTimeMillis(), true));
+                    } catch (IOException ex) {
+                    }
+                    System.out.println("Ping handshake recieved in "
+                            + (System.currentTimeMillis() - msgP.getStartTime())
+                            + "ms");
+                    Main.addToChat("Ping handshake recieved in "
+                            + (System.currentTimeMillis() - msgP.getStartTime())
+                            + "ms" + "\r\n");
+                } else {
+                    System.out.println("Ping: " + (System.currentTimeMillis() - msgP.getStartTime()));
+                    Main.addToChat("Ping: " + (System.currentTimeMillis() - msgP.getStartTime()) + "\r\n");
+                }
+
                 break;
         }
     }

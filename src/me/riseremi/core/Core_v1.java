@@ -217,7 +217,7 @@ public final class Core_v1 extends JPanel {
                 g.fillRect(xo - w / 2 * 32, yo + (radius - w / 2) * 32, w * 32, 32);
             }
             //camera.untranslate(g);
-            
+
             //test draw min range
             g.setColor(new Color(52, 152, 219, 50));
 
@@ -235,7 +235,7 @@ public final class Core_v1 extends JPanel {
         g.setFont(walkwayBold);
 
         if (tileSelectionMode) {
-           //g.drawRect(selectionCursor.x, selectionCursor.y, 32, 32);
+            //g.drawRect(selectionCursor.x, selectionCursor.y, 32, 32);
 
             selectionCursor.paint(g2);
 
@@ -377,18 +377,18 @@ public final class Core_v1 extends JPanel {
     public boolean rangeMatches(Player player, int realX, int realY, BasicCard card) {
         final int minRange = card.getMinRange();
         final int maxRange = card.getMaxRange();
-        
+
         final int userX = player.getX();
-        final int userY =  player.getY();
+        final int userY = player.getY();
 
         final int xDif = Math.abs(userX - realX);
         final int yDif = Math.abs(userY - realY);
-        
-//        final int xDifMin = Math.abs(userX - realX);
-//        final int yDifMin = Math.abs(userY - realY);
+
+        boolean maxPassed = (xDif + yDif <= maxRange);
+        boolean minPassed = (xDif + yDif > minRange);
 
         //some amazing maths
-        return (xDif + yDif <= maxRange) && (xDif + yDif > minRange);
+        return maxPassed && (minRange == 0 ? true : minPassed);
     }
 
     public Entity getPlayerById(int id) {

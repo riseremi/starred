@@ -129,7 +129,8 @@ public class MouseController implements MouseListener, MouseMotionListener {
                     case DAMAGE:
                     case NONE:
                     case HEAL:
-                        if ((thereIsFriend || thereIsPlayer) && !attackMessageSent) {
+                    case BLOODCOST:
+                        if (/*(thereIsFriend || thereIsPlayer) && */!attackMessageSent) {
                             //instance.send(new MessageAttack(userId, targetId, justUsedCardId));
                             messagesToSend.add(new MessageAttack(userId, targetId, justUsedCardId));
                             attackMessageSent = true;
