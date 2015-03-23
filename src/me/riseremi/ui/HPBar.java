@@ -14,9 +14,10 @@ public class HPBar {
     public static final int INDENT = 16, BAR_HEIGHT = 8;
     private final int x, y;
     private final int barWidth, barHeight, indent;
-    private final Color ACTIVE = new Color(92, 173, 90),
-            SHADOW = new Color(56, 104, 56),
-            INACTIVE = new Color(146, 42, 51);
+    private final Color ACTIVE = new Color(6, 204, 113),
+            SHADOW = new Color(6, 204, 113),
+//            SHADOW = new Color(39, 174, 96),
+            INACTIVE = new Color(231, 76, 60);
 
     public HPBar(int x, int y, int indent, int maxWidth, int barHeight) {
         this.x = x;

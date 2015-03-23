@@ -32,7 +32,7 @@ public final class World {
     public void draw(Graphics g) {
         final int blocksX = 0;
         final int blocksY = 0;
-        
+
         //old code when camera didn't exist
 //        final int blocksX = worldLayer.getBlocksX();
 //        final int blocksY = worldLayer.getBlocksY();
@@ -40,7 +40,6 @@ public final class World {
 //        nullLayer.setBlocksY(blocksY);
 //        objectsLayer.setBlocksX(blocksX);
 //        objectsLayer.setBlocksY(blocksY);
-
         worldLayer.paintLayer(g);
         objectsLayer.paintLayer(g);
     }
@@ -55,10 +54,12 @@ public final class World {
 //        //Core_v1.getInstance().getPlayer().addToPosition(addX, addY);
     }
 
+    @Deprecated
     public int getX() {
         return worldLayer.getBlocksX();
     }
 
+    @Deprecated
     public int getY() {
         return worldLayer.getBlocksY();
     }

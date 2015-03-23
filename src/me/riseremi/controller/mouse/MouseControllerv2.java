@@ -53,7 +53,7 @@ public class MouseControllerv2 implements MouseListener, MouseMotionListener {
         final int realX = e.getX() / Global.tileWidth * Global.tileWidth;
         final int realY = e.getY() / Global.tileHeight * Global.tileHeight;
 
-        Core_v1.getInstance().getSelectionCursorv2().setPosition(blockX, blockY);
+        Core_v1.getInstance().getSelectionCursor().setPosition(blockX, blockY);
 
         //big card
         final Core_v1 core = Core_v1.getInstance();

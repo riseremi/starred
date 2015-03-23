@@ -91,15 +91,7 @@ public class Protocol {
                 core.getPlayerById(id).setName(name);
                 break;
             case SET_POSITION:
-                MessageSetPosition msgSP = ((MessageSetPosition) message);
-                System.out.println(msgSP.getId());
-                final Entity entity = core.getPlayerById(msgSP.getId());
-                final int x = msgSP.getX();
-                final int y = msgSP.getY();
-                if (Main.ENABLE_DEBUG_TOOLS) {
-                    System.out.println("Teleported to " + x + ":" + y);
-                }
-                entity.setPosition(x, y);
+                message.processClient(message);
                 break;
             case TURN_END:
                 core.startTurn();

@@ -1,5 +1,8 @@
 package me.riseremi.network.messages;
 
+import me.riseremi.core.Core_v1;
+import me.riseremi.entities.Entity;
+import me.riseremi.main.Main;
 import org.rising.framework.network.Message;
 
 /**
@@ -36,7 +39,15 @@ public class MessageSetPosition extends Message {
 
     @Override
     public void processClient(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MessageSetPosition msgSP = ((MessageSetPosition) message);
+        System.out.println(msgSP.getId());
+        final Entity entity = Core_v1.getInstance().getPlayerById(msgSP.getId());
+        final int xx = msgSP.getX();
+        final int yy = msgSP.getY();
+        if (Main.ENABLE_DEBUG_TOOLS) {
+            System.out.println("Teleported to " + xx + ":" + yy);
+        }
+        entity.setPosition(x, y);
     }
 
 }

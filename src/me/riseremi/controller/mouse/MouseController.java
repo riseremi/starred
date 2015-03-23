@@ -50,12 +50,8 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final int playerX = user.getX();
         final int playerY = user.getY();
 
-        //in tiles
-        final int cursorX = (int) core.getSelectionCursor().getX() / 32;
-        final int cursorY = (int) core.getSelectionCursor().getY() / 32;
-
-        final int mX = cursorX - core.getCamera().getX() / Global.tileWidth;
-        final int mY = cursorY - core.getCamera().getY() / Global.tileHeight;
+        final int mX = core.getSelectionCursor().getRealX();
+        final int mY = core.getSelectionCursor().getRealY();
 
         //System.out.println("cx: " + mX + "/cy: " + mY);
         boolean thereIsFriend = (mX == friendX) && (mY == friendY);
@@ -118,6 +114,12 @@ public class MouseController implements MouseListener, MouseMotionListener {
                         if (!thereIsFriend && !thereIsPlayer) {
                             //instance.send(new MessageSetPosition(userId, mX, mY));
                             messagesToSend.add(new MessageSetPosition(userId, mX, mY));
+                        }
+                        break;
+                    case BLINK_OPPONENT:
+                        if (!thereIsFriend && !thereIsPlayer) {
+                            //instance.send(new MessageSetPosition(userId, mX, mY));
+                            messagesToSend.add(new MessageSetPosition(friend.getId(), mX, mY));
                         }
                         break;
                     case ADD_AP:
@@ -186,7 +188,8 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final Deck deck = core.getPlayer().getDeck();
 
         if (core.isTileSelectionMode()) {
-            core.setSelectionCursor(new Rectangle(e.getX() / 32 * 32, e.getY() / 32 * 32, 32, 32));
+            //core.setSelectionCursor(new Rectangle(e.getX() / 32 * 32, e.getY() / 32 * 32, 32, 32));
+            core.getSelectionCursor().setPosition(e.getX() / 32 * 32, e.getY() / 32 * 32);
         }
         //rect intersections
         deck.switchPaint(mouseRect);

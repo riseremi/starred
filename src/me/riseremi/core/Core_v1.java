@@ -57,7 +57,7 @@ public final class Core_v1 extends JPanel {
     private long effectStartTime;
     //
     @Getter @Setter private boolean tileSelectionMode = false;
-    @Getter @Setter private Rectangle selectionCursor = new Rectangle();
+//    @Getter @Setter private Rectangle selectionCursor = new Rectangle();
     private long turnStartTime;
     private long timeLeft = 1;
     private boolean iAmServer;
@@ -65,8 +65,8 @@ public final class Core_v1 extends JPanel {
     private boolean initialized = false;
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
     @Getter @Setter private Camera camera;
-    @Getter @Setter private SelectionCursor selectionCursorv2 = new SelectionCursor();
-    @Getter @Setter private boolean selectionMode;
+    @Getter @Setter private SelectionCursor selectionCursor;
+//    @Getter @Setter private boolean selectionMode;
     @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
     @Setter private boolean gameOver;
     @Setter private int winnerId;
@@ -100,6 +100,7 @@ public final class Core_v1 extends JPanel {
         player = new Player("Server", 0, -1, Entity.Type.PLAYER);
         friend = new Friend("Client", 0, -1, Entity.Type.PLAYER);
         camera = new Camera();
+        selectionCursor = new SelectionCursor(world, this);
 
         try {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
@@ -185,10 +186,9 @@ public final class Core_v1 extends JPanel {
         player.getHpBar().paint(g2, player);
         friend.getHpBar().paint(g2, friend);
 
-        if (isSelectionMode()) {
-            selectionCursorv2.paint(g);
-        }
-
+//        if (isSelectionMode()) {
+//            selectionCursor.paint(g);
+//        }
         final Player player1 = player;
         final Deck deck = player1.getDeck();
 
@@ -205,7 +205,7 @@ public final class Core_v1 extends JPanel {
             final int xo = x * Global.tileWidth;
             final int yo = y * Global.tileHeight;
 
-            g.setColor(new Color(200, 0, 0, 40));
+            g.setColor(new Color(231, 76, 60, 40));
 
             camera.translate(g);
             for (int w = 1; w < radius * 2 + 1; w += 2) {
@@ -221,13 +221,18 @@ public final class Core_v1 extends JPanel {
         g.setFont(walkwayBold);
 
         if (tileSelectionMode) {
-            g.setColor(Color.red);
-            g.drawRect(selectionCursor.x, selectionCursor.y, 32, 32);
+           //g.drawRect(selectionCursor.x, selectionCursor.y, 32, 32);
+
+            selectionCursor.paint(g2);
+
+            g.setColor(Color.WHITE);
+            String cursorCoordinates = selectionCursor.getRealX() + ":" + selectionCursor.getRealY();
+            g.drawString(cursorCoordinates, selectionCursor.getX(), selectionCursor.getY());
         }
 
         g.setColor(Color.WHITE);
         if (nextTurnAvailable) {
-            g.drawString("YOUR TURN (F11 end turn)", 32, 64);
+            g.drawString("Your turn (F11 end turn)", 32, 64);
 
             timeLeft = TURN_TIME_LIMIT - (System.currentTimeMillis() - turnStartTime) + 1000;
             String newString = String.format("%02d min, %02d sec",
@@ -237,7 +242,7 @@ public final class Core_v1 extends JPanel {
 
             g.drawString("Time left: " + newString, 32, 64 + 24);
         } else {
-            g.drawString("ENEMY TURN", 32, 64);
+            g.drawString("Enemy turn", 32, 64);
         }
         g.drawString("AP: " + player.getActionPoints(), 32, 64 + 24 * 2);
         g.drawString("Cards drawn: " + cardsDrawn, 32, 64 + 24 * 3);

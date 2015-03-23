@@ -174,5 +174,22 @@
                 "value": "-5"
             }
         ]
+    },
+    {
+        "name": "Blood Ritual",
+        "id": "11",
+        "image": "/res/cards/backs/card_special.png",
+        "art": "/res/cards/arts/art_test.png",
+        "description": "none",
+        "apcost": "0",
+        "range": "10",
+        "type": "NONE",
+        "class": "Blood Ritual",
+        "effects": [
+            {
+                "name": "BLINK_OPPONENT",
+                "value": "0"
+            }
+        ]
     }
 ]

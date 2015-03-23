@@ -55,7 +55,8 @@ public final class BasicCard {
             BLOOD_CRUSH = 6,
             ADD_AP_ID = 7,
             SACRIFICE = 8,
-            GREATER_HEAL = 9;
+            GREATER_HEAL = 9,
+            BLOOD_RITUAL = 10;
     //
     @Getter
     @Setter
@@ -135,6 +136,8 @@ public final class BasicCard {
                     break;
                 case BLINK:
                     break;
+                case BLINK_OPPONENT:
+                    break;
                 case HEAL:
                     target.heal(value);
                     break;
@@ -146,7 +149,6 @@ public final class BasicCard {
                     break;
                 case NONE:
                     Main.addToChat("BUT NOTHING HAPPENS\r\n");
-                    System.out.println("none card");
                     break;
             }
         }
@@ -154,7 +156,7 @@ public final class BasicCard {
 
     public enum EffectType {
 
-        DAMAGE, HEAL, BLINK, WAIT, ADD_AP, BLOODCOST, NONE
+        DAMAGE, HEAL, BLINK, WAIT, ADD_AP, BLOODCOST, BLINK_OPPONENT, NONE
     }
 
     public enum Type {
