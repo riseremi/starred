@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import lombok.Getter;
-import me.riseremi.cards.Deck;
+import me.riseremi.cards.Hand;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
 
@@ -57,7 +57,7 @@ public class MouseControllerv2 implements MouseListener, MouseMotionListener {
 
         //big card
         final Core_v1 core = Core_v1.getInstance();
-        final Deck deck = core.getPlayer().getDeck();
+        final Hand deck = core.getPlayer().getHand();
 
         mouseRect.x = e.getX();
         mouseRect.y = e.getY();

@@ -182,7 +182,7 @@
         "art": "/res/cards/arts/art_test.png",
         "description": "none",
         "apcost": "0",
-        "range": "10",
+        "range": "4-10",
         "type": "NONE",
         "class": "Blood Ritual",
         "effects": [

@@ -36,8 +36,7 @@ public final class BasicCard {
     private final int cost;
 //    @Getter
 //    private final int bloodCost;
-    @Getter
-    private final int useRadius;
+    @Getter private final int minRange, maxRange;
     @Getter
     private BufferedImage bigCard, smallCard;
     @Getter
@@ -65,10 +64,10 @@ public final class BasicCard {
     private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
-
+    
     public BasicCard(String description, int id, String pathToBigCard, String pathToArt,
             String name, Effect[] effects, Type type, int cost,
-            int useRadius) {
+            int minRange, int maxRange) {
         try {
             this.art = ImageIO.read(getClass().getResourceAsStream(pathToArt));
             this.bigCard = ImageIO.read(getClass().getResourceAsStream(pathToBigCard));
@@ -82,14 +81,15 @@ public final class BasicCard {
 //        this.power = power;
         this.cost = cost;
 //        this.bloodCost = bloodCost;
-        this.useRadius = useRadius;
+        this.minRange = minRange;
+        this.maxRange = maxRange;
         this.rect = new Rectangle();
 
-        this.bigCard = wwTest(bigCard, art, description, name, id);
+        this.bigCard = buildBigCard(bigCard, art, description, name, id);
     }
 
     public BasicCard(int id, BufferedImage bigCard, String name,
-            Effect[] effects, Type type, int cost, int useRadius) {
+            Effect[] effects, Type type, int cost, int minRange, int maxRange) {
         this.id = id;
         this.bigCard = bigCard;
         this.smallCard = scaleImage(bigCard, WIDTH, HEIGHT);
@@ -97,7 +97,8 @@ public final class BasicCard {
         this.effects = effects;
         this.type = type;
         this.cost = cost;
-        this.useRadius = useRadius;
+        this.minRange = minRange;
+        this.maxRange = maxRange;
         this.rect = new Rectangle();
     }
 
@@ -107,7 +108,7 @@ public final class BasicCard {
 
             player.setCanMove(false);
             core.setTileSelectionMode(true);
-            player.getDeck().setJustUsedCard(this);
+            player.getHand().setJustUsedCard(this);
         }
     }
 
@@ -196,7 +197,7 @@ public final class BasicCard {
 
     @Override
     protected BasicCard clone() throws CloneNotSupportedException {
-        return new BasicCard(id, bigCard, name, effects, type, cost, useRadius);
+        return new BasicCard(id, bigCard, name, effects, type, cost, minRange, maxRange);
     }
 
     //uses for card preview
@@ -223,7 +224,7 @@ public final class BasicCard {
         return newImage;
     }
 
-    private BufferedImage wwTest(BufferedImage img, BufferedImage art, String s, String name, int id) {
+    private BufferedImage buildBigCard(BufferedImage img, BufferedImage art, String s, String name, int id) {
         //s = s.replace("|", "\n");
         StringBuilder sb = new StringBuilder(s);
 

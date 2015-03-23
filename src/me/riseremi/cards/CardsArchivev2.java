@@ -26,7 +26,20 @@ public class CardsArchivev2 {
 
         int id = getInt((String) hashMap.get("id"));
         int apcost = getInt((String) hashMap.get("apcost"));
-        int range = getInt((String) hashMap.get("range"));
+
+        int minRange = 0, maxRange = 0;
+        //
+        String rangeStr = (String) hashMap.get("range");
+
+        //min range specified 
+        if (rangeStr.contains("-")) {
+            String[] ranges = rangeStr.split("-");
+            minRange = getInt(ranges[0]);
+            maxRange = getInt(ranges[1]);
+        } else {
+            maxRange = getInt((String) hashMap.get("range"));
+        }
+//        int minRange = getInt((String) hashMap.get("range"));
 
         Effect[] effects = new Effect[effectsList.size()];
 
@@ -34,6 +47,7 @@ public class CardsArchivev2 {
             effects[i] = new Effect();
         }
 
+        //add effects
         for (int i = 0; i < effectsList.size(); i++) {
             //first HashMap with first effect
             final HashMap<String, Object> currentHashMap = effectsList.get(i);
@@ -57,12 +71,12 @@ public class CardsArchivev2 {
                 name,
                 effects,
                 getType((String) hashMap.get("type")),
-                apcost, range);
+                apcost, minRange, maxRange);
 
         allCards.put(id, card);
         length = allCards.size();
 
-        //printCards(hashMap, effects);
+//        printCards(hashMap, effects);
     }
 
     private int getInt(String str) {

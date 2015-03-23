@@ -15,7 +15,7 @@ import me.riseremi.utils.Shift;
  *
  * @author Riseremi
  */
-public final class Deck {
+public final class Hand {
 
     public static final int SIZE = 8;
     @Getter

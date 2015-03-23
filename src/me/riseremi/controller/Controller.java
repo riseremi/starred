@@ -62,7 +62,7 @@ public class Controller implements KeyListener {
                 final int cardId = Integer.parseInt(response);
                 final BasicCard card = CardsArchive.get(cardId);
 
-                Core_v1.getInstance().getPlayer().getDeck().addCard(card);
+                Core_v1.getInstance().getPlayer().getHand().addCard(card);
             } catch (NumberFormatException | CloneNotSupportedException ex) {
                 System.out.println("ERROR: cannot give card (wrong id)");
             }

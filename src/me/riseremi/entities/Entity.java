@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
-import me.riseremi.cards.Deck;
+import me.riseremi.cards.Hand;
 import me.riseremi.core.Camera;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
@@ -34,7 +34,7 @@ public class Entity {
     @Getter @Setter protected int actionPoints;
     //action costs
     public static final float MOVE_COST = 1F;
-    @Getter protected Deck deck;
+    @Getter protected Hand hand;
     @Getter @Setter private boolean canMove = true;
     @Getter @Setter private HPBar hpBar;
     private int additionalAP;
@@ -43,7 +43,7 @@ public class Entity {
     @Getter int imgId;
     @Getter @Setter Type type;
     @Getter @Setter int classId;
-    private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "TH (temp)"};
+    private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "Head Hunter"};
 
     public enum Type {
 
@@ -55,7 +55,7 @@ public class Entity {
         this.imgId = imgId;
         this.classId = imgId;
         this.id = id;
-        this.deck = new Deck();
+        this.hand = new Hand();
         this.actionPoints = 10;
         this.hp = this.maxHp = 30;
         this.pAtk = 0;
@@ -66,7 +66,6 @@ public class Entity {
         //this.setName(name + " (id: " + id + ")");
         this.setName(name);
         try {
-            //this.setSprite(ImageIO.read(getClass().getResourceAsStream(pathToSprite)));
             this.setSprite(ImageIO.read(getClass().getResourceAsStream("/res/sprites/hero" + imgId + ".png")));
         } catch (IOException ex) {
             System.out.println("cannot load sprite");
@@ -92,9 +91,6 @@ public class Entity {
             g.drawString(Main.ENABLE_DEBUG_TOOLS ? name2 : name1,
                     xo + 16 - g.getFontMetrics().stringWidth(Main.ENABLE_DEBUG_TOOLS ? name2 : name1) / 2, yo - 8);
         }
-//        instance.getCamera().untranslate(g);
-//        hpBar.paint(g, this);
-//        instance.getCamera().translate(g);
     }
 
     public void setImage(int imgId) {

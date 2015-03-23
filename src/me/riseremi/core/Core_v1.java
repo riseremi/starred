@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.riseremi.cards.BasicCard;
 import me.riseremi.cards.CardsArchive;
-import me.riseremi.cards.Deck;
+import me.riseremi.cards.Hand;
 import me.riseremi.controller.mouse.MouseController;
 import me.riseremi.controller.mouse.SelectionCursor;
 import me.riseremi.entities.Entity;
@@ -105,7 +105,7 @@ public final class Core_v1 extends JPanel {
         try {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
             //waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
-            player.getDeck().addCard(CardsArchive.get(BasicCard.BLINK));
+            player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
         } catch (IOException | CloneNotSupportedException ex) {
@@ -149,7 +149,7 @@ public final class Core_v1 extends JPanel {
         player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
 
         try {
-            player.getDeck().addCard(CardsArchive.getRandomCard());
+            player.getHand().addCard(CardsArchive.getRandomCard());
         } catch (CloneNotSupportedException ex) {
         }
     }
@@ -190,14 +190,15 @@ public final class Core_v1 extends JPanel {
 //            selectionCursor.paint(g);
 //        }
         final Player player1 = player;
-        final Deck deck = player1.getDeck();
+        final Hand hand = player1.getHand();
 
-        BasicCard activeCard = deck.getActiveCard();
+        BasicCard activeCard = hand.getActiveCard();
 
-        //draw card radius
-        final BasicCard justUsedCard = player.getDeck().getJustUsedCard();
+        //draw card use radius
+        final BasicCard justUsedCard = player.getHand().getJustUsedCard();
         if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.EffectType[]{BasicCard.EffectType.NONE}))) {
-            final int radius = activeCard != null ? activeCard.getUseRadius() : justUsedCard.getUseRadius();
+            final int minRadius = activeCard != null ? activeCard.getMinRange() : justUsedCard.getMinRange();
+            final int radius = activeCard != null ? activeCard.getMaxRange() : justUsedCard.getMaxRange();
 
             final int x = player.getX();
             final int y = player.getY();
@@ -205,7 +206,7 @@ public final class Core_v1 extends JPanel {
             final int xo = x * Global.tileWidth;
             final int yo = y * Global.tileHeight;
 
-            g.setColor(new Color(231, 76, 60, 40));
+            g.setColor(new Color(231, 76, 60, 50));
 
             camera.translate(g);
             for (int w = 1; w < radius * 2 + 1; w += 2) {
@@ -215,9 +216,22 @@ public final class Core_v1 extends JPanel {
             for (int w = radius * 2 + 1; w > 0; w -= 2) {
                 g.fillRect(xo - w / 2 * 32, yo + (radius - w / 2) * 32, w * 32, 32);
             }
+            //camera.untranslate(g);
+            
+            //test draw min range
+            g.setColor(new Color(52, 152, 219, 50));
+
+            //camera.translate(g);
+            for (int w = 1; w < minRadius * 2 + 1; w += 2) {
+                g.fillRect(xo - w / 2 * 32, yo - (minRadius - w / 2) * 32, w * 32, 32);
+            }
+
+            for (int w = minRadius * 2 + 1; w > 0; w -= 2) {
+                g.fillRect(xo - w / 2 * 32, yo + (minRadius - w / 2) * 32, w * 32, 32);
+            }
             camera.untranslate(g);
         }
-        player.getDeck().paint(g);
+        player.getHand().paint(g);
         g.setFont(walkwayBold);
 
         if (tileSelectionMode) {
@@ -352,7 +366,7 @@ public final class Core_v1 extends JPanel {
      */
     public void startTurn() {
         try {
-            player.getDeck().addCard(CardsArchive.getRandomCard());
+            player.getHand().addCard(CardsArchive.getRandomCard());
             incrementCardsDrawn();
         } catch (CloneNotSupportedException ex) {
         }
@@ -360,15 +374,21 @@ public final class Core_v1 extends JPanel {
         turnStartTime = System.currentTimeMillis();
     }
 
-    public boolean isTheyNear(Player player, int fx, int fy, int radius) {
-        final int px = player.getX();
-        final int py = player.getY();
+    public boolean rangeMatches(Player player, int realX, int realY, BasicCard card) {
+        final int minRange = card.getMinRange();
+        final int maxRange = card.getMaxRange();
+        
+        final int userX = player.getX();
+        final int userY =  player.getY();
 
-        final int xDif = Math.abs(px - fx);
-        final int yDif = Math.abs(py - fy);
+        final int xDif = Math.abs(userX - realX);
+        final int yDif = Math.abs(userY - realY);
+        
+//        final int xDifMin = Math.abs(userX - realX);
+//        final int yDifMin = Math.abs(userY - realY);
 
         //some amazing maths
-        return (xDif + yDif <= radius);
+        return (xDif + yDif <= maxRange) && (xDif + yDif > minRange);
     }
 
     public Entity getPlayerById(int id) {

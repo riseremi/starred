@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import lombok.Getter;
 import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.Deck;
+import me.riseremi.cards.Hand;
 import me.riseremi.cards.Effect;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
@@ -40,7 +40,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
         final Player user = core.getPlayer();
         final Friend friend = core.getFriend();
-        final Deck deck = user.getDeck();
+        final Hand deck = user.getHand();
 
         Entity target = friend;
 
@@ -50,15 +50,15 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final int playerX = user.getX();
         final int playerY = user.getY();
 
-        final int mX = core.getSelectionCursor().getRealX();
-        final int mY = core.getSelectionCursor().getRealY();
+        final int realX = core.getSelectionCursor().getRealX();
+        final int realY = core.getSelectionCursor().getRealY();
 
         //System.out.println("cx: " + mX + "/cy: " + mY);
-        boolean thereIsFriend = (mX == friendX) && (mY == friendY);
-        boolean thereIsPlayer = (mX == playerX) && (mY == playerY);
+        boolean thereIsFriend = (realX == friendX) && (realY == friendY);
+        boolean thereIsPlayer = (realX == playerX) && (realY == playerY);
         boolean thereIsObstacle = true;
         try {
-            thereIsObstacle = CheckObstacles.checkObstacle(core.getWorld(), mX, mY);//mX == playerX) && (mY == playerY);
+            thereIsObstacle = CheckObstacles.checkObstacle(core.getWorld(), realX, realY);//mX == playerX) && (mY == playerY);
         } catch (CloneNotSupportedException ex) {
         }
 
@@ -96,7 +96,10 @@ public class MouseController implements MouseListener, MouseMotionListener {
         }
 
         final BasicCard justUsedCard = deck.getJustUsedCard();
-        boolean near = justUsedCard != null ? core.isTheyNear(user, mX, mY, justUsedCard.getUseRadius()) : false;
+        boolean near = justUsedCard != null
+                ? core.rangeMatches(user, realX, realY, justUsedCard)
+                : false;
+        
         if (near && !thereIsObstacle) {
 
             final Client instance = Client.getInstance();
@@ -113,13 +116,13 @@ public class MouseController implements MouseListener, MouseMotionListener {
                     case BLINK:
                         if (!thereIsFriend && !thereIsPlayer) {
                             //instance.send(new MessageSetPosition(userId, mX, mY));
-                            messagesToSend.add(new MessageSetPosition(userId, mX, mY));
+                            messagesToSend.add(new MessageSetPosition(userId, realX, realY));
                         }
                         break;
                     case BLINK_OPPONENT:
                         if (!thereIsFriend && !thereIsPlayer) {
                             //instance.send(new MessageSetPosition(userId, mX, mY));
-                            messagesToSend.add(new MessageSetPosition(friend.getId(), mX, mY));
+                            messagesToSend.add(new MessageSetPosition(friend.getId(), realX, realY));
                         }
                         break;
                     case ADD_AP:
@@ -148,8 +151,8 @@ public class MouseController implements MouseListener, MouseMotionListener {
             user.setCanMove(true);
             core.setCardJustUsed(true);
             core.setTileSelectionMode(false);
-            user.getDeck().removeCard(deck.getJustUsedCard());
-            user.getDeck().setJustUsedCard(null);
+            user.getHand().removeCard(deck.getJustUsedCard());
+            user.getHand().setJustUsedCard(null);
         }
 
         //activate selection mode after click on a thumbnail
@@ -185,7 +188,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         mouseRect.y = e.getY();
 
         final Core_v1 core = Core_v1.getInstance();
-        final Deck deck = core.getPlayer().getDeck();
+        final Hand deck = core.getPlayer().getHand();
 
         if (core.isTileSelectionMode()) {
             //core.setSelectionCursor(new Rectangle(e.getX() / 32 * 32, e.getY() / 32 * 32, 32, 32));
