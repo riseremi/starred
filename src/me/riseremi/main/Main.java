@@ -24,7 +24,6 @@ import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.ui.windows.LoginScreen;
 import org.rising.framework.network.Client;
-import org.rising.framework.network.Server;
 
 /**
  *

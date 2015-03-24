@@ -4,15 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,6 +68,9 @@ public final class Core_v1 extends JPanel {
     @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
     @Setter private boolean gameOver;
     @Setter private int winnerId;
+    //
+    int particlesCount = 100;
+    ArrayList<Particle> particles = new ArrayList<>();
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -82,6 +83,14 @@ public final class Core_v1 extends JPanel {
     }
 
     public void init(int imgId, String ip, String name, boolean isServer) {
+        //particles test
+        //int particlesCount = 1;
+        //ArrayList<Particle> particles = new ArrayList<>();
+
+        for (int i = 0; i < particlesCount; i++) {
+            particles.add(new Particle());
+        }
+
         iAmServer = isServer;
         player.setName(name);
         friend.setName(name);
@@ -347,6 +356,39 @@ public final class Core_v1 extends JPanel {
         }
 
         repaint();
+
+        //clear background
+//        g2.setColor(Color.BLACK);
+//        g2.fillRect(0, 0, 640, 480);
+        for (int i = 0; i < particles.size(); i++) {
+            Particle p = particles.get(i);
+
+            Random rnd = new Random();
+
+            //p.setOpacity(rnd.nextInt(255));
+            g2.setColor(new Color(p.getR(), p.getG(), p.getB()));
+
+            g2.fillArc(p.x + camera.getX(), p.y + camera.getY(), (int) p.getRadius(),
+                    (int) p.getRadius(), 0, 360);
+
+            p.setRemainingLife(p.getRemainingLife() - 1);
+            p.setRadius(p.getRadius() - 1);
+
+            //System.out.println("life: " + p.getRemainingLife());
+//            p.getLocation().x += p.getSpeed().x;
+//            p.getLocation().y += p.getSpeed().y;
+            p.x += p.getSpeed().x;
+            p.y += p.getSpeed().y;
+
+            final int greenComponent = rnd.nextInt((250 / (int) p.getLife() * (int) p.getRemainingLife()) + 1);
+            p.setG(greenComponent);
+
+            //System.out.println("greencomp:" + ((int) (250 / p.getLife() * p.getRemainingLife()) + 1));
+            if (p.getRemainingLife() < 0 || p.getRadius() < 0) {
+                particles.remove(p);
+                particles.add(new Particle());
+            }
+        }
     }
 
     /**
