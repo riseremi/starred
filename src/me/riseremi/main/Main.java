@@ -22,6 +22,7 @@ import me.riseremi.json.JSONSLoader;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
+import me.riseremi.ui.windows.LobbyScreen;
 import me.riseremi.ui.windows.LoginScreen;
 import org.rising.framework.network.Client;
 
@@ -51,6 +52,7 @@ public class Main extends JFrame implements ActionListener {
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
     private static LoginScreen loginScreen1;
+    private static LobbyScreen lobbyScreen;
 
     public Main(String title) {
         Core_v1.getInstance();
@@ -105,6 +107,7 @@ public class Main extends JFrame implements ActionListener {
 
         LoginScreen.getServer().addActionListener(this);
         LoginScreen.getClient().addActionListener(this);
+        LobbyScreen.getGoButton().addActionListener(this);
         //client.addActionListener(this);
     }
 
@@ -127,12 +130,15 @@ public class Main extends JFrame implements ActionListener {
         game = new Main("Game");
         core = Core_v1.getInstance();
         loginScreen1 = new LoginScreen();
+        lobbyScreen = new LobbyScreen();
 
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 //        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
+        
         game.add(loginScreen1, BorderLayout.CENTER);
         loginScreen1.setVisible(true);
+        //lobbyScreen.setVisible(false);
 
         //game.add(loginScreen, BorderLayout.CENTER);
         //loginScreen.setVisible(true);
@@ -210,14 +216,25 @@ public class Main extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == LoginScreen.getServer()) {
-            core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), true);
+        if(e.getSource() ==  LobbyScreen.getGoButton()) {
+            lobbyScreen.setVisible(false);
+            game.remove(lobbyScreen);
             game.add(core);
-            loginScreen1.setVisible(false);
             panel.setVisible(true);
-            game.remove(loginScreen1);
             game.requestFocus();
         }
+        if (e.getSource() == LoginScreen.getServer()) {
+            core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), true);
+            //game.add(core);
+            loginScreen1.setVisible(false);
+            game.remove(loginScreen1);
+            
+            game.add(lobbyScreen, BorderLayout.CENTER);
+            lobbyScreen.setVisible(true);
+            panel.setVisible(true);
+            //game.requestFocus();
+        }
+        
         if (e.getSource() == LoginScreen.getClient()) {
             core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), false);
             game.add(core);

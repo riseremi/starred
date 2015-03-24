@@ -43,7 +43,7 @@ public class LoginScreen extends JPanel implements ActionListener {
 
     public LoginScreen() {
         int yOffset = 150;
-        
+
         //kekeke
         nick.setEditable(false);
 
@@ -52,7 +52,7 @@ public class LoginScreen extends JPanel implements ActionListener {
         //
         nick.setBounds(frameWidth / 4, 100 + yOffset, frameWidth / 2 - 32, 24);
         newNick.setBounds(frameWidth / 4 + nick.getWidth(), 100 + yOffset, 32, 24);
-        
+
         ip.setBounds(frameWidth / 4, 130 + yOffset, frameWidth / 2, 24);
         server.setBounds(frameWidth / 4, 160 + yOffset, frameWidth / 4, 32);
         client.setBounds(frameWidth / 2, 160 + yOffset, frameWidth / 4, 32);
@@ -134,9 +134,9 @@ public class LoginScreen extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         if (e.getSource() == newNick) {
-             nick.setText(NameGenerator.getName());
-         }
+        if (e.getSource() == newNick) {
+            nick.setText(NameGenerator.getName());
+        }
         if (e.getSource() == next) {
             previewIndex = previewIndex == NUM_OF_HEROES - 1 ? 0 : previewIndex + 1;
 

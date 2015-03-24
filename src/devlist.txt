@@ -74,3 +74,4 @@ FEATURE LIST
 - lobby screen
 - rewrite chat alerts
 - ( ͡° ͜ʖ ͡°)
+- chat auto-scrolling
