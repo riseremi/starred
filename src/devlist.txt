@@ -63,6 +63,8 @@ FEATURE LIST
 24.03.2015
 ~ fix chat output
 ~ fix ping message
++ two Jr. Painter cards introduced
+~ fix font when card header is too long
 
 - fix and rework world map
 - fix ADD_AP not applies to Target (not to self)
@@ -71,3 +73,4 @@ FEATURE LIST
 - rewrite MouseController from scratch
 - lobby screen
 - rewrite chat alerts
+- 

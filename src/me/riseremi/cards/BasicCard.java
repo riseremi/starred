@@ -64,7 +64,7 @@ public final class BasicCard {
     private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
-    
+
     public BasicCard(String description, int id, String pathToBigCard, String pathToArt,
             String name, Effect[] effects, Type type, int cost,
             int minRange, int maxRange) {
@@ -128,6 +128,7 @@ public final class BasicCard {
 
     /* use card */
     private void switchIt(Effect[] effects, Entity user, Entity target) {
+            final Core_v1 core = Core_v1.getInstance();
         for (Effect effect1 : effects) {
             EffectType effect = effect1.getEffectType();
             int value = Integer.parseInt((String) effect1.getValue());
@@ -139,6 +140,12 @@ public final class BasicCard {
 //                    break;
 //                case BLINK_OPPONENT:
 //                    break;
+                case DRAW_CARD:
+                    user.drawCards(value);
+                    break;
+                case UNDRAW_CARD:
+                    target.undrawCards(value);
+                    break;
                 case HEAL:
                     target.heal(value);
                     break;
@@ -157,7 +164,9 @@ public final class BasicCard {
 
     public enum EffectType {
 
-        DAMAGE, HEAL, BLINK, WAIT, ADD_AP, BLOODCOST, BLINK_OPPONENT, NONE
+        DAMAGE, HEAL, BLINK, WAIT, ADD_AP, BLOODCOST, BLINK_OPPONENT,
+        DRAW_CARD, UNDRAW_CARD,
+        NONE
     }
 
     public enum Type {
@@ -250,11 +259,16 @@ public final class BasicCard {
         //determine X position to center the title
         int cardWidth = img.getWidth();
         int titleWidth = g.getFontMetrics().stringWidth(name);
+        
+        if (titleWidth > (cardWidth - 32)) {
+            g.setFont(new Font("Arial", Font.BOLD, 18));
+            titleWidth = g.getFontMetrics().stringWidth(name);
+        }
+        
         int xPosition = cardWidth / 2 - titleWidth / 2;
         int yPosition = 32;
         int shiftValue = 2;
-        
-        
+
         //outline
         g.setColor(Color.BLACK);
         g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue));

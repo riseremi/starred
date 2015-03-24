@@ -5,9 +5,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
+import me.riseremi.cards.BasicCard;
+import me.riseremi.cards.CardsArchive;
 import me.riseremi.cards.Hand;
 import me.riseremi.core.Camera;
 import me.riseremi.core.Core_v1;
@@ -201,6 +205,24 @@ public class Entity {
 
     public void addAPInNextTurn(int value) {
         actionPoints += value;
+    }
+
+    public void drawCards(int value) {
+        for (int i = 0; i < value; i++) {
+            try {
+                BasicCard card = CardsArchive.getRandomCard();
+                hand.addCard(card);
+                Core_v1.getInstance().incrementCardsDrawn();
+            } catch (CloneNotSupportedException ex) {
+            }
+        }
+    }
+
+    public void undrawCards(int value) {
+        for (int i = 0; i < value; i++) {
+            hand.removeLastCard();
+//            Core_v1.getInstance().incrementCardsDrawn();
+        }
     }
 
 }

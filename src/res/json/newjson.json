@@ -180,7 +180,7 @@
         "id": "11",
         "image": "/res/cards/backs/card_special.png",
         "art": "/res/cards/arts/art_test.png",
-        "description": "Calls enemy to a selected cell using your blood power. |Minimal_range: 4|Maximal_range: 10",
+        "description": "Calls enemy to a selected cell using your blood power. |Minimal_range:_4 Maximal_range:_10",
         "apcost": "5",
         "range": "4-10",
         "type": "NONE",
@@ -193,6 +193,40 @@
             {
                 "name": "BLINK_OPPONENT",
                 "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "Blessing of the Painter",
+        "id": "12",
+        "image": "/res/cards/backs/card_special.png",
+        "art": "/res/cards/arts/scare.png",
+        "description": "Draws 2 cards into your hand.",
+        "apcost": "3",
+        "range": "0",
+        "type": "NONE",
+        "class": "Jr. Painter",
+        "effects": [
+            {
+                "name": "DRAW_CARD",
+                "value": "2"
+            }
+        ]
+    },
+    {
+        "name": "Painter's Curse",
+        "id": "13",
+        "image": "/res/cards/backs/card_special.png",
+        "art": "/res/cards/arts/scare.png",
+        "description": "Removes 1 card from the hand.",
+        "apcost": "9",
+        "range": "0",
+        "type": "NONE",
+        "class": "Jr. Painter",
+        "effects": [
+            {
+                "name": "UNDRAW_CARD",
+                "value": "1"
             }
         ]
     }

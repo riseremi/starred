@@ -18,11 +18,8 @@ import me.riseremi.utils.Shift;
 public final class Hand {
 
     public static final int SIZE = 8;
-    @Getter
-    private final ArrayList<BasicCard> cards = new ArrayList<>();
-    @Getter
-    @Setter
-    private BasicCard justUsedCard;
+    @Getter private final ArrayList<BasicCard> cards = new ArrayList<>();
+    @Getter @Setter private BasicCard justUsedCard;
 
     public void paint(Graphics2D g) {
         for (int i = 0; i < cards.size(); i++) {
@@ -81,6 +78,12 @@ public final class Hand {
 
     public void removeCard(BasicCard card) {
         cards.remove(card);
+    }
+
+    public void removeLastCard() {
+        if (cards.size() > 0) {
+            cards.remove(cards.size() - 1);
+        }
     }
 
     public void removeCard(int slot) {
