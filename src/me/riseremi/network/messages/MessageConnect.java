@@ -9,14 +9,20 @@ import org.rising.framework.network.Message;
 public class MessageConnect extends Message {
 
     private final String name;
+    private final int iconId;
 
-    public MessageConnect(String name) {
+    public MessageConnect(String name, int iconId) {
         super(Message.Type.CONNECT);
         this.name = name;
+        this.iconId = iconId;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getIconId() {
+        return iconId;
     }
 
     @Override

@@ -16,21 +16,19 @@ public class RButton extends JButton {
 
     private final Color COLOR_BORDER_OUTSIDE = new Color(185, 185, 185);
     private final Color COLOR_BORDER_INSIDE = new Color(252, 252, 252);
-    private Color COLOR_BACKGROUND = new Color(242, 242, 242);
-    private final Color COLOR_BACKGROUND_HOVER = new Color(232, 242, 252);
-    private final Color COLOR_BACKGROUND_NORMAL = new Color(242, 242, 242);
-    private final Color COLOR_TEXT = Color.BLACK;
-    private boolean paintButton;
+    private Color COLOR_BACKGROUND_DISABLED = new Color(189, 195, 199);
+    private Color COLOR_BACKGROUND = new Color(41, 128, 185);
+    private Color COLOR_BACKGROUND_HOVER = new Color(52, 152, 219);
+    private Color COLOR_BACKGROUND_NORMAL = new Color(41, 128, 185);
+    private final Color COLOR_TEXT = Color.WHITE;
+    private boolean decorative;
 
-    public RButton(String text) {
-        this(text, true);
-    }
-
-    public RButton(String text, boolean paintButton) {
+    public RButton(String text, boolean decorative) {
         super(text);
         this.setBorderPainted(false);
         this.setFocusPainted(false);
-        this.paintButton = paintButton;
+        this.decorative = decorative;
+//        setVisible(true);
 
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -52,8 +50,8 @@ public class RButton extends JButton {
 
         g2.setPaint(Color.WHITE);
         g2.fillRect(0, 0, getWidth(), getHeight());
-        if (paintButton) {
-            g2.setPaint(COLOR_BACKGROUND);
+        if (!decorative) {
+            g2.setPaint(isEnabled() ? COLOR_BACKGROUND : COLOR_BACKGROUND_DISABLED);
             g2.fillRect(0, 0, getWidth(), getHeight());
             g2.setPaint(COLOR_TEXT);
 
@@ -61,13 +59,13 @@ public class RButton extends JButton {
             int w = g2.getFontMetrics().stringWidth(text) / 2;
             g2.drawString(text, getWidth() / 2 - w, getHeight() / 2 + getLabelHeight(g2, text) / 4);
 
-            g2.setColor(COLOR_BORDER_OUTSIDE);
-            g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
-
-            g2.setColor(COLOR_BORDER_INSIDE);
-            g2.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
+//            g2.setColor(COLOR_BORDER_OUTSIDE);
+//            g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+//
+//            g2.setColor(COLOR_BORDER_INSIDE);
+//            g2.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
         }
-        
+
         if (getIcon() != null) {
             getIcon().paintIcon(this, g2, 0, 0);
         }

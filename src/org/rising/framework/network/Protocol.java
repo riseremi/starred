@@ -3,19 +3,18 @@ package org.rising.framework.network;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
+import me.riseremi.network.messages.MessageAddToTheLobby;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetFriendId;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.network.messages.MessageSetPlayerId;
-import me.riseremi.network.messages.MessageSetPosition;
+import me.riseremi.ui.windows.LobbyScreen;
 
 /**
  *
@@ -32,19 +31,28 @@ public class Protocol {
         switch (type) {
             case CONNECT:
                 System.out.println("Connection id: " + id);
-                Player p = new Player(((MessageConnect) message).getName(), 0, id, Entity.Type.PLAYER);
+
+                final String name = ((MessageConnect) message).getName();
+                Player p = new Player(name, 0, id, Entity.Type.PLAYER);
 
                 players.add(p);
+                //Main.getLobbyScreen().getPlayersListModel().addElement(name);
 
                 if (players.size() == 2) {
                     for (Entity e : players) {
-                        Server.getInstance().sendToOne(new MessageSetPlayerId(e.getId()), e.getId());
-                        Server.getInstance().sendToAllExcludingOne(new MessageSetFriendId(e.getId()), e.getId());
+                        Server.getInstance().sendToOne(
+                                new MessageSetPlayerId(e.getId()), e.getId());
 
-                        Server.getInstance().sendToAll(new MessageSetName(e.getName(), e.getId()));
-                        //Server.getInstance().sendToOne(new MessageSetName(e.getName(), e.getId()), e.getId());
+                        Server.getInstance().sendToAllExcludingOne(
+                                new MessageSetFriendId(e.getId()), e.getId());
 
+                        Server.getInstance().sendToAll(
+                                new MessageSetName(e.getName(), e.getId()));
+
+                        Server.getInstance().sendToAllExcludingOne(
+                                new MessageAddToTheLobby(e.getName()), e.getId());
                     }
+                    Main.getLobbyScreen().setCanGo();
                 }
                 break;
             case CHAT_MESSAGE:
@@ -92,16 +100,14 @@ public class Protocol {
 
                 core.getPlayerById(id).setName(name);
                 break;
-            case SET_POSITION:
-                message.processClient(message);
-                break;
             case TURN_END:
                 core.startTurn();
                 break;
             case ATTACK:
-                message.processClient(message);
-                break;
             case GAMEOVER_MESSAGE:
+            case ADD_TO_THE_LOBBY:
+            case SET_POSITION:
+            case GO:
                 message.processClient(message);
                 break;
             case PING_MESSAGE:

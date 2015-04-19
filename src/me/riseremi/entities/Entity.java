@@ -16,7 +16,6 @@ import me.riseremi.cards.Hand;
 import me.riseremi.core.Camera;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
-import me.riseremi.items.Item;
 import me.riseremi.main.Main;
 import me.riseremi.map.world.World;
 import me.riseremi.ui.HPBar;
@@ -27,7 +26,6 @@ import me.riseremi.ui.HPBar;
  */
 public class Entity {
 
-    @Getter protected ArrayList<Item> inventory = new ArrayList<>();
     @Getter @Setter protected int hp, maxHp, verticalSpeed, horizontalSpeed, pDef, mDef, pAtk, mAtk;
     @Getter @Setter protected String name;
     //координаты измеряются в тайлах

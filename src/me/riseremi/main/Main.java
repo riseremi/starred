@@ -13,18 +13,22 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.text.DefaultCaret;
+import lombok.Getter;
 import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
 import me.riseremi.json.JSONSLoader;
 import me.riseremi.network.messages.MessageChat;
+import me.riseremi.network.messages.MessageGo;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.ui.windows.LobbyScreen;
 import me.riseremi.ui.windows.LoginScreen;
 import org.rising.framework.network.Client;
+import org.rising.framework.network.Server;
 
 /**
  *
@@ -35,7 +39,7 @@ public class Main extends JFrame implements ActionListener {
 
     public static boolean ENABLE_DEBUG_TOOLS;
     public static boolean CARD_DUMP;
-    public static Main game;
+    public static Main main;
     private static JTextField chatField;
     private static JPanel panel;
     private static boolean enabled = false;
@@ -52,7 +56,8 @@ public class Main extends JFrame implements ActionListener {
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
     private static LoginScreen loginScreen1;
-    private static LobbyScreen lobbyScreen;
+    @Getter private static LobbyScreen lobbyScreen;
+    private static DefaultCaret caret;
 
     public Main(String title) {
         Core_v1.getInstance();
@@ -76,7 +81,7 @@ public class Main extends JFrame implements ActionListener {
 
         JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+        caret = (DefaultCaret) textArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         panel.add(chatField, BorderLayout.SOUTH);
@@ -87,28 +92,11 @@ public class Main extends JFrame implements ActionListener {
         add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);
 
-        //creating login screen
-//        loginScreen = new JPanel();
-//        loginScreen.setLayout(null);
-        int yOffset = 150;
-
-        int frameWidth = getFrames()[0].getWidth();
         setUIFont(new javax.swing.plaf.FontUIResource(MAIN_FONT));
-//
-//        name.setBounds(frameWidth / 4, 100 + yOffset, frameWidth / 2, 24);
-//        ip.setBounds(frameWidth / 4, 130 + yOffset, frameWidth / 2, 24);
-//        server.setBounds(frameWidth / 4, 160 + yOffset, frameWidth / 4, 32);
-//        client.setBounds(frameWidth / 2, 160 + yOffset, frameWidth / 4, 32);
-//
-//        loginScreen.add(name);
-//        loginScreen.add(ip);
-//        loginScreen.add(server);
-//        loginScreen.add(client);
 
-        LoginScreen.getServer().addActionListener(this);
-        LoginScreen.getClient().addActionListener(this);
+        LoginScreen.getHostButton().addActionListener(this);
+        LoginScreen.getJoinButton().addActionListener(this);
         LobbyScreen.getGoButton().addActionListener(this);
-        //client.addActionListener(this);
     }
 
     public static void main(String[] args) throws Exception {
@@ -127,16 +115,14 @@ public class Main extends JFrame implements ActionListener {
 //        su.bleh();
         su2.process();
 
-        game = new Main("Game");
+        main = new Main("Game");
         core = Core_v1.getInstance();
         loginScreen1 = new LoginScreen();
-        lobbyScreen = new LobbyScreen();
 
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 //        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
-        
-        game.add(loginScreen1, BorderLayout.CENTER);
+        main.add(loginScreen1, BorderLayout.CENTER);
         loginScreen1.setVisible(true);
         //lobbyScreen.setVisible(false);
 
@@ -145,7 +131,7 @@ public class Main extends JFrame implements ActionListener {
         core.initBase();
         //core.init();
         //game.add(core);
-        game.setVisible(true);
+        main.setVisible(true);
 
         //only hard only test
         String helpText = "У карт есть радиус использования: у магической — две клетки, у физической — одна. Чтобы использовать карту, нужно подойти к врагу на нужное расстояние и кликнуть на карту в столбике справа. Если по окончании раунда у героя остались AP, в следующем ходу ему начислится одно бонусное AP.";
@@ -201,7 +187,7 @@ public class Main extends JFrame implements ActionListener {
                 }
             }
             chatField.setText("");
-            game.requestFocus();
+            main.requestFocus();
             //.requestFocus();
         } else {
             chatField.requestFocus();
@@ -212,36 +198,41 @@ public class Main extends JFrame implements ActionListener {
         textArea.setBackground(Color.GRAY);
         textArea.append(msg);
         textArea.setBackground(Color.WHITE);
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+    }
+
+    public static void go() {
+        SwingUtilities.invokeLater(() -> {
+            lobbyScreen.setVisible(false);
+            main.add(core);
+            main.requestFocus();
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() ==  LobbyScreen.getGoButton()) {
-            lobbyScreen.setVisible(false);
-            game.remove(lobbyScreen);
-            game.add(core);
-            panel.setVisible(true);
-            game.requestFocus();
+        if (e.getSource() == LobbyScreen.getGoButton()) {
+            try {
+                Server.getInstance().sendToAll(new MessageGo());
+            } catch (Exception ex) {
+            }
         }
-        if (e.getSource() == LoginScreen.getServer()) {
+        if (e.getSource() == LoginScreen.getHostButton()) {
+            lobbyScreen = new LobbyScreen(true);
             core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), true);
-            //game.add(core);
             loginScreen1.setVisible(false);
-            game.remove(loginScreen1);
-            
-            game.add(lobbyScreen, BorderLayout.CENTER);
+            main.add(lobbyScreen, BorderLayout.CENTER);
             lobbyScreen.setVisible(true);
             panel.setVisible(true);
-            //game.requestFocus();
         }
-        
-        if (e.getSource() == LoginScreen.getClient()) {
+
+        if (e.getSource() == LoginScreen.getJoinButton()) {
+            lobbyScreen = new LobbyScreen(false);
             core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), false);
-            game.add(core);
             loginScreen1.setVisible(false);
+            main.add(lobbyScreen, BorderLayout.CENTER);
+            lobbyScreen.setVisible(true);
             panel.setVisible(true);
-            game.remove(loginScreen1);
-            game.requestFocus();
         }
     }
 

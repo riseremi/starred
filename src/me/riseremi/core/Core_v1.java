@@ -58,7 +58,7 @@ public final class Core_v1 extends JPanel {
 //    @Getter @Setter private Rectangle selectionCursor = new Rectangle();
     private long turnStartTime;
     private long timeLeft = 1;
-    private boolean iAmServer;
+    @Getter private boolean serverMode;
     //
     private boolean initialized = false;
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
@@ -83,15 +83,11 @@ public final class Core_v1 extends JPanel {
     }
 
     public void init(int imgId, String ip, String name, boolean isServer) {
-        //particles test
-        //int particlesCount = 1;
-        //ArrayList<Particle> particles = new ArrayList<>();
-
         for (int i = 0; i < particlesCount; i++) {
             particles.add(new Particle());
         }
 
-        iAmServer = isServer;
+        serverMode = isServer;
         player.setName(name);
         friend.setName(name);
         if (isServer) {
@@ -131,14 +127,15 @@ public final class Core_v1 extends JPanel {
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
         //player.setName(name.isEmpty() ? "Server" : name);
-        Main.game.setTitle("Starred - Server");
+        Main.main.setTitle("Starred - Server");
 
         Server.SERVER_IP = "localhost";
         server = Server.getInstance();
         client = Client.getInstance();
 
         try {
-            client.send(new MessageConnect(player.getName()));
+            client.send(new MessageConnect(player.getName(), imgId));
+            Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
         } catch (IOException ex) {
         }
         friend.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5, false);
@@ -147,11 +144,12 @@ public final class Core_v1 extends JPanel {
 
     public void initClient(int imgId, String ip, String name) {
         player.setImage(imgId);
-        Main.game.setTitle("Starred - Client");
+        Main.main.setTitle("Starred - Client");
         client = Client.getInstance();
 
         try {
-            client.send(new MessageConnect(player.getName()));
+            client.send(new MessageConnect(player.getName(), imgId));
+            Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
         } catch (IOException ex) {
         }
         friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
@@ -338,7 +336,7 @@ public final class Core_v1 extends JPanel {
 
         if (!initialized) {
             initialized = true;
-            if (iAmServer) {
+            if (serverMode) {
                 startTurn();
             }
         }

@@ -36,8 +36,8 @@ public class LoginScreen extends JPanel implements ActionListener {
     private final RButton next, previous;
     @Getter private int previewIndex = 0;
     //
-    @Getter private static final JButton server = new RButton("Host"),
-            client = new RButton("Connect"), newNick = new RButton("<");
+    @Getter private static final JButton hostButton = new RButton("Host", false),
+            joinButton = new RButton("Join", false), newNick = new RButton("<", false);
     @Getter private static final JTextField nick = new RTextField(NameGenerator.getName()),
             ip = new RTextField("127.0.0.1");
 
@@ -54,17 +54,17 @@ public class LoginScreen extends JPanel implements ActionListener {
         newNick.setBounds(frameWidth / 4 + nick.getWidth(), 100 + yOffset, 32, 24);
 
         ip.setBounds(frameWidth / 4, 130 + yOffset, frameWidth / 2, 24);
-        server.setBounds(frameWidth / 4, 160 + yOffset, frameWidth / 4, 32);
-        client.setBounds(frameWidth / 2, 160 + yOffset, frameWidth / 4, 32);
+        hostButton.setBounds(frameWidth / 4, 160 + yOffset, frameWidth / 4, 32);
+        joinButton.setBounds(frameWidth / 2, 160 + yOffset, frameWidth / 4, 32);
 
         add(nick);
         add(newNick);
         add(ip);
-        add(server);
-        add(client);
+        add(hostButton);
+        add(joinButton);
 
-        server.addActionListener(this);
-        client.addActionListener(this);
+        hostButton.addActionListener(this);
+        joinButton.addActionListener(this);
         newNick.addActionListener(this);
 
         //
@@ -91,15 +91,15 @@ public class LoginScreen extends JPanel implements ActionListener {
         URL imageURL1 = LoginScreen.class.getResource(imgLocation1);
         URL imageURL2 = LoginScreen.class.getResource(imgLocation2);
 
-        next = new RButton("", false);
+        next = new RButton("", true);
         next.addActionListener(this);
         next.setIcon(new ImageIcon(imageURL1, "Next"));
 
-        previous = new RButton("", false);
+        previous = new RButton("", true);
         previous.addActionListener(this);
         previous.setIcon(new ImageIcon(imageURL2, "Previous"));
 
-        preview = new RButton("", false);
+        preview = new RButton("", true);
         preview.setIcon(new ImageIcon(heroPreviews[0]));
 
         final JLabel jLabel = new JLabel("Select your icon");

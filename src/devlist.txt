@@ -71,7 +71,13 @@ FEATURE LIST
 - implement first playable class (Warrior I think)
     to implement: Bloody Mage, Head Hunter, Bearded Druid etc. (see google sheets)
 - rewrite MouseController from scratch
-- lobby screen
 - rewrite chat alerts
 - ( ͡° ͜ʖ ͡°)
-- chat auto-scrolling
+
+19.04.2015
++ chat auto-scrolling
++ lobby screen
++ something in the way oooooooooh
+- disable Go button instead of hiding
+
+- fix MessageConnect (player's icon selection will work as it should)

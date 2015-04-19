@@ -37,14 +37,9 @@ public final class BasicCard {
 //    @Getter
 //    private final int bloodCost;
     @Getter private final int minRange, maxRange;
-    @Getter
-    private BufferedImage bigCard, smallCard;
-    @Getter
-    @Setter
-    private Rectangle rect;
-    @Getter
-    @Setter
-    private boolean paintBig = false;
+    @Getter private BufferedImage bigCard, smallCard;
+    @Getter @Setter private Rectangle rect;
+    @Getter @Setter private boolean paintBig = false;
     public static final int //
             MAGICAL_SLAIN = 1,
             SWORD_ATTACK = 2,
@@ -78,9 +73,7 @@ public final class BasicCard {
         this.name = name;
         this.effects = effects;
         this.type = type;
-//        this.power = power;
         this.cost = cost;
-//        this.bloodCost = bloodCost;
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.rect = new Rectangle();
@@ -128,7 +121,7 @@ public final class BasicCard {
 
     /* use card */
     private void switchIt(Effect[] effects, Entity user, Entity target) {
-            final Core_v1 core = Core_v1.getInstance();
+        final Core_v1 core = Core_v1.getInstance();
         for (Effect effect1 : effects) {
             EffectType effect = effect1.getEffectType();
             int value = Integer.parseInt((String) effect1.getValue());
@@ -259,12 +252,12 @@ public final class BasicCard {
         //determine X position to center the title
         int cardWidth = img.getWidth();
         int titleWidth = g.getFontMetrics().stringWidth(name);
-        
+
         if (titleWidth > (cardWidth - 32)) {
             g.setFont(new Font("Arial", Font.BOLD, 18));
             titleWidth = g.getFontMetrics().stringWidth(name);
         }
-        
+
         int xPosition = cardWidth / 2 - titleWidth / 2;
         int yPosition = 32;
         int shiftValue = 2;
