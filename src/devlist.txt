@@ -75,9 +75,9 @@ FEATURE LIST
 - ( ͡° ͜ʖ ͡°)
 
 19.04.2015
-+ chat auto-scrolling
 + lobby screen
 + something in the way oooooooooh
-- disable Go button instead of hiding
+~ chat auto-scrolling
+~ fix MessageConnect (player's icon selection will work as it should)
+~ disable Go button instead of hiding
 
-- fix MessageConnect (player's icon selection will work as it should)

@@ -6,7 +6,7 @@
         "art": "/res/cards/arts/magic1.png",
         "description": "The Gods summon pure magic power upon your enemy. Damage=11",
         "apcost": "8",
-        "range": "2",
+        "range": "0-2",
         "type": "MAGIC",
         "effects": [
             {
@@ -22,7 +22,7 @@
         "art": "/res/cards/arts/phys1.png",
         "description": "You use your sword to cut your enemy. |Damage: 7",
         "apcost": "4",
-        "range": "1",
+        "range": "0-1",
         "type": "PHYS",
         "effects": [
             {
@@ -38,7 +38,7 @@
         "art": "/res/cards/arts/fireball.png",
         "description": "Fires a fireball. Damage=3",
         "apcost": "4",
-        "range": "5",
+        "range": "0-5",
         "type": "MAGIC",
         "class": "unknown",
         "effects": [
@@ -72,7 +72,7 @@
         "art": "/res/cards/arts/heal1.png",
         "description": "Restores 5 health points. Healing=5",
         "apcost": "2",
-        "range": "8",
+        "range": "0-8",
         "type": "NONE",
         "class": "unknown",
         "effects": [
@@ -89,7 +89,7 @@
         "art": "/res/cards/arts/art_test.png",
         "description": "Calls power of blood to crush your enemies. Damage=14|Blood_cost=5",
         "apcost": "7",
-        "range": "4",
+        "range": "0-4",
         "type": "NONE",
         "class": "Bloody Mage",
         "effects": [
@@ -148,7 +148,7 @@
         "art": "/res/cards/arts/greater_heal.png",
         "description": "Restores more points than a usual heal. |Healing=10",
         "apcost": "5",
-        "range": "8",
+        "range": "0-8",
         "type": "NONE",
         "class": "Bearded Druid",
         "effects": [

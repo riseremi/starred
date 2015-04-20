@@ -45,7 +45,9 @@ public class Entity {
     @Getter int imgId;
     @Getter @Setter Type type;
     @Getter @Setter int classId;
-    private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "Head Hunter"};
+    private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
+        "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
+        "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter"};
 
     public enum Type {
 

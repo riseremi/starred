@@ -12,9 +12,9 @@ import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetFriendId;
+import me.riseremi.network.messages.MessageSetIconId;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.network.messages.MessageSetPlayerId;
-import me.riseremi.ui.windows.LobbyScreen;
 
 /**
  *
@@ -31,9 +31,11 @@ public class Protocol {
         switch (type) {
             case CONNECT:
                 System.out.println("Connection id: " + id);
+                final MessageConnect connectMessage = (MessageConnect) message;
+                final String name = connectMessage.getName();
+                final int iconId = connectMessage.getIconId();
 
-                final String name = ((MessageConnect) message).getName();
-                Player p = new Player(name, 0, id, Entity.Type.PLAYER);
+                Player p = new Player(name, iconId, id, Entity.Type.PLAYER);
 
                 players.add(p);
                 //Main.getLobbyScreen().getPlayersListModel().addElement(name);
@@ -50,23 +52,20 @@ public class Protocol {
                                 new MessageSetName(e.getName(), e.getId()));
 
                         Server.getInstance().sendToAllExcludingOne(
+                                new MessageSetIconId(e.getImgId()), e.getId());
+
+                        Server.getInstance().sendToAllExcludingOne(
                                 new MessageAddToTheLobby(e.getName()), e.getId());
                     }
                     Main.getLobbyScreen().setCanGo();
                 }
                 break;
             case CHAT_MESSAGE:
-                Server.getInstance().sendToAll(message);
-                break;
             case SET_POSITION:
-                Server.getInstance().sendToAll(message);
-                break;
-            case TURN_END:
-                Server.getInstance().sendToAllExcludingOne(message, id);
-                break;
             case ATTACK:
                 Server.getInstance().sendToAll(message);
                 break;
+            case TURN_END:
             case PING_MESSAGE:
                 Server.getInstance().sendToAllExcludingOne(message, id);
                 break;
@@ -108,6 +107,7 @@ public class Protocol {
             case ADD_TO_THE_LOBBY:
             case SET_POSITION:
             case GO:
+            case SET_ICON_ID:
                 message.processClient(message);
                 break;
             case PING_MESSAGE:

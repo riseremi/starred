@@ -47,26 +47,18 @@ public class Main extends JFrame implements ActionListener {
     private static Core_v1 core;
     private final Controller controller = new Controller(false);
     private final Controller chatController = new Controller(true);
-//    private static JPanel loginScreen;
-    //UI elements for login screen
-//    private static JButton server = new RButton("Host"),
-//            client = new RButton("Connect");
-//    private static JTextField name = new RTextField("Player"),
-//            ip = new RTextField("127.0.0.1");
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
-    private static LoginScreen loginScreen1;
+    private static LoginScreen loginScreen;
     @Getter private static LobbyScreen lobbyScreen;
     private static DefaultCaret caret;
 
     public Main(String title) {
-        Core_v1.getInstance();
+
         setTitle(title);
-        //setBounds(10, 10, Global.windowWidth, Global.windowHeight);
         setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-//        setUndecorated(true);////////////////////////////////////////
         addKeyListener(controller);
 
         this.setLayout(new BorderLayout());
@@ -91,15 +83,18 @@ public class Main extends JFrame implements ActionListener {
         chatField.addKeyListener(chatController);
         add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);
-
-        setUIFont(new javax.swing.plaf.FontUIResource(MAIN_FONT));
+        
+        //setUIFont(new javax.swing.plaf.FontUIResource(MAIN_FONT));
 
         LoginScreen.getHostButton().addActionListener(this);
         LoginScreen.getJoinButton().addActionListener(this);
         LobbyScreen.getGoButton().addActionListener(this);
+
     }
 
     public static void main(String[] args) throws Exception {
+        long start = System.currentTimeMillis();
+
         if (args.length > 0 && "--debug".equals(args[0])) {
             ENABLE_DEBUG_TOOLS = true;
         }
@@ -110,39 +105,34 @@ public class Main extends JFrame implements ActionListener {
 
 //        System.out.println((char) 31);
 //        System.exit(0);
-        //StringUtils su = new JSONSLoader();
         JSONSLoader su2 = new JSONSLoader();
-//        su.bleh();
         su2.process();
 
         main = new Main("Game");
         core = Core_v1.getInstance();
-        loginScreen1 = new LoginScreen();
+        loginScreen = new LoginScreen();
 
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 //        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        main.add(loginScreen, BorderLayout.CENTER);
+        loginScreen.setVisible(true);
 
-        main.add(loginScreen1, BorderLayout.CENTER);
-        loginScreen1.setVisible(true);
-        //lobbyScreen.setVisible(false);
-
-        //game.add(loginScreen, BorderLayout.CENTER);
-        //loginScreen.setVisible(true);
         core.initBase();
-        //core.init();
-        //game.add(core);
         main.setVisible(true);
 
+        //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+        System.out.println("\nStarted in " + (System.currentTimeMillis() - start) + " ms");
+
         //only hard only test
-        String helpText = "У карт есть радиус использования: у магической — две клетки, у физической — одна. Чтобы использовать карту, нужно подойти к врагу на нужное расстояние и кликнуть на карту в столбике справа. Если по окончании раунда у героя остались AP, в следующем ходу ему начислится одно бонусное AP.";
-        JFrame help = new JFrame();
-        final JTextArea jTextArea = new JTextArea(helpText);
-        jTextArea.setLineWrap(true);
-        jTextArea.setWrapStyleWord(true);
-        help.add(jTextArea, BorderLayout.CENTER);
-        help.setSize(new Dimension(320, 240));
-        help.setPreferredSize(new Dimension(320, 240));
-        help.setLocation(100, 100);
+//        String helpText = "У карт есть радиус использования: у магической — две клетки, у физической — одна. Чтобы использовать карту, нужно подойти к врагу на нужное расстояние и кликнуть на карту в столбике справа. Если по окончании раунда у героя остались AP, в следующем ходу ему начислится одно бонусное AP.";
+//        JFrame help = new JFrame();
+//        final JTextArea jTextArea = new JTextArea(helpText);
+//        jTextArea.setLineWrap(true);
+//        jTextArea.setWrapStyleWord(true);
+//        help.add(jTextArea, BorderLayout.CENTER);
+//        help.setSize(new Dimension(320, 240));
+//        help.setPreferredSize(new Dimension(320, 240));
+//        help.setLocation(100, 100);
         //help.setVisible(true);
     }
 
@@ -219,8 +209,8 @@ public class Main extends JFrame implements ActionListener {
         }
         if (e.getSource() == LoginScreen.getHostButton()) {
             lobbyScreen = new LobbyScreen(true);
-            core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), true);
-            loginScreen1.setVisible(false);
+            core.init(loginScreen.getPreviewIndex(), LoginScreen.getIpField().getText(), LoginScreen.getNickField().getText(), true);
+            loginScreen.setVisible(false);
             main.add(lobbyScreen, BorderLayout.CENTER);
             lobbyScreen.setVisible(true);
             panel.setVisible(true);
@@ -228,8 +218,8 @@ public class Main extends JFrame implements ActionListener {
 
         if (e.getSource() == LoginScreen.getJoinButton()) {
             lobbyScreen = new LobbyScreen(false);
-            core.init(loginScreen1.getPreviewIndex(), LoginScreen.getIp().getText(), LoginScreen.getNick().getText(), false);
-            loginScreen1.setVisible(false);
+            core.init(loginScreen.getPreviewIndex(), LoginScreen.getIpField().getText(), LoginScreen.getNickField().getText(), false);
+            loginScreen.setVisible(false);
             main.add(lobbyScreen, BorderLayout.CENTER);
             lobbyScreen.setVisible(true);
             panel.setVisible(true);

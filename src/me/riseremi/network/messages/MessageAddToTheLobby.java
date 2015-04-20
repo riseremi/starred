@@ -29,7 +29,7 @@ public class MessageAddToTheLobby extends Message {
     public void processClient(Message message) {
         final MessageAddToTheLobby message1 = (MessageAddToTheLobby) message;
         Main.getLobbyScreen().getPlayersListModel().addElement(message1.getName());
-        System.out.println("Added to: " + message1.getName());
+        System.out.println("Added: " + message1.getName());
     }
 
 }

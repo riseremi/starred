@@ -17,16 +17,13 @@ import me.riseremi.utils.RLE;
 public final class IOManager {
 
     public static void newLoadFromFileToVersion2(String fileName, World world) throws IOException {
-        File f = new File(fileName);
-        //f.createNewFile();
-
         //BufferedReader br = new BufferedReader(new FileReader(fileName));
         //BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath()));
         
         InputStream reader = IOManager.class.getResourceAsStream(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(reader));
 
-        System.out.println("Loading map...");
+        System.out.println("\nLoading map...");
 
         long start = System.currentTimeMillis();
 
@@ -131,10 +128,9 @@ public final class IOManager {
                 getLayer(2).setTile(x, y, tempLayout2.get(y).get(x));
             }
         }
-        System.out.println("Done!");
 
-        long end = System.currentTimeMillis();
-        System.out.println("Lapsed: " + String.valueOf(end - start) + " millis\r\n");
+        System.out.println("Lapsed: " + (System.currentTimeMillis() - start) + " ms");
+        System.out.println("Done!");
     }
 
     //загрузка карты из ТХТ ФИЛЕ    
@@ -208,13 +204,14 @@ public final class IOManager {
 
     //возвращает слой с номером
     public static TiledLayer getLayer(int i) {
+        final World world = Core_v1.getInstance().getWorld();
         switch (i) {
             case 0:
-                return Core_v1.getInstance().getWorld().getNullLayer();
+                return world.getNullLayer();
             case 1:
-                return Core_v1.getInstance().getWorld().getWorldLayer();
+                return world.getWorldLayer();
             case 2:
-                return Core_v1.getInstance().getWorld().getObjectsLayer();
+                return world.getObjectsLayer();
             default:
                 return null;
         }

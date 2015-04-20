@@ -76,11 +76,10 @@ public class MouseController implements MouseListener, MouseMotionListener {
         }
 
         //check if there are entity
-        int entitiesThere = 0;
-        if (entitiesThere > 0) {
-            thereIsFriend = thereIsPlayer = true;
-        }
-
+//        int entitiesThere = 0;
+//        if (entitiesThere > 0) {
+//            thereIsFriend = thereIsPlayer = true;
+//        }
         //
         if (e.getButton() == MouseEvent.BUTTON3 && !core.isTileSelectionMode() /*&& core.isConnected()*/) {
             if (deck.getActiveCard() != null) {
@@ -99,7 +98,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         boolean near = justUsedCard != null
                 ? core.rangeMatches(user, realX, realY, justUsedCard)
                 : false;
-        
+
         if (near && !thereIsObstacle) {
 
             final Client instance = Client.getInstance();
@@ -131,7 +130,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
                     case HEAL:
                     case BLOODCOST:
                     case DRAW_CARD:
-                        if (/*(thereIsFriend || thereIsPlayer) && */!attackMessageSent) {
+                        if ((thereIsFriend || thereIsPlayer) && !attackMessageSent) {
                             //instance.send(new MessageAttack(userId, targetId, justUsedCardId));
                             messagesToSend.add(new MessageAttack(userId, targetId, justUsedCardId));
                             attackMessageSent = true;

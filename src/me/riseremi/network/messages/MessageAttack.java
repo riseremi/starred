@@ -45,7 +45,6 @@ public class MessageAttack extends Message {
 
         BasicCard card;
         try {
-            System.out.println(msgA.getCardId());
             card = CardsArchive.get(msgA.getCardId());
             
             final Entity user = core.getPlayerById(msgA.getUserId());

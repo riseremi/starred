@@ -27,7 +27,7 @@ public class CardsArchivev2 {
         int id = getInt((String) hashMap.get("id"));
         int apcost = getInt((String) hashMap.get("apcost"));
 
-        int minRange = 0, maxRange = 0;
+        int minRange = 0, maxRange;
         //
         String rangeStr = (String) hashMap.get("range");
 
