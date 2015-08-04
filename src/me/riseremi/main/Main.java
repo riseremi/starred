@@ -108,7 +108,7 @@ public class Main extends JFrame implements ActionListener {
         JSONSLoader su2 = new JSONSLoader();
         su2.process();
 
-        main = new Main("Game");
+        main = new Main("Starred Classic");
         core = Core_v1.getInstance();
         loginScreen = new LoginScreen();
 
