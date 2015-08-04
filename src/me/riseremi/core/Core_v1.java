@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JPanel;
 import lombok.Getter;
@@ -132,11 +131,11 @@ public final class Core_v1 extends JPanel {
         addMouseMotionListener(new MouseController());
     }
 
-    //inits both server and client
-    //need to recode to get standalone server
+    // inits both server and client
+    // need to recode to get standalone server
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
-        Main.main.setTitle("Starred - Server");
+        Main.main.setTitle(Main.GAME_TITLE + " - Server");
 
         Server.SERVER_IP = "localhost";
         server = Server.getInstance();
@@ -153,7 +152,7 @@ public final class Core_v1 extends JPanel {
 
     public void initClient(int imgId, String ip, String name) {
         player.setImage(imgId);
-        Main.main.setTitle("Starred - Client");
+        Main.main.setTitle(Main.GAME_TITLE + " - Client");
         client = Client.getInstance();
 
         try {

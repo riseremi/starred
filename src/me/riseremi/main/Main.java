@@ -37,6 +37,7 @@ import org.rising.framework.network.Server;
  */
 public class Main extends JFrame implements ActionListener {
 
+    public static final String GAME_TITLE = "Starred Classic";
     public static boolean ENABLE_DEBUG_TOOLS;
     public static boolean CARD_DUMP;
     public static Main main;
@@ -54,7 +55,6 @@ public class Main extends JFrame implements ActionListener {
     private static DefaultCaret caret;
 
     public Main(String title) {
-
         setTitle(title);
         setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,8 +84,6 @@ public class Main extends JFrame implements ActionListener {
         add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);
         
-        //setUIFont(new javax.swing.plaf.FontUIResource(MAIN_FONT));
-
         LoginScreen.getHostButton().addActionListener(this);
         LoginScreen.getJoinButton().addActionListener(this);
         LobbyScreen.getGoButton().addActionListener(this);
@@ -106,7 +104,7 @@ public class Main extends JFrame implements ActionListener {
         JSONSLoader jsonLoader = new JSONSLoader();
         jsonLoader.process();
 
-        main = new Main("Starred Classic");
+        main = new Main(GAME_TITLE);
         core = Core_v1.getInstance();
         loginScreen = new LoginScreen();
 
@@ -119,7 +117,7 @@ public class Main extends JFrame implements ActionListener {
         System.out.println("\nStarted in " + (System.currentTimeMillis() - start) + " ms");
     }
 
-    //if Enter pressed
+    // Enter pressed
     public static void toggleChat() {
         enabled = !enabled;
         chatField.setEnabled(enabled);
