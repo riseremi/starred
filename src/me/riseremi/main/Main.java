@@ -103,37 +103,20 @@ public class Main extends JFrame implements ActionListener {
             CARD_DUMP = true;
         }
 
-//        System.out.println((char) 31);
-//        System.exit(0);
-        JSONSLoader su2 = new JSONSLoader();
-        su2.process();
+        JSONSLoader jsonLoader = new JSONSLoader();
+        jsonLoader.process();
 
         main = new Main("Starred Classic");
         core = Core_v1.getInstance();
         loginScreen = new LoginScreen();
 
-//        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         main.add(loginScreen, BorderLayout.CENTER);
         loginScreen.setVisible(true);
 
         core.initBase();
         main.setVisible(true);
 
-        //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-
         System.out.println("\nStarted in " + (System.currentTimeMillis() - start) + " ms");
-
-        //only hard only test
-//        String helpText = "У карт есть радиус использования: у магической — две клетки, у физической — одна. Чтобы использовать карту, нужно подойти к врагу на нужное расстояние и кликнуть на карту в столбике справа. Если по окончании раунда у героя остались AP, в следующем ходу ему начислится одно бонусное AP.";
-//        JFrame help = new JFrame();
-//        final JTextArea jTextArea = new JTextArea(helpText);
-//        jTextArea.setLineWrap(true);
-//        jTextArea.setWrapStyleWord(true);
-//        help.add(jTextArea, BorderLayout.CENTER);
-//        help.setSize(new Dimension(320, 240));
-//        help.setPreferredSize(new Dimension(320, 240));
-//        help.setLocation(100, 100);
-        //help.setVisible(true);
     }
 
     //if Enter pressed
@@ -156,7 +139,6 @@ public class Main extends JFrame implements ActionListener {
                         case "/setname":
                             core2.getPlayer().setName(msgBody);
                             try {
-                                //core2.getNetwork().sendData(new NetworkMessage(NetworkMessage.SET_FRIEND_NAME, msgBody));
                                 MessageSetName msgSetName = new MessageSetName(msgBody, Core_v1.getInstance().getPlayer().getId());
                                 Client.getInstance().send(msgSetName);
                             } catch (IOException ex) {
@@ -178,7 +160,6 @@ public class Main extends JFrame implements ActionListener {
             }
             chatField.setText("");
             main.requestFocus();
-            //.requestFocus();
         } else {
             chatField.requestFocus();
         }

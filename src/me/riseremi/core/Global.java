@@ -25,9 +25,6 @@ public final class Global {
 //    public final static String pathToTheTiles = "/res/pooshka_tiles.png";
     //спрайты вещей
     public final static SpriteSheet items = new SpriteSheet();
-    //длина типа сообщения в заголовке NetworkMessage
-    //mov - передвижение, msg - сообщение в чат, ita - отправить предмет, itd - удалить предмет
-    public final static int headerLength = 3;
 
     public static int translateX(int x) {
         final int blocksX = Core_v1.getInstance().getWorld().getWorldLayer().getBlocksX();

@@ -37,7 +37,6 @@ public class Controller implements KeyListener {
         World world = Core_v1.getInstance().getWorld();
 
         //блокировка передвижения, пока не подключится клиент
-        //if (Core_v1.getInstance().isConnected()) {
         if (!isChat && Core_v1.getInstance().isNextTurnAvailable()) {
             try {
                 HeroController.heroController(player, world, ke);
@@ -46,7 +45,6 @@ public class Controller implements KeyListener {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //}
 
         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
             Main.toggleChat();

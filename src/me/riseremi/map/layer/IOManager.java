@@ -17,21 +17,14 @@ import me.riseremi.utils.RLE;
 public final class IOManager {
 
     public static void newLoadFromFileToVersion2(String fileName, World world) throws IOException {
-        //BufferedReader br = new BufferedReader(new FileReader(fileName));
-        //BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath()));
-        
         InputStream reader = IOManager.class.getResourceAsStream(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(reader));
 
         System.out.println("\nLoading map...");
 
         long start = System.currentTimeMillis();
-
-        //String fileContent = MapHash.getFileData(fileName);
-        //fileContent = MapHash.decompress(fileContent);
-        //System.out.println("NAME: " + fileName);
+        
         String fileContent = br.readLine();
-        //fileContent = MapHash.decompress(fileContent);
 
         int width = Integer.valueOf(getProperty("width", fileContent));
         int height = Integer.valueOf(getProperty("height", fileContent));
@@ -48,11 +41,6 @@ public final class IOManager {
         String layer1 = getProperty("data-1", fileContent);
         String layer2 = getProperty("data-2", fileContent);
 
-        //String teleports = getProperty("teleports", fileContent);
-        //String animation = getProperty("animation", fileContent);
-        //layer0 = MapHash.decode(layer0);
-        //layer1 = MapHash.decode(layer1);
-        //layer2 = MapHash.decode(layer2);
         layer0 = RLE.decompress(layer0);
         layer1 = RLE.decompress(layer1);
         layer2 = RLE.decompress(layer2);

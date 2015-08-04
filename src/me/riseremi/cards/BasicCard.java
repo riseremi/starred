@@ -23,19 +23,14 @@ import me.riseremi.utils.Shift;
 public final class BasicCard {
 
     private BufferedImage back, art;
-    //private String description;
-    //
     @Getter
     private final int id;
     @Getter
     private final String name;
-//    @Getter @Setter private EffectType effect;
     @Getter
     private final Type type;
     @Getter
     private final int cost;
-//    @Getter
-//    private final int bloodCost;
     @Getter private final int minRange, maxRange;
     @Getter private BufferedImage bigCard, smallCard;
     @Getter @Setter private Rectangle rect;
@@ -54,8 +49,6 @@ public final class BasicCard {
     //
     @Getter
     @Setter
-    //private EffectType[] effects;
-    //    private HashMap<String, Object> effectsMap;
     private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
@@ -129,10 +122,6 @@ public final class BasicCard {
                 case DAMAGE:
                     target.dealPhysicalDamage(value);
                     break;
-//                case BLINK:
-//                    break;
-//                case BLINK_OPPONENT:
-//                    break;
                 case DRAW_CARD:
                     user.drawCards(value);
                     break;
@@ -217,8 +206,6 @@ public final class BasicCard {
         try {
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                     RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            //g.setBackground(background);
-            //g.clearRect(0, 0, width, height);
             g.drawImage(img, 0, 0, width, height, null);
         } finally {
             g.dispose();
@@ -227,7 +214,6 @@ public final class BasicCard {
     }
 
     private BufferedImage buildBigCard(BufferedImage img, BufferedImage art, String s, String name, int id) {
-        //s = s.replace("|", "\n");
         StringBuilder sb = new StringBuilder(s);
 
         int i = 0;
@@ -235,7 +221,6 @@ public final class BasicCard {
             sb.replace(i, i + 1, "\n");
         }
 
-        //System.out.println(sb.toString());
         String temp = sb.toString().replace("|", "\n").replace("=", ": ");
         temp = temp.replace("_", " ");
         String[] strings = temp.split("\n");

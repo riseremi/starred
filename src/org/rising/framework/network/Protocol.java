@@ -38,7 +38,6 @@ public class Protocol {
                 Player p = new Player(name, iconId, id, Entity.Type.PLAYER);
 
                 players.add(p);
-                //Main.getLobbyScreen().getPlayersListModel().addElement(name);
 
                 if (players.size() == 2) {
                     for (Entity e : players) {

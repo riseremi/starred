@@ -44,7 +44,6 @@ public final class Hand {
             g.drawString("" + card.getCost(), Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1));
 
             //red color for cards with blood cost
-            //Color overlayNumberColor = card.getBloodCost() == 0 ? Color.WHITE : Color.RED;
             g.setColor(Color.WHITE);
             g.drawString("" + card.getCost(), x, y);
 

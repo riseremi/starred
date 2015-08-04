@@ -38,39 +38,56 @@ import org.rising.framework.network.Server;
  */
 public final class Core_v1 extends JPanel {
 
-    private @Getter @Setter Player player;
-    private @Getter Friend friend;
-    private @Getter World world;
-    private @Getter Server server;
-    private @Getter Client client;
+    private @Getter
+    @Setter
+    Player player;
+    private @Getter
+    Friend friend;
+    private @Getter
+    World world;
+    private @Getter
+    Server server;
+    private @Getter
+    Client client;
     private ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private @Getter @Setter
+    private @Getter
+    @Setter
     boolean connected = false;
     private BufferedImage waitingImage;
-    @Getter @Setter private boolean nextTurnAvailable;
+    @Getter
+    @Setter
+    private boolean nextTurnAvailable;
     private Font walkwayBold;
     //
-    @Setter @Getter private boolean cardJustUsed;
+    @Setter
+    @Getter
+    private boolean cardJustUsed;
     private long effectStartTime;
     //
-    @Getter @Setter private boolean tileSelectionMode = false;
-//    @Getter @Setter private Rectangle selectionCursor = new Rectangle();
+    @Getter
+    @Setter
+    private boolean tileSelectionMode = false;
     private long turnStartTime;
     private long timeLeft = 1;
-    @Getter private boolean serverMode;
+    @Getter
+    private boolean serverMode;
     //
     private boolean initialized = false;
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
-    @Getter @Setter private Camera camera;
-    @Getter @Setter private SelectionCursor selectionCursor;
-//    @Getter @Setter private boolean selectionMode;
-    @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
-    @Setter private boolean gameOver;
-    @Setter private int winnerId;
-    //
-    int particlesCount = 100;
-    ArrayList<Particle> particles = new ArrayList<>();
+    @Getter
+    @Setter
+    private Camera camera;
+    @Getter
+    @Setter
+    private SelectionCursor selectionCursor;
+    @Getter
+    @Setter
+    private int cardsDrawn = 0, cardsDrawnLimit = 30;
+    @Setter
+    private boolean gameOver;
+    @Setter
+    private int winnerId;
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -83,10 +100,6 @@ public final class Core_v1 extends JPanel {
     }
 
     public void init(int imgId, String ip, String name, boolean isServer) {
-        for (int i = 0; i < particlesCount; i++) {
-            particles.add(new Particle());
-        }
-
         serverMode = isServer;
         player.setName(name);
         friend.setName(name);
@@ -109,7 +122,6 @@ public final class Core_v1 extends JPanel {
 
         try {
             IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
-            //waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
             player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
@@ -118,15 +130,12 @@ public final class Core_v1 extends JPanel {
         }
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseController());
-//        addMouseListener(new MouseController());
-//        addMouseMotionListener(new MouseController());
     }
 
     //inits both server and client
     //need to recode to get standalone server
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
-        //player.setName(name.isEmpty() ? "Server" : name);
         Main.main.setTitle("Starred - Server");
 
         Server.SERVER_IP = "localhost";
@@ -161,10 +170,6 @@ public final class Core_v1 extends JPanel {
         }
     }
 
-    /**
-     *
-     * @param g2
-     */
     @Override
     public void paint(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
@@ -193,9 +198,6 @@ public final class Core_v1 extends JPanel {
         player.getHpBar().paint(g2, player);
         friend.getHpBar().paint(g2, friend);
 
-//        if (isSelectionMode()) {
-//            selectionCursor.paint(g);
-//        }
         final Player player1 = player;
         final Hand hand = player1.getHand();
 
@@ -223,12 +225,9 @@ public final class Core_v1 extends JPanel {
             for (int w = radius * 2 + 1; w > 0; w -= 2) {
                 g.fillRect(xo - w / 2 * 32, yo + (radius - w / 2) * 32, w * 32, 32);
             }
-            //camera.untranslate(g);
-
             //test draw min range
             g.setColor(new Color(52, 152, 219, 50));
 
-            //camera.translate(g);
             for (int w = 1; w < minRadius * 2 + 1; w += 2) {
                 g.fillRect(xo - w / 2 * 32, yo - (minRadius - w / 2) * 32, w * 32, 32);
             }
@@ -242,8 +241,6 @@ public final class Core_v1 extends JPanel {
         g.setFont(walkwayBold);
 
         if (tileSelectionMode) {
-            //g.drawRect(selectionCursor.x, selectionCursor.y, 32, 32);
-
             selectionCursor.paint(g2);
 
             g.setColor(Color.WHITE);
@@ -281,21 +278,6 @@ public final class Core_v1 extends JPanel {
             nextTurnAvailable = false;
             gameOver = true;
             winnerId = player.isDead() ? friend.getId() : player.getId();
-//
-//            int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
-//
-//            g.setColor(new Color(0, 0, 0, 0.5f));
-//            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
-//                    Global.WINDOW_WIDTH, overlayHeight);
-//
-//            Font trb = new Font("Arial", Font.BOLD, 28);
-//            g.setFont(trb);
-//
-//            g.setColor(Color.WHITE);
-//
-//            String message = player.isDead() ? friend.getName() + " wins"
-//                    : player.getName() + " wins";
-//            g.drawString(message, 400, 310);
         }
 
         //game over if cardsDrawn > cardsDrawnLimit
@@ -354,39 +336,6 @@ public final class Core_v1 extends JPanel {
         }
 
         repaint();
-
-        //clear background
-//        g2.setColor(Color.BLACK);
-//        g2.fillRect(0, 0, 640, 480);
-        for (int i = 0; i < particles.size(); i++) {
-            Particle p = particles.get(i);
-
-            Random rnd = new Random();
-
-            //p.setOpacity(rnd.nextInt(255));
-            g2.setColor(new Color(p.getR(), p.getG(), p.getB()));
-
-            g2.fillArc(p.x + camera.getX(), p.y + camera.getY(), (int) p.getRadius(),
-                    (int) p.getRadius(), 0, 360);
-
-            p.setRemainingLife(p.getRemainingLife() - 1);
-            p.setRadius(p.getRadius() - 1);
-
-            //System.out.println("life: " + p.getRemainingLife());
-//            p.getLocation().x += p.getSpeed().x;
-//            p.getLocation().y += p.getSpeed().y;
-            p.x += p.getSpeed().x;
-            p.y += p.getSpeed().y;
-
-            final int greenComponent = rnd.nextInt((250 / (int) p.getLife() * (int) p.getRemainingLife()) + 1);
-            p.setG(greenComponent);
-
-            //System.out.println("greencomp:" + ((int) (250 / p.getLife() * p.getRemainingLife()) + 1));
-            if (p.getRemainingLife() < 0 || p.getRadius() < 0) {
-                particles.remove(p);
-                particles.add(new Particle());
-            }
-        }
     }
 
     /**
