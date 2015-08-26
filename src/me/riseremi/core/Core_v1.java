@@ -37,56 +37,33 @@ import org.rising.framework.network.Server;
  */
 public final class Core_v1 extends JPanel {
 
-    private @Getter
-    @Setter
-    Player player;
-    private @Getter
-    Friend friend;
-    private @Getter
-    World world;
-    private @Getter
-    Server server;
-    private @Getter
-    Client client;
-    private ArrayList<Window> windows = new ArrayList<>();
+    private @Getter @Setter Player player;
+    private @Getter Friend friend;
+    private @Getter World world;
+    private @Getter Server server;
+    private @Getter Client client;
+    private final ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private @Getter
-    @Setter
-    boolean connected = false;
+    private @Getter @Setter boolean connected = false;
     private BufferedImage waitingImage;
-    @Getter
-    @Setter
-    private boolean nextTurnAvailable;
+    @Getter @Setter private boolean nextTurnAvailable;
     private Font walkwayBold;
     //
-    @Setter
-    @Getter
-    private boolean cardJustUsed;
+    @Setter @Getter private boolean cardJustUsed;
     private long effectStartTime;
     //
-    @Getter
-    @Setter
-    private boolean tileSelectionMode = false;
+    @Getter @Setter private boolean tileSelectionMode = false;
     private long turnStartTime;
     private long timeLeft = 1;
-    @Getter
-    private boolean serverMode;
+    @Getter private boolean serverMode;
     //
     private boolean initialized = false;
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
-    @Getter
-    @Setter
-    private Camera camera;
-    @Getter
-    @Setter
-    private SelectionCursor selectionCursor;
-    @Getter
-    @Setter
-    private int cardsDrawn = 0, cardsDrawnLimit = 30;
-    @Setter
-    private boolean gameOver;
-    @Setter
-    private int winnerId;
+    @Getter @Setter private Camera camera;
+    @Getter @Setter private SelectionCursor selectionCursor;
+    @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
+    @Setter private boolean gameOver;
+    @Setter private int winnerId;
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -102,8 +79,7 @@ public final class Core_v1 extends JPanel {
         serverMode = isServer;
         player.setName(name);
         friend.setName(name);
-        if (isServer) {
-            initServer(imgId, name);
+        if (isServer) {         initServer(imgId, name);
         } else {
             Server.SERVER_IP = ip;
             initClient(imgId, ip, name);
@@ -153,9 +129,7 @@ public final class Core_v1 extends JPanel {
     public void initClient(int imgId, String ip, String name) {
         player.setImage(imgId);
         Main.main.setTitle(Main.GAME_TITLE + " - Client");
-        client = Client.getInstance();
-
-        try {
+        client = Client.getInstance();        try {
             client.send(new MessageConnect(player.getName(), imgId));
             Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
         } catch (IOException ex) {
@@ -298,8 +272,7 @@ public final class Core_v1 extends JPanel {
             int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
 
             g.setColor(new Color(0, 0, 0, 0.5f));
-            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
-                    Global.WINDOW_WIDTH, overlayHeight);
+            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,                    Global.WINDOW_WIDTH, overlayHeight);
 
             Font trb = new Font("Arial", Font.BOLD, 28);
             g.setFont(trb);
