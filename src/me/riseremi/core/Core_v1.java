@@ -339,7 +339,7 @@ public final class Core_v1 extends JPanel {
 
     /**
      * End current turn, reset player's ADD_AP (Action Points) to its default
-     * value (10), disables all actions
+     * value (10), disable all actions
      *
      * @throws java.io.IOException
      */

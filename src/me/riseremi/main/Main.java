@@ -51,7 +51,8 @@ public class Main extends JFrame implements ActionListener {
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
     private static LoginScreen loginScreen;
-    @Getter private static LobbyScreen lobbyScreen;
+    @Getter
+    private static LobbyScreen lobbyScreen;
     private static DefaultCaret caret;
 
     public Main(String title) {
@@ -83,7 +84,7 @@ public class Main extends JFrame implements ActionListener {
         chatField.addKeyListener(chatController);
         add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);
-        
+
         LoginScreen.getHostButton().addActionListener(this);
         LoginScreen.getJoinButton().addActionListener(this);
         LobbyScreen.getGoButton().addActionListener(this);
@@ -142,12 +143,6 @@ public class Main extends JFrame implements ActionListener {
                             } catch (IOException ex) {
                             }
                             break;
-                    }
-                } else if (msgText.equals("/ping")) {
-                    MessagePing msg = new MessagePing(System.currentTimeMillis(), false);
-                    try {
-                        Client.getInstance().send(msg);
-                    } catch (IOException ex) {
                     }
                 } else {
                     try {
