@@ -3,12 +3,17 @@ package me.riseremi.map.layer;
 import me.riseremi.core.Core_v1;
 import me.riseremi.map.world.World;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import me.riseremi.utils.RLE;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -23,7 +28,7 @@ public final class IOManager {
         System.out.println("\nLoading map...");
 
         long start = System.currentTimeMillis();
-        
+
         String fileContent = br.readLine();
 
         int width = Integer.valueOf(getProperty("width", fileContent));
@@ -117,8 +122,35 @@ public final class IOManager {
             }
         }
 
+        dump(tempLayout0, tempLayout1, tempLayout2);
+
         System.out.println("Lapsed: " + (System.currentTimeMillis() - start) + " ms");
         System.out.println("Done!");
+    }
+
+    private static void dump(ArrayList<ArrayList<Integer>> obstacles,
+            ArrayList<ArrayList<Integer>> background,
+            ArrayList<ArrayList<Integer>> decorations) throws IOException {
+        String fileName = "map_dump.json";
+        File f = new File(fileName);
+        if (!f.exists()) {
+            f.createNewFile();
+        }
+
+        JSONObject mapJSON = new JSONObject();
+        mapJSON.put("obstacles_layer", obstacles)
+                .put("background_layer", background)
+                .put("decorations_layer", decorations);
+
+        try {
+            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"))) {
+                bw.write(mapJSON.toString(2));
+                bw.newLine();
+                bw.flush();
+            }
+        } catch (IOException | JSONException ex) {
+            System.out.println(ex.toString());
+        }
     }
 
     //загрузка карты из ТХТ ФИЛЕ    
