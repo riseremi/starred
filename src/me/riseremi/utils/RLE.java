@@ -41,8 +41,12 @@ public class RLE {
         return sb.toString();
     }
 
-    //decompressing input array
     public static String decompress(String data) {
+        return decompress(data, " ");
+    }
+
+    //decompressing input array
+    public static String decompress(String data, String separator) {
         ArrayList<Integer> tempLayout = new ArrayList<>();
 
         String[] tiles = data.split(" ");
@@ -71,7 +75,7 @@ public class RLE {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < decoded.length; i++) {
-            sb.append(String.valueOf(decoded[i])).append(" ");
+            sb.append(String.valueOf(decoded[i])).append(separator);
         }
 
         return sb.toString();

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public final class TiledLayer extends Layer {
 
     private final int[][] map;//[x][y]
-    private final int[][] visiblity;//[x][y] 
+//    private final int[][] visiblity;//[x][y] 
     private final BufferedImage[] tiles;
     private final int tileWidth, tileHeight;
     private final int horizontalTilesNumber, verticalTilesNumber;
@@ -41,7 +41,7 @@ public final class TiledLayer extends Layer {
             }
         }
 
-        visiblity = new int[width][height];
+//        visiblity = new int[width][height];
     }
 
     public int[][] getMap() {
@@ -88,17 +88,17 @@ public final class TiledLayer extends Layer {
         return tileId;
     }
 
-    public int[][] getVisiblity() {
-        return visiblity;
-    }
-
-    public boolean isLighted(int x, int y) {
-        return visiblity[x][y] == 1;
-    }
-
-    public void setVisiblity(int x, int y, int state) {
-        visiblity[x][y] = state;
-    }
+//    public int[][] getVisiblity() {
+//        return visiblity;
+//    }
+//
+//    public boolean isLighted(int x, int y) {
+//        return visiblity[x][y] == 1;
+//    }
+//
+//    public void setVisiblity(int x, int y, int state) {
+//        visiblity[x][y] = state;
+//    }
 
     public void fillRectTile(int x, int y, int w, int h, int tileId) {
         for (int i = y; i < y + h; i++) {
@@ -124,17 +124,17 @@ public final class TiledLayer extends Layer {
         }
 
         //обнуляем
-        for (int i = 0; i < Global.horizontalTiles; i++) {
-            for (int j = 0; j < Global.verticalTiles; j++) {
-                visiblity[i][j] = 0;
-            }
-        }
+//        for (int i = 0; i < Global.horizontalTiles; i++) {
+//            for (int j = 0; j < Global.verticalTiles; j++) {
+//                visiblity[i][j] = 0;
+//            }
+//        }
     }
 
-    public void drawVisiblity(Graphics g, World world, int x, int y) {
-        y = y + world.getWorldLayer().getBlocksY();
-        Bresenham.drawBresenhamLine(x, y, x, y - 5, visiblity, g);
-    }
+//    public void drawVisiblity(Graphics g, World world, int x, int y) {
+//        y = y + world.getWorldLayer().getBlocksY();
+//        Bresenham.drawBresenhamLine(x, y, x, y - 5, visiblity, g);
+//    }
 
     protected void paintTile(Graphics g, int x, int y, int id) {
         g.drawImage(tiles[id], x, y, null);

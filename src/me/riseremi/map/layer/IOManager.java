@@ -26,7 +26,6 @@ public final class IOManager {
         BufferedReader br = new BufferedReader(new InputStreamReader(reader));
 
         System.out.println("\nLoading map...");
-
         long start = System.currentTimeMillis();
 
         String fileContent = br.readLine();
@@ -121,8 +120,8 @@ public final class IOManager {
                 getLayer(2).setTile(x, y, tempLayout2.get(y).get(x));
             }
         }
-
-        dump(tempLayout0, tempLayout1, tempLayout2);
+        
+//        dump(tempLayout0, tempLayout1, tempLayout2);
 
         System.out.println("Lapsed: " + (System.currentTimeMillis() - start) + " ms");
         System.out.println("Done!");
@@ -144,7 +143,7 @@ public final class IOManager {
 
         try {
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"))) {
-                bw.write(mapJSON.toString(2));
+                bw.write(mapJSON.toString());
                 bw.newLine();
                 bw.flush();
             }
