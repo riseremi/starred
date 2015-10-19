@@ -1,13 +1,12 @@
 package me.riseremi.map.layer;
 
-import me.riseremi.core.Bresenham;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
-import me.riseremi.map.world.World;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import lombok.Setter;
 
 /**
  *
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  */
 public final class TiledLayer extends Layer {
 
-    private final int[][] map;//[x][y]
+    private @Setter int[][] map;//[x][y]
 //    private final int[][] visiblity;//[x][y] 
     private final BufferedImage[] tiles;
     private final int tileWidth, tileHeight;
@@ -99,7 +98,6 @@ public final class TiledLayer extends Layer {
 //    public void setVisiblity(int x, int y, int state) {
 //        visiblity[x][y] = state;
 //    }
-
     public void fillRectTile(int x, int y, int w, int h, int tileId) {
         for (int i = y; i < y + h; i++) {
             for (int j = x; j < w + x; j++) {
@@ -135,7 +133,6 @@ public final class TiledLayer extends Layer {
 //        y = y + world.getWorldLayer().getBlocksY();
 //        Bresenham.drawBresenhamLine(x, y, x, y - 5, visiblity, g);
 //    }
-
     protected void paintTile(Graphics g, int x, int y, int id) {
         g.drawImage(tiles[id], x, y, null);
         g.setColor(Color.white);

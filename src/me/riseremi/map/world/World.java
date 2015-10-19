@@ -13,9 +13,9 @@ import lombok.*;
  */
 public final class World {
 
-    private @Getter TiledLayer worldLayer;
-    private @Getter TiledLayer objectsLayer;
-    private @Getter TiledLayer nullLayer;
+    private @Getter @Setter TiledLayer worldLayer;
+    private @Getter @Setter TiledLayer objectsLayer;
+    private @Getter @Setter TiledLayer nullLayer;
 
     public World(int tileWidth, int tileHeight, int width, int height) {
         try {

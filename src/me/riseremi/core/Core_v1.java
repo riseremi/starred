@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +24,9 @@ import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
 import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
-import me.riseremi.map.layer.IOManager;
 import me.riseremi.map.world.World;
+import me.riseremi.mreader.StarredMap;
+import me.riseremi.mreader.WrongFormatException;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageEndTurn;
 import me.riseremi.network.messages.MessageGameOver;
@@ -79,7 +82,8 @@ public final class Core_v1 extends JPanel {
         serverMode = isServer;
         player.setName(name);
         friend.setName(name);
-        if (isServer) {         initServer(imgId, name);
+        if (isServer) {
+            initServer(imgId, name);
         } else {
             Server.SERVER_IP = ip;
             initClient(imgId, ip, name);
@@ -96,18 +100,26 @@ public final class Core_v1 extends JPanel {
         selectionCursor = new SelectionCursor(world, this);
 
         try {
-            IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
+            StarredMap map = new StarredMap(Global.pathToTheMap);
+
+            world.getNullLayer().setMap(map.getObstaclesLayer());
+            world.getWorldLayer().setMap(map.getBackgroundLayer());
+            world.getObjectsLayer().setMap(map.getDecorationsLayer());
+
             player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
+
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
         } catch (IOException | CloneNotSupportedException ex) {
             System.out.println(ex.toString());
+        } catch (WrongFormatException ex) {
+            Logger.getLogger(Core_v1.class.getName()).log(Level.SEVERE, null, ex);
         }
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseController());
     }
 
-    // inits both server and client
+    // init both server and client
     // need to recode to get standalone server
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
@@ -129,7 +141,8 @@ public final class Core_v1 extends JPanel {
     public void initClient(int imgId, String ip, String name) {
         player.setImage(imgId);
         Main.main.setTitle(Main.GAME_TITLE + " - Client");
-        client = Client.getInstance();        try {
+        client = Client.getInstance();
+        try {
             client.send(new MessageConnect(player.getName(), imgId));
             Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
         } catch (IOException ex) {
@@ -272,7 +285,7 @@ public final class Core_v1 extends JPanel {
             int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
 
             g.setColor(new Color(0, 0, 0, 0.5f));
-            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,                    Global.WINDOW_WIDTH, overlayHeight);
+            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2, Global.WINDOW_WIDTH, overlayHeight);
 
             Font trb = new Font("Arial", Font.BOLD, 28);
             g.setFont(trb);
