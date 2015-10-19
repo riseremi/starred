@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Remi
+ * @author LPzhelud
  */
 public abstract class Layer {
 

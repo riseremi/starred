@@ -36,7 +36,7 @@ import org.rising.framework.network.Server;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class Core_v1 extends JPanel {
 
@@ -102,9 +102,9 @@ public final class Core_v1 extends JPanel {
         try {
             StarredMap map = new StarredMap(Global.pathToTheMap);
 
-            world.getNullLayer().setMap(map.getObstaclesLayer());
-            world.getWorldLayer().setMap(map.getBackgroundLayer());
-            world.getObjectsLayer().setMap(map.getDecorationsLayer());
+            world.getObstaclesLayer().setMap(map.getObstaclesLayer());
+            world.getBackgroundLayer().setMap(map.getBackgroundLayer());
+            world.getDecorationsLayer().setMap(map.getDecorationsLayer());
 
             player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
 
@@ -336,7 +336,7 @@ public final class Core_v1 extends JPanel {
     }
 
     /**
-     * enable all actions, add a new card
+     * Enable all actions, add a new card
      */
     public void startTurn() {
         try {

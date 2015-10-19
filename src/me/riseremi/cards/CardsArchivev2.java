@@ -7,7 +7,7 @@ import me.riseremi.cards.BasicCard.EffectType;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class CardsArchivev2 {
 

@@ -23,7 +23,6 @@ import me.riseremi.core.Global;
 import me.riseremi.json.JSONSLoader;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageGo;
-import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.ui.windows.LobbyScreen;
 import me.riseremi.ui.windows.LoginScreen;
@@ -32,7 +31,7 @@ import org.rising.framework.network.Server;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  * @version 0.2
  */
 public class Main extends JFrame implements ActionListener {

@@ -12,7 +12,6 @@ import me.riseremi.cards.BasicCard;
 import me.riseremi.cards.Hand;
 import me.riseremi.cards.Effect;
 import me.riseremi.core.Core_v1;
-import me.riseremi.core.Global;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
 import me.riseremi.entities.Player;
@@ -25,7 +24,7 @@ import org.rising.framework.network.Message;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MouseController implements MouseListener, MouseMotionListener {
 

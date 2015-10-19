@@ -18,7 +18,7 @@ import me.riseremi.utils.Shift;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class BasicCard {
 
@@ -47,9 +47,7 @@ public final class BasicCard {
             GREATER_HEAL = 9,
             BLOOD_RITUAL = 10;
     //
-    @Getter
-    @Setter
-    private Effect[] effects;
+    @Getter @Setter private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
 

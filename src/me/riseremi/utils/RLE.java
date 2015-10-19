@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class RLE {
 

@@ -17,7 +17,7 @@ import me.riseremi.network.messages.MessageSetPlayerId;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Protocol {
 

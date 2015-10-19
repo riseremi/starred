@@ -19,7 +19,7 @@ import me.riseremi.ui.HPBar;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Entity {
 

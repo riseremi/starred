@@ -16,7 +16,7 @@ import me.riseremi.map.world.World;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Controller implements KeyListener {
 

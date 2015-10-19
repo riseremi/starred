@@ -2,7 +2,7 @@ package me.riseremi.entities;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Creep extends Entity {
 

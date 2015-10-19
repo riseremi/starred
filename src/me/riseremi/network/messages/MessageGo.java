@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package me.riseremi.network.messages;
 
 import me.riseremi.main.Main;
@@ -10,7 +5,7 @@ import org.rising.framework.network.Message;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MessageGo extends Message {
 

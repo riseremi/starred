@@ -10,7 +10,7 @@ import me.riseremi.cards.CardsArchivev2;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class JSONSLoader {
 

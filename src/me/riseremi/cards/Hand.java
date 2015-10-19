@@ -13,7 +13,7 @@ import me.riseremi.utils.Shift;
 /**
  * Колода карт, которые находятся на руках у героя.
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class Hand {
 

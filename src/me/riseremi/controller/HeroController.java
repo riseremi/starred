@@ -13,7 +13,7 @@ import org.rising.framework.network.Client;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class HeroController {
 

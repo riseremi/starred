@@ -1,15 +1,11 @@
 package me.riseremi.core;
 
-import me.riseremi.map.layer.SpriteSheet;
-
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class Global {
 
-    //массив номеров тайлов, которые являются препятствиями (отсчёт в tiles.png начинается с нуля)
-    public final static int[] obstacles = {1, 2, 3, 4, 5, 6};
     public final static int tileWidth = 32, tileHeight = 32;
     public final static int CHAT_HEIGHT = 100;
     public final static int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 600 + CHAT_HEIGHT;
@@ -23,16 +19,14 @@ public final class Global {
     public final static String pathToTheMap = "/res/new_map2.m";
     public final static String pathToTheTiles = "/res/new_tiles.png";
 //    public final static String pathToTheTiles = "/res/pooshka_tiles.png";
-    //спрайты вещей
-    public final static SpriteSheet items = new SpriteSheet();
 
     public static int translateX(int x) {
-        final int blocksX = Core_v1.getInstance().getWorld().getWorldLayer().getBlocksX();
+        final int blocksX = Core_v1.getInstance().getWorld().getBackgroundLayer().getBlocksX();
         return (x + blocksX);
     }
 
     public static int translateY(int y) {
-        final int blocksY = Core_v1.getInstance().getWorld().getWorldLayer().getBlocksY();
+        final int blocksY = Core_v1.getInstance().getWorld().getBackgroundLayer().getBlocksY();
         return (y + blocksY);
     }
 }

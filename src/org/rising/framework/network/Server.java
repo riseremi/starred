@@ -10,7 +10,7 @@ import me.riseremi.main.Main;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Server {
 

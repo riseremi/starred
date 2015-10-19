@@ -16,7 +16,7 @@ import javax.xml.bind.DatatypeConverter;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MapHash {
 
