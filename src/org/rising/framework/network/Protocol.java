@@ -64,6 +64,8 @@ public class Protocol {
                 Server.getInstance().sendToAll(message);
                 break;
             case TURN_END:
+                Server.getInstance().sendToAllExcludingOne(message, id);
+                break;
             default:
                 Server.getInstance().sendToAll(message);
         }

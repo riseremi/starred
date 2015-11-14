@@ -145,7 +145,7 @@ public final class Core_v1 extends JPanel {
         try {
             client.send(new MessageConnect(player.getName(), imgId));
             Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
         }
         friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
         player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
@@ -330,9 +330,10 @@ public final class Core_v1 extends JPanel {
      * @throws java.io.IOException
      */
     public void endTurn() throws IOException {
+        Main.addToChat("DEBUG: Ending turn...\r\n");
         Client.getInstance().send(new MessageEndTurn());
         player.resetActionPoints();
-        nextTurnAvailable = false;
+        nextTurnAvailable = !nextTurnAvailable;
     }
 
     /**

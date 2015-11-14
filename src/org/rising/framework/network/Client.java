@@ -3,7 +3,11 @@ package org.rising.framework.network;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import me.riseremi.main.Main;
 
 /**
@@ -21,7 +25,7 @@ public class Client {
         if (instance == null) {
             try {
                 System.out.println("Connecting to " + Server.SERVER_IP + "...");
-                instance = new Client(7777, Server.SERVER_IP);
+                instance = new Client(1234, Server.SERVER_IP);
                 return instance;
             } catch (IOException ex) {
             }
@@ -35,7 +39,7 @@ public class Client {
         out = new ObjectOutputStream(s.getOutputStream());
         out.flush();
         in = new ObjectInputStream(s.getInputStream());
-
+        
         Thread t = new Thread() {
             @Override
             public void run() {
@@ -47,6 +51,7 @@ public class Client {
                         }
                         Protocol.processMessageOnClientSide(s);
                     } catch (IOException | ClassNotFoundException ex) {
+                        System.out.println(ex);
                     }
                 }
             }

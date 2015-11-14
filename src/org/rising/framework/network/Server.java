@@ -24,7 +24,7 @@ public class Server {
     public static Server getInstance() {
         if (instance == null) {
             try {
-                instance = new Server(7777);
+                instance = new Server(1234);
                 return instance;
             } catch (IOException ex) {
             }
