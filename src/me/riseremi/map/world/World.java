@@ -9,36 +9,36 @@ import lombok.*;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class World {
 
-    private @Getter TiledLayer worldLayer;
-    private @Getter TiledLayer objectsLayer;
-    private @Getter TiledLayer nullLayer;
+    private @Getter TiledLayer backgroundLayer;
+    private @Getter TiledLayer decorationsLayer;
+    private @Getter TiledLayer obstaclesLayer;
 
     public World(int tileWidth, int tileHeight, int width, int height) {
         try {
-            nullLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
-            worldLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
-            objectsLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
+            obstaclesLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
+            backgroundLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
+            decorationsLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
         } catch (IOException ex) {
         }
     }
 
     public void draw(Graphics g) {
-        worldLayer.paintLayer(g);
-        objectsLayer.paintLayer(g);
+        backgroundLayer.paintLayer(g);
+        decorationsLayer.paintLayer(g);
     }
 
     @Deprecated
     public int getX() {
-        return worldLayer.getBlocksX();
+        return backgroundLayer.getBlocksX();
     }
 
     @Deprecated
     public int getY() {
-        return worldLayer.getBlocksY();
+        return backgroundLayer.getBlocksY();
     }
 
 }

@@ -1,13 +1,12 @@
 package me.riseremi.ui.windows;
 
 import me.riseremi.core.Global;
-import me.riseremi.main.Main;
 import java.awt.Color;
 import java.awt.Graphics;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Window {
 

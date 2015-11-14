@@ -1,12 +1,11 @@
 package me.riseremi.network.messages;
 
-import lombok.Getter;
 import me.riseremi.core.Core_v1;
 import org.rising.framework.network.Message;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MessageGameOver extends Message {
 

@@ -5,7 +5,7 @@ import org.rising.framework.network.Message;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MessageAddToTheLobby extends Message {
 

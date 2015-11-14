@@ -9,8 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +24,9 @@ import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
 import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
-import me.riseremi.map.layer.IOManager;
 import me.riseremi.map.world.World;
+import me.riseremi.mreader.StarredMap;
+import me.riseremi.mreader.WrongFormatException;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageEndTurn;
 import me.riseremi.network.messages.MessageGameOver;
@@ -34,7 +36,7 @@ import org.rising.framework.network.Server;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class Core_v1 extends JPanel {
 
@@ -43,10 +45,9 @@ public final class Core_v1 extends JPanel {
     private @Getter World world;
     private @Getter Server server;
     private @Getter Client client;
-    private ArrayList<Window> windows = new ArrayList<>();
+    private final ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private @Getter @Setter
-    boolean connected = false;
+    private @Getter @Setter boolean connected = false;
     private BufferedImage waitingImage;
     @Getter @Setter private boolean nextTurnAvailable;
     private Font walkwayBold;
@@ -55,7 +56,6 @@ public final class Core_v1 extends JPanel {
     private long effectStartTime;
     //
     @Getter @Setter private boolean tileSelectionMode = false;
-//    @Getter @Setter private Rectangle selectionCursor = new Rectangle();
     private long turnStartTime;
     private long timeLeft = 1;
     @Getter private boolean serverMode;
@@ -64,13 +64,9 @@ public final class Core_v1 extends JPanel {
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
     @Getter @Setter private Camera camera;
     @Getter @Setter private SelectionCursor selectionCursor;
-//    @Getter @Setter private boolean selectionMode;
     @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
     @Setter private boolean gameOver;
     @Setter private int winnerId;
-    //
-    int particlesCount = 100;
-    ArrayList<Particle> particles = new ArrayList<>();
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -83,10 +79,6 @@ public final class Core_v1 extends JPanel {
     }
 
     public void init(int imgId, String ip, String name, boolean isServer) {
-        for (int i = 0; i < particlesCount; i++) {
-            particles.add(new Particle());
-        }
-
         serverMode = isServer;
         player.setName(name);
         friend.setName(name);
@@ -108,26 +100,30 @@ public final class Core_v1 extends JPanel {
         selectionCursor = new SelectionCursor(world, this);
 
         try {
-            IOManager.newLoadFromFileToVersion2(Global.pathToTheMap, world);
-            //waitingImage = ImageIO.read(getClass().getResourceAsStream("/res/waiting.png"));
+            StarredMap map = new StarredMap(Global.pathToTheMap);
+
+            world.getObstaclesLayer().setMap(map.getObstaclesLayer());
+            world.getBackgroundLayer().setMap(map.getBackgroundLayer());
+            world.getDecorationsLayer().setMap(map.getDecorationsLayer());
+
             player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
+
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
         } catch (IOException | CloneNotSupportedException ex) {
             System.out.println(ex.toString());
+        } catch (WrongFormatException ex) {
+            Logger.getLogger(Core_v1.class.getName()).log(Level.SEVERE, null, ex);
         }
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseController());
-//        addMouseListener(new MouseController());
-//        addMouseMotionListener(new MouseController());
     }
 
-    //inits both server and client
-    //need to recode to get standalone server
+    // init both server and client
+    // need to recode to get standalone server
     public void initServer(int imgId, String name) {
         player.setImage(imgId);
-        //player.setName(name.isEmpty() ? "Server" : name);
-        Main.main.setTitle("Starred - Server");
+        Main.main.setTitle(Main.GAME_TITLE + " - Server");
 
         Server.SERVER_IP = "localhost";
         server = Server.getInstance();
@@ -144,13 +140,12 @@ public final class Core_v1 extends JPanel {
 
     public void initClient(int imgId, String ip, String name) {
         player.setImage(imgId);
-        Main.main.setTitle("Starred - Client");
+        Main.main.setTitle(Main.GAME_TITLE + " - Client");
         client = Client.getInstance();
-
         try {
             client.send(new MessageConnect(player.getName(), imgId));
             Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
         }
         friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
         player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
@@ -161,10 +156,6 @@ public final class Core_v1 extends JPanel {
         }
     }
 
-    /**
-     *
-     * @param g2
-     */
     @Override
     public void paint(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
@@ -193,9 +184,6 @@ public final class Core_v1 extends JPanel {
         player.getHpBar().paint(g2, player);
         friend.getHpBar().paint(g2, friend);
 
-//        if (isSelectionMode()) {
-//            selectionCursor.paint(g);
-//        }
         final Player player1 = player;
         final Hand hand = player1.getHand();
 
@@ -223,12 +211,9 @@ public final class Core_v1 extends JPanel {
             for (int w = radius * 2 + 1; w > 0; w -= 2) {
                 g.fillRect(xo - w / 2 * 32, yo + (radius - w / 2) * 32, w * 32, 32);
             }
-            //camera.untranslate(g);
-
             //test draw min range
             g.setColor(new Color(52, 152, 219, 50));
 
-            //camera.translate(g);
             for (int w = 1; w < minRadius * 2 + 1; w += 2) {
                 g.fillRect(xo - w / 2 * 32, yo - (minRadius - w / 2) * 32, w * 32, 32);
             }
@@ -242,8 +227,6 @@ public final class Core_v1 extends JPanel {
         g.setFont(walkwayBold);
 
         if (tileSelectionMode) {
-            //g.drawRect(selectionCursor.x, selectionCursor.y, 32, 32);
-
             selectionCursor.paint(g2);
 
             g.setColor(Color.WHITE);
@@ -281,21 +264,6 @@ public final class Core_v1 extends JPanel {
             nextTurnAvailable = false;
             gameOver = true;
             winnerId = player.isDead() ? friend.getId() : player.getId();
-//
-//            int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
-//
-//            g.setColor(new Color(0, 0, 0, 0.5f));
-//            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
-//                    Global.WINDOW_WIDTH, overlayHeight);
-//
-//            Font trb = new Font("Arial", Font.BOLD, 28);
-//            g.setFont(trb);
-//
-//            g.setColor(Color.WHITE);
-//
-//            String message = player.isDead() ? friend.getName() + " wins"
-//                    : player.getName() + " wins";
-//            g.drawString(message, 400, 310);
         }
 
         //game over if cardsDrawn > cardsDrawnLimit
@@ -317,8 +285,7 @@ public final class Core_v1 extends JPanel {
             int overlayHeight = Global.VIEWPORT_HEIGHT / 5;
 
             g.setColor(new Color(0, 0, 0, 0.5f));
-            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2,
-                    Global.WINDOW_WIDTH, overlayHeight);
+            g.fillRect(0, Global.VIEWPORT_HEIGHT / 2 - overlayHeight / 2, Global.WINDOW_WIDTH, overlayHeight);
 
             Font trb = new Font("Arial", Font.BOLD, 28);
             g.setFont(trb);
@@ -354,55 +321,23 @@ public final class Core_v1 extends JPanel {
         }
 
         repaint();
-
-        //clear background
-//        g2.setColor(Color.BLACK);
-//        g2.fillRect(0, 0, 640, 480);
-        for (int i = 0; i < particles.size(); i++) {
-            Particle p = particles.get(i);
-
-            Random rnd = new Random();
-
-            //p.setOpacity(rnd.nextInt(255));
-            g2.setColor(new Color(p.getR(), p.getG(), p.getB()));
-
-            g2.fillArc(p.x + camera.getX(), p.y + camera.getY(), (int) p.getRadius(),
-                    (int) p.getRadius(), 0, 360);
-
-            p.setRemainingLife(p.getRemainingLife() - 1);
-            p.setRadius(p.getRadius() - 1);
-
-            //System.out.println("life: " + p.getRemainingLife());
-//            p.getLocation().x += p.getSpeed().x;
-//            p.getLocation().y += p.getSpeed().y;
-            p.x += p.getSpeed().x;
-            p.y += p.getSpeed().y;
-
-            final int greenComponent = rnd.nextInt((250 / (int) p.getLife() * (int) p.getRemainingLife()) + 1);
-            p.setG(greenComponent);
-
-            //System.out.println("greencomp:" + ((int) (250 / p.getLife() * p.getRemainingLife()) + 1));
-            if (p.getRemainingLife() < 0 || p.getRadius() < 0) {
-                particles.remove(p);
-                particles.add(new Particle());
-            }
-        }
     }
 
     /**
      * End current turn, reset player's ADD_AP (Action Points) to its default
-     * value (10), disables all actions
+     * value (10), disable all actions
      *
      * @throws java.io.IOException
      */
     public void endTurn() throws IOException {
+        Main.addToChat("DEBUG: Ending turn...\r\n");
         Client.getInstance().send(new MessageEndTurn());
         player.resetActionPoints();
-        nextTurnAvailable = false;
+        nextTurnAvailable = !nextTurnAvailable;
     }
 
     /**
-     * enable all actions, add a new card
+     * Enable all actions, add a new card
      */
     public void startTurn() {
         try {

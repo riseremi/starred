@@ -2,7 +2,7 @@ package me.riseremi.json;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class WrongJSONFormatException extends Exception {
 

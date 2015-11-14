@@ -11,7 +11,7 @@ import me.riseremi.core.Global;
 
 /**
  *
- * @author Remi Weiss <riseremi at icloud.com>
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MouseControllerv2 implements MouseListener, MouseMotionListener {
 

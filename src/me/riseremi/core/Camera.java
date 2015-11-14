@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Camera {
 

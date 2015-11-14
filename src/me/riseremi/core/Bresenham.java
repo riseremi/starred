@@ -3,10 +3,6 @@ package me.riseremi.core;
 import java.awt.Color;
 import java.awt.Graphics;
 
-/**
- *
- * @author Remi
- */
 public class Bresenham {
     // Этот код "рисует" все 9 видов отрезков. Наклонные (из начала в конец и из конца в начало каждый), вертикальный и горизонтальный - тоже из начала в конец и из конца в начало, и точку.
 

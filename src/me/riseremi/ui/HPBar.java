@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class HPBar {
 

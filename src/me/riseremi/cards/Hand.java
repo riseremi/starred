@@ -13,7 +13,7 @@ import me.riseremi.utils.Shift;
 /**
  * Колода карт, которые находятся на руках у героя.
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public final class Hand {
 
@@ -44,7 +44,6 @@ public final class Hand {
             g.drawString("" + card.getCost(), Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1));
 
             //red color for cards with blood cost
-            //Color overlayNumberColor = card.getBloodCost() == 0 ? Color.WHITE : Color.RED;
             g.setColor(Color.WHITE);
             g.drawString("" + card.getCost(), x, y);
 

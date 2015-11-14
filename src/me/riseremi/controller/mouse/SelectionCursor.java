@@ -13,7 +13,7 @@ import me.riseremi.map.world.World;
  * Rectangle cursor that appears only when you use a card (tile/target
  * selection).
  *
- * @author Remi Weiss <riseremi at icloud.com>
+ * @author riseremi <riseremi at icloud.com>
  */
 public class SelectionCursor {
 

@@ -10,7 +10,7 @@ import me.riseremi.main.Main;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Server {
 
@@ -24,7 +24,7 @@ public class Server {
     public static Server getInstance() {
         if (instance == null) {
             try {
-                instance = new Server(7777);
+                instance = new Server(1234);
                 return instance;
             } catch (IOException ex) {
             }
@@ -43,7 +43,6 @@ public class Server {
                         Socket socket = serverSocket.accept();
                         final Connection connection = new Connection(socket, i++);
                         clients.add(connection);
-                        //connection.send(connection.getId());
                     } catch (IOException ex) {
                     }
                 }
@@ -53,10 +52,6 @@ public class Server {
     }
 
     public void sendToAll(Object message) throws IOException {
-//        for (Connection connection : clients) {
-//            connection.send(message);
-//        }
-
         for (int j = 0; j < clients.size(); j++) {
             Connection c = clients.get(j);
             c.send(message);

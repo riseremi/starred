@@ -2,7 +2,7 @@ package me.riseremi.utils;
 
 /**
  *
- * @author Remi Weiss <riseremi at icloud.com>
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Shift {
 

@@ -14,7 +14,7 @@ import me.riseremi.ui.RButton;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class LobbyScreen extends JPanel implements ActionListener {
 

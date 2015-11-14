@@ -10,7 +10,6 @@ import me.riseremi.main.Main;
 import me.riseremi.network.messages.MessageAddToTheLobby;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageConnect;
-import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetFriendId;
 import me.riseremi.network.messages.MessageSetIconId;
 import me.riseremi.network.messages.MessageSetName;
@@ -18,7 +17,7 @@ import me.riseremi.network.messages.MessageSetPlayerId;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Protocol {
 
@@ -30,7 +29,7 @@ public class Protocol {
 
         switch (type) {
             case CONNECT:
-                System.out.println("Connection id: " + id);
+                System.out.println("[SERVER] Incoming connection: " + id);
                 final MessageConnect connectMessage = (MessageConnect) message;
                 final String name = connectMessage.getName();
                 final int iconId = connectMessage.getIconId();
@@ -38,7 +37,6 @@ public class Protocol {
                 Player p = new Player(name, iconId, id, Entity.Type.PLAYER);
 
                 players.add(p);
-                //Main.getLobbyScreen().getPlayersListModel().addElement(name);
 
                 if (players.size() == 2) {
                     for (Entity e : players) {
@@ -66,7 +64,6 @@ public class Protocol {
                 Server.getInstance().sendToAll(message);
                 break;
             case TURN_END:
-            case PING_MESSAGE:
                 Server.getInstance().sendToAllExcludingOne(message, id);
                 break;
             default:
@@ -109,26 +106,6 @@ public class Protocol {
             case GO:
             case SET_ICON_ID:
                 message.processClient(message);
-                break;
-            case PING_MESSAGE:
-                MessagePing msgP = ((MessagePing) message);
-
-                if (!msgP.isSingleSide()) {
-                    try {
-                        Client.getInstance().send(new MessagePing(System.currentTimeMillis(), true));
-                    } catch (IOException ex) {
-                    }
-                    System.out.println("Ping handshake recieved in "
-                            + (System.currentTimeMillis() - msgP.getStartTime())
-                            + "ms");
-                    Main.addToChat("Ping handshake recieved in "
-                            + (System.currentTimeMillis() - msgP.getStartTime())
-                            + "ms" + "\r\n");
-                } else {
-                    System.out.println("Ping: " + (System.currentTimeMillis() - msgP.getStartTime()));
-                    Main.addToChat("Ping: " + (System.currentTimeMillis() - msgP.getStartTime()) + "\r\n");
-                }
-
                 break;
         }
     }

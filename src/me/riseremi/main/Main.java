@@ -23,7 +23,6 @@ import me.riseremi.core.Global;
 import me.riseremi.json.JSONSLoader;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageGo;
-import me.riseremi.network.messages.MessagePing;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.ui.windows.LobbyScreen;
 import me.riseremi.ui.windows.LoginScreen;
@@ -32,11 +31,12 @@ import org.rising.framework.network.Server;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  * @version 0.2
  */
 public class Main extends JFrame implements ActionListener {
 
+    public static final String GAME_TITLE = "Starred Classic";
     public static boolean ENABLE_DEBUG_TOOLS;
     public static boolean CARD_DUMP;
     public static Main main;
@@ -50,11 +50,11 @@ public class Main extends JFrame implements ActionListener {
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
     private static LoginScreen loginScreen;
-    @Getter private static LobbyScreen lobbyScreen;
+    @Getter
+    private static LobbyScreen lobbyScreen;
     private static DefaultCaret caret;
 
     public Main(String title) {
-
         setTitle(title);
         setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -83,8 +83,6 @@ public class Main extends JFrame implements ActionListener {
         chatField.addKeyListener(chatController);
         add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);
-        
-        //setUIFont(new javax.swing.plaf.FontUIResource(MAIN_FONT));
 
         LoginScreen.getHostButton().addActionListener(this);
         LoginScreen.getJoinButton().addActionListener(this);
@@ -103,40 +101,23 @@ public class Main extends JFrame implements ActionListener {
             CARD_DUMP = true;
         }
 
-//        System.out.println((char) 31);
-//        System.exit(0);
-        JSONSLoader su2 = new JSONSLoader();
-        su2.process();
+        JSONSLoader jsonLoader = new JSONSLoader();
+        jsonLoader.process();
 
-        main = new Main("Game");
+        main = new Main(GAME_TITLE);
         core = Core_v1.getInstance();
         loginScreen = new LoginScreen();
 
-//        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         main.add(loginScreen, BorderLayout.CENTER);
         loginScreen.setVisible(true);
 
         core.initBase();
         main.setVisible(true);
 
-        //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-
         System.out.println("\nStarted in " + (System.currentTimeMillis() - start) + " ms");
-
-        //only hard only test
-//        String helpText = "У карт есть радиус использования: у магической — две клетки, у физической — одна. Чтобы использовать карту, нужно подойти к врагу на нужное расстояние и кликнуть на карту в столбике справа. Если по окончании раунда у героя остались AP, в следующем ходу ему начислится одно бонусное AP.";
-//        JFrame help = new JFrame();
-//        final JTextArea jTextArea = new JTextArea(helpText);
-//        jTextArea.setLineWrap(true);
-//        jTextArea.setWrapStyleWord(true);
-//        help.add(jTextArea, BorderLayout.CENTER);
-//        help.setSize(new Dimension(320, 240));
-//        help.setPreferredSize(new Dimension(320, 240));
-//        help.setLocation(100, 100);
-        //help.setVisible(true);
     }
 
-    //if Enter pressed
+    // Enter pressed
     public static void toggleChat() {
         enabled = !enabled;
         chatField.setEnabled(enabled);
@@ -156,18 +137,11 @@ public class Main extends JFrame implements ActionListener {
                         case "/setname":
                             core2.getPlayer().setName(msgBody);
                             try {
-                                //core2.getNetwork().sendData(new NetworkMessage(NetworkMessage.SET_FRIEND_NAME, msgBody));
                                 MessageSetName msgSetName = new MessageSetName(msgBody, Core_v1.getInstance().getPlayer().getId());
                                 Client.getInstance().send(msgSetName);
                             } catch (IOException ex) {
                             }
                             break;
-                    }
-                } else if (msgText.equals("/ping")) {
-                    MessagePing msg = new MessagePing(System.currentTimeMillis(), false);
-                    try {
-                        Client.getInstance().send(msg);
-                    } catch (IOException ex) {
                     }
                 } else {
                     try {
@@ -178,7 +152,6 @@ public class Main extends JFrame implements ActionListener {
             }
             chatField.setText("");
             main.requestFocus();
-            //.requestFocus();
         } else {
             chatField.requestFocus();
         }

@@ -24,7 +24,7 @@ import me.riseremi.utils.NameGenerator;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class LoginScreen extends JPanel implements ActionListener {
 

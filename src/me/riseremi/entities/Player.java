@@ -5,7 +5,7 @@ import me.riseremi.core.Global;
 
 /**
  *
- * @author remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Player extends Entity {
 

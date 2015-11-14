@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package me.riseremi.entities;
 
 import java.util.ArrayList;
@@ -11,7 +6,7 @@ import lombok.Setter;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class EntityList {
     @Getter @Setter private ArrayList<Entity> entities = new ArrayList<>();

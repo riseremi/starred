@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  *
- * @author Riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class CardsArchive {
 

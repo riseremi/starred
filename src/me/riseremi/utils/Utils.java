@@ -2,7 +2,7 @@ package me.riseremi.utils;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class Utils {
 

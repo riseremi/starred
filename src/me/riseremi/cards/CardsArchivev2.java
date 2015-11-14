@@ -7,7 +7,7 @@ import me.riseremi.cards.BasicCard.EffectType;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class CardsArchivev2 {
 
@@ -39,7 +39,6 @@ public class CardsArchivev2 {
         } else {
             maxRange = getInt((String) hashMap.get("range"));
         }
-//        int minRange = getInt((String) hashMap.get("range"));
 
         Effect[] effects = new Effect[effectsList.size()];
 
@@ -49,7 +48,6 @@ public class CardsArchivev2 {
 
         //add effects
         for (int i = 0; i < effectsList.size(); i++) {
-            //first HashMap with first effect
             final HashMap<String, Object> currentHashMap = effectsList.get(i);
             final Set<String> keySet = currentHashMap.keySet();
             //key:value
@@ -75,8 +73,6 @@ public class CardsArchivev2 {
 
         allCards.put(id, card);
         length = allCards.size();
-
-//        printCards(hashMap, effects);
     }
 
     private int getInt(String str) {

@@ -7,11 +7,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.riseremi.cards.CardsArchivev2;
-import me.riseremi.map.layer.IOManager;
 
 /**
  *
- * @author riseremi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class JSONSLoader {
 
@@ -26,7 +25,7 @@ public class JSONSLoader {
 
     public void process() throws WrongJSONFormatException {
         try {
-            InputStream reader = IOManager.class.getResourceAsStream("/res/json/newjson.json");
+            InputStream reader = JSONSLoader.class.getResourceAsStream("/res/json/newjson.json");
             BufferedReader br = new BufferedReader(new InputStreamReader(reader));
             String currentLine, lineToProcess;
 

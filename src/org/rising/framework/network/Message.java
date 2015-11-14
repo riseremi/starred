@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public abstract class Message implements Serializable {
 

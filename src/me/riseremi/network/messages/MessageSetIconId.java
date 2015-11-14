@@ -5,7 +5,7 @@ import org.rising.framework.network.Message;
 
 /**
  *
- * @author Remi
+ * @author riseremi <riseremi at icloud.com>
  */
 public class MessageSetIconId extends Message {
 
