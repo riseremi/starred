@@ -7,6 +7,8 @@ import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.Getter;
 import me.riseremi.cards.BasicCard;
 import me.riseremi.cards.Hand;
@@ -28,8 +30,7 @@ import org.rising.framework.network.Message;
  */
 public class MouseController implements MouseListener, MouseMotionListener {
 
-    @Getter
-    private static final Rectangle mouseRect = new Rectangle(1, 1);
+    @Getter private static final Rectangle mouseRect = new Rectangle(1, 1);
     private static final Random rnd = new Random();
 
     @Override
@@ -74,12 +75,6 @@ public class MouseController implements MouseListener, MouseMotionListener {
             System.out.println("OBSTACLE DETECTED");
         }
 
-        //check if there are entity
-//        int entitiesThere = 0;
-//        if (entitiesThere > 0) {
-//            thereIsFriend = thereIsPlayer = true;
-//        }
-        //
         if (e.getButton() == MouseEvent.BUTTON3 && !core.isTileSelectionMode() /*&& core.isConnected()*/) {
             if (deck.getActiveCard() != null) {
                 deck.removeCard(deck.getActiveCard());
@@ -165,6 +160,15 @@ public class MouseController implements MouseListener, MouseMotionListener {
         if (e.getButton() == MouseEvent.BUTTON1 && deck.getActiveCard() != null
                 && !core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
             deck.getActiveCard().setAsSelectedCard(user, target);
+        }
+
+        if (mouseRect.x < 64 && mouseRect.y < 64) {
+            try {
+                // assume we're clicking on the "Next turn" button
+                Core_v1.getInstance().endTurn();
+            } catch (IOException ex) {
+                Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

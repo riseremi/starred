@@ -15,14 +15,12 @@ import me.riseremi.core.Global;
  */
 public class MouseControllerv2 implements MouseListener, MouseMotionListener {
 
-    @Getter
-    private static final Rectangle mouseRect = new Rectangle(1, 1);
+    @Getter private static final Rectangle mouseRect = new Rectangle(1, 1);
 
     @Override
     public void mouseClicked(MouseEvent e) {
         Core_v1 core = Core_v1.getInstance();
-        
-        
+
     }
 
     @Override
