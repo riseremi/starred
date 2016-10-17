@@ -23,14 +23,10 @@ import me.riseremi.utils.Shift;
 public final class BasicCard {
 
     private BufferedImage back, art;
-    @Getter
-    private final int id;
-    @Getter
-    private final String name;
-    @Getter
-    private final Type type;
-    @Getter
-    private final int cost;
+    @Getter private final int id;
+    @Getter private final String name;
+    @Getter private final Type type;
+    @Getter private final int cost;
     @Getter private final int minRange, maxRange;
     @Getter private BufferedImage bigCard, smallCard;
     @Getter @Setter private Rectangle rect;
@@ -46,7 +42,7 @@ public final class BasicCard {
             SACRIFICE = 8,
             GREATER_HEAL = 9,
             BLOOD_RITUAL = 10;
-    //
+
     @Getter @Setter private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
