@@ -1,18 +1,19 @@
 package me.riseremi.controller;
 
+import me.riseremi.cards.Card;
+import me.riseremi.cards.CardsArchivev3;
+import me.riseremi.core.Core_v1;
+import me.riseremi.entities.Player;
+import me.riseremi.main.Main;
+import me.riseremi.map.world.World;
+
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.CardsArchive;
-import me.riseremi.core.Core_v1;
-import me.riseremi.entities.Player;
-import me.riseremi.main.Main;
-import me.riseremi.map.world.World;
 
 /**
  *
@@ -58,10 +59,10 @@ public class Controller implements KeyListener {
 
             try {
                 final int cardId = Integer.parseInt(response);
-                final BasicCard card = CardsArchive.get(cardId);
+                final Card card = CardsArchivev3.Companion.getInstance().getCard(cardId);
 
-                Core_v1.getInstance().getPlayer().getHand().addCard(card);
-            } catch (NumberFormatException | CloneNotSupportedException ex) {
+                Core_v1.getInstance().getPlayer().getHand().addCard(card.toDrawableCard());
+            } catch (NumberFormatException ex) {
                 System.out.println("ERROR: cannot give card (wrong id)");
             }
         }

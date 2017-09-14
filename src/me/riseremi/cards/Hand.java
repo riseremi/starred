@@ -1,14 +1,13 @@
 package me.riseremi.cards;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
 import me.riseremi.main.Main;
 import me.riseremi.utils.Shift;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Колода карт, которые находятся на руках у героя.
@@ -18,19 +17,24 @@ import me.riseremi.utils.Shift;
 public final class Hand {
 
     public static final int SIZE = 8;
-    @Getter private final ArrayList<BasicCard> cards = new ArrayList<>();
-    @Getter @Setter private BasicCard justUsedCard;
+    @Getter
+    private final List<DrawableCard> cards = new ArrayList<>();
+    @Getter
+    @Setter
+    private BasicCard justUsedCard;
 
     public void paint(Graphics2D g) {
         for (int i = 0; i < cards.size(); i++) {
             int x = Main.getFrames()[0].getWidth() - BasicCard.WIDTH - 12;
             int y = 32 + i * (BasicCard.HEIGHT + 4);
-            final BasicCard card = cards.get(i);
+            final DrawableCard card = cards.get(i);
 
-            card.setRect(new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT));
+//            card.setRect(new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT));
+            Rectangle paintRect = new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT);
 
-            g.drawImage(card.getSmallCard(), x, y, null);
-            g.drawRect(card.getX(), card.getY(), card.getWidth(), card.getHeight());
+            g.drawImage(card.getPreview(), x, y, null);
+//            g.drawRect(card.getX(), card.getY(), card.getWidth(), card.getHeight());
+            g.drawRect(x, y, BasicCard.WIDTH, BasicCard.HEIGHT);
 
             Font trb = new Font("Arial", Font.BOLD, 28);
             g.setFont(trb);
@@ -38,44 +42,44 @@ public final class Hand {
             y += BasicCard.HEIGHT / 3;
 
             g.setColor(Color.BLACK);
-            g.drawString("" + card.getCost(), Shift.ShiftWest(x, 1), Shift.ShiftNorth(y, 1));
-            g.drawString("" + card.getCost(), Shift.ShiftWest(x, 1), Shift.ShiftSouth(y, 1));
-            g.drawString("" + card.getCost(), Shift.ShiftEast(x, 1), Shift.ShiftNorth(y, 1));
-            g.drawString("" + card.getCost(), Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.ShiftWest(x, 1), Shift.ShiftNorth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.ShiftWest(x, 1), Shift.ShiftSouth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.ShiftEast(x, 1), Shift.ShiftNorth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1));
 
             //red color for cards with blood cost
             g.setColor(Color.WHITE);
-            g.drawString("" + card.getCost(), x, y);
+            g.drawString("" + card.getCard().getApcost(), x, y);
 
             g.setColor(Color.WHITE);
 
-            //draw a big card preview
-            if (card.isPaintBig()) {
-                g.drawImage(card.getBigCard(), 16, 24, null);
+            //draw a big card cover
+            if (card.getHover()) {
+                g.drawImage(card.getCover(), 16, 24, null);
             }
         }
     }
 
-    public BasicCard getActiveCard() {
-        for (BasicCard card : cards) {
-            if (card.isPaintBig()) {
+    public DrawableCard getActiveCard() {
+        for (DrawableCard card : cards) {
+            if (card.getHover()) {
                 return card;
             }
         }
         return null;
     }
 
-    public BasicCard getCard(int slot) {
+    public DrawableCard getCard(int slot) {
         return cards.get(slot);
     }
 
-    public void addCard(BasicCard card) {
+    public void addCard(DrawableCard card) {
         if (cards.size() < SIZE) {
             cards.add(card);
         }
     }
 
-    public void removeCard(BasicCard card) {
+    public void removeCard(DrawableCard card) {
         cards.remove(card);
     }
 

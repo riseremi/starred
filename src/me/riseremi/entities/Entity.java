@@ -1,14 +1,9 @@
 package me.riseremi.entities;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
-import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.CardsArchive;
+import me.riseremi.cards.Card;
+import me.riseremi.cards.CardsArchivev3;
 import me.riseremi.cards.Hand;
 import me.riseremi.core.Camera;
 import me.riseremi.core.Core_v1;
@@ -17,34 +12,65 @@ import me.riseremi.main.Main;
 import me.riseremi.map.world.World;
 import me.riseremi.ui.HPBar;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public class Entity {
 
-    @Getter @Setter protected int hp, maxHp, verticalSpeed, horizontalSpeed, pDef, mDef, pAtk, mAtk;
-    @Getter @Setter protected String name;
+    @Getter
+    @Setter
+    protected int hp, maxHp, verticalSpeed, horizontalSpeed, pDef, mDef, pAtk, mAtk;
+    @Getter
+    @Setter
+    protected String name;
     //координаты измеряются в тайлах
-    @Getter @Setter private int x, y; //straight from the top-left corner, 0:0, no offset
-    @Getter @Setter protected BufferedImage sprite;
-    @Getter @Setter protected boolean isPaint = false;
-    @Getter @Setter protected int invSize = 20;
-    @Getter @Setter protected int actionPoints;
+    @Getter
+    @Setter
+    private int x, y; //straight from the top-left corner, 0:0, no offset
+    @Getter
+    @Setter
+    protected BufferedImage sprite;
+    @Getter
+    @Setter
+    protected boolean isPaint = false;
+    @Getter
+    @Setter
+    protected int invSize = 20;
+    @Getter
+    @Setter
+    protected int actionPoints;
     //action costs
     public static final float MOVE_COST = 1F;
-    @Getter protected Hand hand;
-    @Getter @Setter private boolean canMove = true;
-    @Getter @Setter private HPBar hpBar;
+    @Getter
+    protected Hand hand;
+    @Getter
+    @Setter
+    private boolean canMove = true;
+    @Getter
+    @Setter
+    private HPBar hpBar;
     private int additionalAP;
-    @Setter private boolean drawHPBar = true;
-    @Setter @Getter int id;
-    @Getter int imgId;
-    @Getter @Setter Type type;
-    @Getter @Setter int classId;
+    @Setter
+    private boolean drawHPBar = true;
+    @Setter
+    @Getter
+    int id;
+    @Getter
+    int imgId;
+    @Getter
+    @Setter
+    Type type;
+    @Getter
+    @Setter
+    int classId;
     private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
-        "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
-        "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter"};
+            "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
+            "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter"};
 
     public enum Type {
 
@@ -99,7 +125,7 @@ public class Entity {
             this.setSprite(ImageIO.read(getClass().getResourceAsStream("/res/sprites/hero" + imgId + ".png")));
             this.imgId = imgId;
             this.classId = imgId;
-        } catch (IOException ex) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -120,8 +146,8 @@ public class Entity {
     }
 
     /**
-     * @deprecated @param xAdd
      * @param yAdd
+     * @deprecated @param xAdd
      */
     public void addToPosition(int xAdd, int yAdd) {
         x += xAdd;
@@ -206,12 +232,9 @@ public class Entity {
 
     public void drawCards(int value) {
         for (int i = 0; i < value; i++) {
-            try {
-                BasicCard card = CardsArchive.getRandomCard();
-                hand.addCard(card);
-                Core_v1.getInstance().incrementCardsDrawn();
-            } catch (CloneNotSupportedException ex) {
-            }
+            Card card = CardsArchivev3.Companion.getInstance().getRandomCard();
+            hand.addCard(card.toDrawableCard());
+            Core_v1.getInstance().incrementCardsDrawn();
         }
     }
 

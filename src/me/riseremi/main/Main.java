@@ -1,26 +1,10 @@
 package me.riseremi.main;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Enumeration;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.text.DefaultCaret;
 import lombok.Getter;
 import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
-import me.riseremi.json.JSONSLoader;
+import me.riseremi.json.CardsLoader;
 import me.riseremi.network.messages.MessageChat;
 import me.riseremi.network.messages.MessageGo;
 import me.riseremi.network.messages.MessageSetName;
@@ -29,8 +13,15 @@ import me.riseremi.ui.windows.LoginScreen;
 import org.rising.framework.network.Client;
 import org.rising.framework.network.Server;
 
+import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Enumeration;
+
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  * @version 0.2
  */
@@ -93,6 +84,11 @@ public class Main extends JFrame implements ActionListener {
     public static void main(String[] args) throws Exception {
         long start = System.currentTimeMillis();
 
+//        final CardsLoader cardsLoader = new CardsLoader();
+//        cardsLoader.loadCards("/res/json/newjson.json");
+
+//        System.exit(-1);
+
         if (args.length > 0 && "--debug".equals(args[0])) {
             ENABLE_DEBUG_TOOLS = true;
         }
@@ -101,8 +97,10 @@ public class Main extends JFrame implements ActionListener {
             CARD_DUMP = true;
         }
 
-        JSONSLoader jsonLoader = new JSONSLoader();
-        jsonLoader.process();
+//        JSONSLoader jsonLoader = new JSONSLoader();
+//        jsonLoader.process();
+        CardsLoader cardsLoader = new CardsLoader();
+        cardsLoader.loadCards("/res/json/newjson.json");
 
         main = new Main(GAME_TITLE);
         core = Core_v1.getInstance();

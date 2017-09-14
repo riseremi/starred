@@ -1,12 +1,13 @@
 package me.riseremi.json;
 
+import me.riseremi.cards.CardsArchivev2;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import me.riseremi.cards.CardsArchivev2;
 
 /**
  *
@@ -17,10 +18,9 @@ public class JSONSLoader {
     private boolean inJSON, inInnerArray;
     private boolean inObject, inInnerObject;
     private HashMap<String, String> hashMap = new HashMap<>();
-    private final String[] keys = {"name", "id", "image", "art", "description", "apcost", "range", "type"};
+    private final String[] keys = {"name", "id", "cover", "art", "description", "apcost", "range", "type"};
     private ArrayList<HashMap<String, Object>> effectsList = new ArrayList<>();
     private HashMap<String, Object> tempEffect = new HashMap<>();
-    private static final String effects = "effects";
     private final String SEPARATOR = Character.toString((char) 31);
 
     public void process() throws WrongJSONFormatException {
@@ -38,10 +38,6 @@ public class JSONSLoader {
                         inInnerArray = true;
 
                         lineToProcess = cleanData(lineToProcess);
-                        String[] pair = lineToProcess.split(SEPARATOR);
-
-                        if (effects.equals(pair[0])) {
-                        }
                     }
                 }
 

@@ -10,7 +10,6 @@ public class CardsArchive {
 
     static final Random rnd = new Random();
 
-    @Otsylka
     public static BasicCard getRandomCard() throws CloneNotSupportedException {
         return get(rnd.nextInt(CardsArchivev2.length) + 1);
     }

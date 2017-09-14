@@ -1,13 +1,14 @@
 package me.riseremi.controller.mouse;
 
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import lombok.Getter;
 import me.riseremi.cards.Hand;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 /**
  *
@@ -55,13 +56,13 @@ public class MouseControllerv2 implements MouseListener, MouseMotionListener {
 
         //big card
         final Core_v1 core = Core_v1.getInstance();
-        final Hand deck = core.getPlayer().getHand();
+        final Hand hand = core.getPlayer().getHand();
 
         mouseRect.x = e.getX();
         mouseRect.y = e.getY();
 
         //rect intersections
-        deck.switchPaint(mouseRect);
+        hand.switchPaint(mouseRect);
 
     }
 

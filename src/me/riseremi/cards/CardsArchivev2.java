@@ -1,9 +1,10 @@
 package me.riseremi.cards;
 
+import me.riseremi.cards.BasicCard.EffectType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-import me.riseremi.cards.BasicCard.EffectType;
 
 /**
  *
@@ -15,21 +16,20 @@ public class CardsArchivev2 {
     public static int length;
 
     public static BasicCard getCard(int id) {
-
         return allCards.get(id);
     }
 
     //create a BasicCard with recieved data and put in into archive
     public void addCard(HashMap<String, String> hashMap,
             ArrayList<HashMap<String, Object>> effectsList) {
-        String name = (String) hashMap.get("name");
+        String name = hashMap.get("name");
 
-        int id = getInt((String) hashMap.get("id"));
-        int apcost = getInt((String) hashMap.get("apcost"));
+        int id = getInt(hashMap.get("id"));
+        int apcost = getInt(hashMap.get("apcost"));
 
         int minRange = 0, maxRange;
         //
-        String rangeStr = (String) hashMap.get("range");
+        String rangeStr = hashMap.get("range");
 
         //min range specified 
         if (rangeStr.contains("-")) {
@@ -37,13 +37,13 @@ public class CardsArchivev2 {
             minRange = getInt(ranges[0]);
             maxRange = getInt(ranges[1]);
         } else {
-            maxRange = getInt((String) hashMap.get("range"));
+            maxRange = getInt(hashMap.get("range"));
         }
 
         Effect[] effects = new Effect[effectsList.size()];
 
         for (int i = 0; i < effects.length; i++) {
-            effects[i] = new Effect();
+            effects[i] = new Effect(EffectType.NONE, 0);
         }
 
         //add effects
@@ -58,17 +58,17 @@ public class CardsArchivev2 {
             String effectStr = (String) currentHashMap.get(effectKey);
             String valueStr = (String) currentHashMap.get(valueKey);
 
-            effects[i].setEffectType(EffectType.valueOf(effectStr));
-            effects[i].setValue(valueStr);
+//            effects[i].setEffectType(EffectType.valueOf(effectStr));
+//            effects[i].setValue(valueStr);
         }
 
-        BasicCard card = new BasicCard((String) hashMap.get("description"),
+        BasicCard card = new BasicCard(hashMap.get("description"),
                 id,
-                (String) hashMap.get("image"),
-                (String) hashMap.get("art"),
+                hashMap.get("image"),
+                hashMap.get("art"),
                 name,
                 effects,
-                getType((String) hashMap.get("type")),
+                getType(hashMap.get("type")),
                 apcost, minRange, maxRange);
 
         allCards.put(id, card);

@@ -1,14 +1,5 @@
 package me.riseremi.cards;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
 import me.riseremi.core.Core_v1;
@@ -16,21 +7,34 @@ import me.riseremi.entities.Entity;
 import me.riseremi.main.Main;
 import me.riseremi.utils.Shift;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public final class BasicCard {
 
-    private BufferedImage back, art;
-    @Getter private final int id;
-    @Getter private final String name;
-    @Getter private final Type type;
-    @Getter private final int cost;
-    @Getter private final int minRange, maxRange;
-    @Getter private BufferedImage bigCard, smallCard;
-    @Getter @Setter private Rectangle rect;
-    @Getter @Setter private boolean paintBig = false;
+    private BufferedImage art;
+    private int id;
+    @Getter
+    private final String name;
+    @Getter
+    private final Type type;
+    @Getter
+    private final int cost;
+    @Getter
+    private final int minRange, maxRange;
+    @Getter
+    private BufferedImage bigCard, smallCard;
+    @Getter
+    @Setter
+    private Rectangle rect;
+    @Getter
+    @Setter
+    private boolean paintBig = false;
     public static final int //
             MAGICAL_SLAIN = 1,
             SWORD_ATTACK = 2,
@@ -43,13 +47,15 @@ public final class BasicCard {
             GREATER_HEAL = 9,
             BLOOD_RITUAL = 10;
 
-    @Getter @Setter private Effect[] effects;
+    @Getter
+    @Setter
+    private Effect[] effects;
 
     public static final int WIDTH = 42, HEIGHT = 60;
 
     public BasicCard(String description, int id, String pathToBigCard, String pathToArt,
-            String name, Effect[] effects, Type type, int cost,
-            int minRange, int maxRange) {
+                     String name, Effect[] effects, Type type, int cost,
+                     int minRange, int maxRange) {
         try {
             this.art = ImageIO.read(getClass().getResourceAsStream(pathToArt));
             this.bigCard = ImageIO.read(getClass().getResourceAsStream(pathToBigCard));
@@ -65,11 +71,11 @@ public final class BasicCard {
         this.maxRange = maxRange;
         this.rect = new Rectangle();
 
-        this.bigCard = buildBigCard(bigCard, art, description, name, id);
+        this.bigCard = buildBigCard(bigCard, art, description, name);
     }
 
     public BasicCard(int id, BufferedImage bigCard, String name,
-            Effect[] effects, Type type, int cost, int minRange, int maxRange) {
+                     Effect[] effects, Type type, int cost, int minRange, int maxRange) {
         this.id = id;
         this.bigCard = bigCard;
         this.smallCard = scaleImage(bigCard, WIDTH, HEIGHT);
@@ -111,7 +117,7 @@ public final class BasicCard {
         final Core_v1 core = Core_v1.getInstance();
         for (Effect effect1 : effects) {
             EffectType effect = effect1.getEffectType();
-            int value = Integer.parseInt((String) effect1.getValue());
+            int value = effect1.getValue();
             switch (effect) {
                 case DAMAGE:
                     target.dealPhysicalDamage(value);
@@ -166,6 +172,14 @@ public final class BasicCard {
         return (int) rect.getY();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
      * Returns a blood cost value if one found.
      *
@@ -174,7 +188,7 @@ public final class BasicCard {
     public int getBloodCost() {
         for (Effect effect : effects) {
             if (effect.getEffectType() == EffectType.BLOODCOST) {
-                return Integer.parseInt(((String) effect.getValue()));
+                return effect.getValue();
             }
         }
         return 0;
@@ -185,8 +199,8 @@ public final class BasicCard {
         return new BasicCard(id, bigCard, name, effects, type, cost, minRange, maxRange);
     }
 
-    //uses for card preview
-    private BufferedImage scaleImage(BufferedImage img, int width, int height) {
+    //uses for card cover
+    public static BufferedImage scaleImage(BufferedImage img, int width, int height) {
         int imgWidth = img.getWidth();
         int imgHeight = img.getHeight();
         if (imgWidth * height < imgHeight * width) {
@@ -207,7 +221,7 @@ public final class BasicCard {
         return newImage;
     }
 
-    private BufferedImage buildBigCard(BufferedImage img, BufferedImage art, String s, String name, int id) {
+    public static BufferedImage buildBigCard(BufferedImage img, BufferedImage art, String s, String name) {
         StringBuilder sb = new StringBuilder(s);
 
         int i = 0;
@@ -259,22 +273,8 @@ public final class BasicCard {
         for (int j = 0; j < strings.length; j++) {
             g.drawString(strings[j], 40, 305 + j * 14);
         }
-        if (Main.CARD_DUMP) {
-            try {
-                File card = new File("C:/cards-dump/0" + (id < 10 ? "0" + id : id) + ".png");
-
-                card.delete();
-                card.createNewFile();
-                ImageIO.write(newImage, "png", card);
-
-                System.out.println("Saved " + card.getAbsolutePath());
-            } catch (IOException ex) {
-                System.out.println("Error while saving card. " + ex.toString());
-            }
-        }
 
         return newImage;
-
     }
 
 }

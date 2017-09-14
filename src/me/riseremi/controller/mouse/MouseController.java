@@ -1,18 +1,9 @@
 package me.riseremi.controller.mouse;
 
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Getter;
 import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.Hand;
 import me.riseremi.cards.Effect;
+import me.riseremi.cards.Hand;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
@@ -23,6 +14,14 @@ import me.riseremi.network.messages.MessageAttack;
 import me.riseremi.network.messages.MessageSetPosition;
 import org.rising.framework.network.Client;
 import org.rising.framework.network.Message;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -89,9 +88,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         }
 
         final BasicCard justUsedCard = deck.getJustUsedCard();
-        boolean near = justUsedCard != null
-                ? core.rangeMatches(user, realX, realY, justUsedCard)
-                : false;
+        boolean near = justUsedCard != null && core.rangeMatches(user, realX, realY, justUsedCard);
 
         if (near && !thereIsObstacle) {
 
@@ -146,29 +143,26 @@ public class MouseController implements MouseListener, MouseMotionListener {
                 System.out.println("Cannot send network message.");
             }
             Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
-            deck.getJustUsedCard().setEffects(new Effect[]{new Effect()});
+            deck.getJustUsedCard().setEffects(new Effect[]{new Effect(BasicCard.EffectType.NONE, 0)});
             user.decreaseActionPoint(deck.getJustUsedCard().getCost());
 
             user.setCanMove(true);
             core.setCardJustUsed(true);
             core.setTileSelectionMode(false);
-            user.getHand().removeCard(deck.getJustUsedCard());
+//            user.getHand().removeCard(deck.getJustUsedCard());
             user.getHand().setJustUsedCard(null);
         }
 
         //activate selection mode after click on a thumbnail
         if (e.getButton() == MouseEvent.BUTTON1 && deck.getActiveCard() != null
                 && !core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
-            deck.getActiveCard().setAsSelectedCard(user, target);
+//            deck.getActiveCard().setAsSelectedCard(user, target);
         }
 
-        if (mouseRect.x < 64 && mouseRect.y < 64) {
-            try {
-                // assume we're clicking on the "Next turn" button
-                Core_v1.getInstance().endTurn();
-            } catch (IOException ex) {
-                Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (mouseRect.x < 64 && mouseRect.y < 64) try {
+            // assume we're clicking on the "Next turn" button
+            Core_v1.getInstance().endTurn();
+        } catch (IOException ignored) {
         }
     }
 
@@ -205,6 +199,6 @@ public class MouseController implements MouseListener, MouseMotionListener {
             core.getSelectionCursor().setPosition(e.getX() / 32 * 32, e.getY() / 32 * 32);
         }
         //rect intersections
-        deck.switchPaint(mouseRect);
+//        deck.switchPaint(mouseRect);
     }
 }

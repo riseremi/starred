@@ -1,24 +1,12 @@
 package me.riseremi.core;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.Setter;
 import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.CardsArchive;
+import me.riseremi.cards.CardsArchivev3;
+import me.riseremi.cards.DrawableCard;
 import me.riseremi.cards.Hand;
-import me.riseremi.controller.mouse.MouseController;
+import me.riseremi.controller.mouse.MouseControllerv2;
 import me.riseremi.controller.mouse.SelectionCursor;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
@@ -34,39 +22,71 @@ import me.riseremi.ui.windows.Window;
 import org.rising.framework.network.Client;
 import org.rising.framework.network.Server;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public final class Core_v1 extends JPanel {
 
-    private @Getter @Setter Player player;
-    private @Getter Friend friend;
-    private @Getter World world;
-    private @Getter Server server;
-    private @Getter Client client;
+    private @Getter
+    @Setter
+    Player player;
+    private @Getter
+    Friend friend;
+    private @Getter
+    World world;
+    private @Getter
+    Server server;
+    private @Getter
+    Client client;
     private final ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private @Getter @Setter boolean connected = false;
+    private @Getter
+    @Setter
+    boolean connected = false;
     private BufferedImage waitingImage;
-    @Getter @Setter private boolean nextTurnAvailable;
+    @Getter
+    @Setter
+    private boolean nextTurnAvailable;
     private Font walkwayBold;
     //
-    @Setter @Getter private boolean cardJustUsed;
+    @Setter
+    @Getter
+    private boolean cardJustUsed;
     private long effectStartTime;
     //
-    @Getter @Setter private boolean tileSelectionMode = false;
+    @Getter
+    @Setter
+    private boolean tileSelectionMode = false;
     private long turnStartTime;
     private long timeLeft = 1;
-    @Getter private boolean serverMode;
+    @Getter
+    private boolean serverMode;
     //
     private boolean initialized = false;
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
-    @Getter @Setter private Camera camera;
-    @Getter @Setter private SelectionCursor selectionCursor;
-    @Getter @Setter private int cardsDrawn = 0, cardsDrawnLimit = 30;
-    @Setter private boolean gameOver;
-    @Setter private int winnerId;
+    @Getter
+    @Setter
+    private Camera camera;
+    @Getter
+    @Setter
+    private SelectionCursor selectionCursor;
+    @Getter
+    @Setter
+    private int cardsDrawn = 0, cardsDrawnLimit = 30;
+    @Setter
+    private boolean gameOver;
+    @Setter
+    private int winnerId;
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -106,17 +126,18 @@ public final class Core_v1 extends JPanel {
             world.getBackgroundLayer().setMap(map.getBackgroundLayer());
             world.getDecorationsLayer().setMap(map.getDecorationsLayer());
 
-            player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
+//            player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
+            player.getHand().addCard(CardsArchivev3.Companion.getInstance().getCard(BasicCard.BLINK).toDrawableCard());
 
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
-        } catch (IOException | CloneNotSupportedException ex) {
-            System.out.println(ex.toString());
         } catch (WrongFormatException ex) {
             Logger.getLogger(Core_v1.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        addMouseListener(new MouseController());
-        addMouseMotionListener(new MouseController());
+//        addMouseListener(new MouseController());
+//        addMouseMotionListener(new MouseController());
     }
 
     // init both server and client
@@ -150,10 +171,7 @@ public final class Core_v1 extends JPanel {
         friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
         player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
 
-        try {
-            player.getHand().addCard(CardsArchive.getRandomCard());
-        } catch (CloneNotSupportedException ex) {
-        }
+        player.getHand().addCard(CardsArchivev3.Companion.getInstance().getCard(BasicCard.BLINK).toDrawableCard());
     }
 
     @Override
@@ -166,7 +184,7 @@ public final class Core_v1 extends JPanel {
 
         try {
             Thread.sleep(15L);
-        } catch (InterruptedException ex) {
+        } catch (InterruptedException ignored) {
         }
 
         g.setColor(Color.black);
@@ -187,13 +205,13 @@ public final class Core_v1 extends JPanel {
         final Player player1 = player;
         final Hand hand = player1.getHand();
 
-        BasicCard activeCard = hand.getActiveCard();
+        DrawableCard activeCard = hand.getActiveCard();
 
         //draw card use radius
         final BasicCard justUsedCard = player.getHand().getJustUsedCard();
         if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.EffectType[]{BasicCard.EffectType.NONE}))) {
-            final int minRadius = activeCard != null ? activeCard.getMinRange() : justUsedCard.getMinRange();
-            final int radius = activeCard != null ? activeCard.getMaxRange() : justUsedCard.getMaxRange();
+            final int minRadius = activeCard != null ? activeCard.getCard().getRange()[0] : justUsedCard.getMinRange();
+            final int radius = activeCard != null ? activeCard.getCard().getRange()[1] : justUsedCard.getMaxRange();
 
             final int x = player.getX();
             final int y = player.getY();
@@ -242,7 +260,7 @@ public final class Core_v1 extends JPanel {
             String newString = String.format("%02d min, %02d sec",
                     TimeUnit.MILLISECONDS.toMinutes(timeLeft),
                     TimeUnit.MILLISECONDS.toSeconds(timeLeft)
-                    - TimeUnit.MILLISECONDS.toMinutes(timeLeft) * 60);
+                            - TimeUnit.MILLISECONDS.toMinutes(timeLeft) * 60);
 
             g.drawString("Time left: " + newString, 32, 64 + 24);
         } else {
@@ -314,11 +332,13 @@ public final class Core_v1 extends JPanel {
 
         if (cardJustUsed && !gameOver) {
             g.setColor(Color.MAGENTA);
-            g.drawString("[PEWPEW AMAZING EFFECTS]", MouseController.getMouseRect().x - 64, MouseController.getMouseRect().y - 8);
+            g.drawString("[PEWPEW AMAZING EFFECTS]", MouseControllerv2.getMouseRect().x - 64, MouseControllerv2.getMouseRect().y - 8);
             if (System.currentTimeMillis() - effectStartTime > 2000) {
                 cardJustUsed = false;
             }
         }
+
+//        g.drawImage(CardsArchivev3.Companion.getInstance().getRandomCard().toDrawableCard().getImage(), 32, 32, null);
 
         repaint();
     }
@@ -340,11 +360,8 @@ public final class Core_v1 extends JPanel {
      * Enable all actions, add a new card
      */
     public void startTurn() {
-        try {
-            player.getHand().addCard(CardsArchive.getRandomCard());
-            incrementCardsDrawn();
-        } catch (CloneNotSupportedException ex) {
-        }
+        player.getHand().addCard(CardsArchivev3.Companion.getInstance().getRandomCard().toDrawableCard());
+        incrementCardsDrawn();
         nextTurnAvailable = true;
         turnStartTime = System.currentTimeMillis();
     }
@@ -363,7 +380,7 @@ public final class Core_v1 extends JPanel {
         boolean minPassed = (xDif + yDif > minRange);
 
         //some amazing maths
-        return maxPassed && (minRange == 0 ? true : minPassed);
+        return maxPassed && (minRange == 0 || minPassed);
     }
 
     public Entity getPlayerById(int id) {
