@@ -7,3 +7,5 @@ out
 nbproject
 lib
 workspace.xml
+.idea/workspace.xml
+.idea/libraries/
