@@ -84,11 +84,6 @@ public class Main extends JFrame implements ActionListener {
     public static void main(String[] args) throws Exception {
         long start = System.currentTimeMillis();
 
-//        final CardsLoader cardsLoader = new CardsLoader();
-//        cardsLoader.loadCards("/res/json/newjson.json");
-
-//        System.exit(-1);
-
         if (args.length > 0 && "--debug".equals(args[0])) {
             ENABLE_DEBUG_TOOLS = true;
         }
@@ -97,8 +92,6 @@ public class Main extends JFrame implements ActionListener {
             CARD_DUMP = true;
         }
 
-//        JSONSLoader jsonLoader = new JSONSLoader();
-//        jsonLoader.process();
         CardsLoader cardsLoader = new CardsLoader();
         cardsLoader.loadCards("/res/json/newjson.json");
 

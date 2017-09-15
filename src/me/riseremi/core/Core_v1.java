@@ -2,8 +2,8 @@ package me.riseremi.core;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.riseremi.cards.BasicCard;
-import me.riseremi.cards.CardsArchivev3;
+import me.riseremi.cards.Card;
+import me.riseremi.cards.CardsArchive;
 import me.riseremi.cards.DrawableCard;
 import me.riseremi.cards.Hand;
 import me.riseremi.controller.mouse.MouseController;
@@ -27,7 +27,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,8 +125,10 @@ public final class Core_v1 extends JPanel {
             world.getBackgroundLayer().setMap(map.getBackgroundLayer());
             world.getDecorationsLayer().setMap(map.getDecorationsLayer());
 
-//            player.getHand().addCard(CardsArchive.get(BasicCard.BLINK));
-            player.getHand().addCard(CardsArchivev3.Companion.getInstance().getCard(BasicCard.BLINK).toDrawableCard());
+            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
+            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
+            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.FIREBALL).toDrawableCard());
+            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.FIREBALL).toDrawableCard());
 
             Main.addToChat("System: Listen closely.\n\r");
             Main.addToChat("System: The highways call my name.\n\r");
@@ -171,7 +172,7 @@ public final class Core_v1 extends JPanel {
         friend.setPosition(Global.CENTER_X + 5, Global.CENTER_Y + 5, false);
         player.setPosition(Global.CENTER_X + 15, Global.CENTER_Y + 5);
 
-        player.getHand().addCard(CardsArchivev3.Companion.getInstance().getCard(BasicCard.BLINK).toDrawableCard());
+        player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
     }
 
     @Override
@@ -207,11 +208,11 @@ public final class Core_v1 extends JPanel {
         DrawableCard activeCard = hand.getActiveCard();
 
         //draw card use radius
-        final BasicCard justUsedCard = player.getHand().getJustUsedCard();
-        if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.EffectType[]{BasicCard.EffectType.NONE}))) {
-            assert activeCard != null;
-            final int minRadius = activeCard.getCard().getRange()[0];
-            final int radius = activeCard.getCard().getRange()[1];
+        final Card raisedCard = player.getRaisedCard();
+        if (activeCard != null || raisedCard != null) {
+            final Card card = activeCard != null ? activeCard.toCard() : raisedCard;
+            final int minRadius = card.getRange()[0];
+            final int radius = card.getRange()[1];
 
             final int x = player.getX();
             final int y = player.getY();
@@ -358,15 +359,15 @@ public final class Core_v1 extends JPanel {
      * Enable all actions, add a new card
      */
     public void startTurn() {
-        player.getHand().addCard(CardsArchivev3.Companion.getInstance().getRandomCard().toDrawableCard());
+        player.getHand().addCard(CardsArchive.Companion.getInstance().getRandomCard().toDrawableCard());
         incrementCardsDrawn();
         nextTurnAvailable = true;
         turnStartTime = System.currentTimeMillis();
     }
 
-    public boolean rangeMatches(Player player, int realX, int realY, BasicCard card) {
-        final int minRange = card.getMinRange();
-        final int maxRange = card.getMaxRange();
+    public boolean rangeMatches(Player player, int realX, int realY, Card card) {
+        final int minRange = card.getRange()[0];
+        final int maxRange = card.getRange()[1];
 
         final int userX = player.getX();
         final int userY = player.getY();

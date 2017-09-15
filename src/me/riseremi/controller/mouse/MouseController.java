@@ -1,7 +1,7 @@
 package me.riseremi.controller.mouse;
 
 import lombok.Getter;
-import me.riseremi.cards.BasicCard;
+import me.riseremi.cards.Card;
 import me.riseremi.cards.Effect;
 import me.riseremi.cards.Hand;
 import me.riseremi.core.Core_v1;
@@ -21,20 +21,18 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public class MouseController implements MouseListener, MouseMotionListener {
 
-    @Getter private static final Rectangle mouseRect = new Rectangle(1, 1);
-    private static final Random rnd = new Random();
+    @Getter
+    private static final Rectangle mouseRect = new Rectangle(1, 1);
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //System.out.println("click");
         Core_v1 core = Core_v1.getInstance();
 
         final Player user = core.getPlayer();
@@ -52,19 +50,17 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final int realX = core.getSelectionCursor().getRealX();
         final int realY = core.getSelectionCursor().getRealY();
 
-        //System.out.println("cx: " + mX + "/cy: " + mY);
         boolean thereIsFriend = (realX == friendX) && (realY == friendY);
         boolean thereIsPlayer = (realX == playerX) && (realY == playerY);
         boolean thereIsObstacle = true;
         try {
-            thereIsObstacle = CheckObstacles.checkObstacle(core.getWorld(), realX, realY);//mX == playerX) && (mY == playerY);
-        } catch (CloneNotSupportedException ex) {
+            thereIsObstacle = CheckObstacles.checkObstacle(core.getWorld(), realX, realY);
+        } catch (CloneNotSupportedException ignored) {
         }
 
         if (thereIsPlayer) {
             System.out.println("PLAYER DETECTED");
             target = user;
-
         }
         if (thereIsFriend) {
             System.out.println("FRIEND DETECTED");
@@ -74,44 +70,45 @@ public class MouseController implements MouseListener, MouseMotionListener {
             System.out.println("OBSTACLE DETECTED");
         }
 
-        if (e.getButton() == MouseEvent.BUTTON3 && !core.isTileSelectionMode() /*&& core.isConnected()*/) {
+        // Right click, remove card from the hand.
+        if (e.getButton() == MouseEvent.BUTTON3 && !core.isTileSelectionMode()) {
             if (deck.getActiveCard() != null) {
                 deck.removeCard(deck.getActiveCard());
             }
         }
 
-        if (e.getButton() == MouseEvent.BUTTON3
-                && core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
+        // Right click with raised card, cancel range selection.
+        if (e.getButton() == MouseEvent.BUTTON3 && core.isTileSelectionMode() && core.isNextTurnAvailable()) {
             user.setCanMove(true);
-            deck.setJustUsedCard(null);
+            user.resetRaisedCard();
             core.setTileSelectionMode(false);
         }
 
-        final BasicCard justUsedCard = deck.getJustUsedCard();
-        boolean near = justUsedCard != null && core.rangeMatches(user, realX, realY, justUsedCard);
+        final Card raisedCard = user.getRaisedCard();
+        boolean near = raisedCard != null && core.rangeMatches(user, realX, realY, raisedCard);
+        System.out.println("Range valid: " + near);
 
         if (near && !thereIsObstacle) {
-
             final Client instance = Client.getInstance();
-            final int justUsedCardId = justUsedCard.getId();
+            final int raisedCardId = raisedCard.getId();
             final int userId = user.getId();
             final int targetId = target.getId();
 
-            final Effect[] effects = justUsedCard.getEffects();
+            final List<Effect> effects = raisedCard.getEffects();
             ArrayList<Message> messagesToSend = new ArrayList<>();
             boolean attackMessageSent = false;
 
+
             for (Effect effect : effects) {
+                System.out.println("Applying card effect: " + effect);
                 switch (effect.getEffectType()) {
                     case BLINK:
                         if (!thereIsFriend && !thereIsPlayer) {
-                            //instance.send(new MessageSetPosition(userId, mX, mY));
                             messagesToSend.add(new MessageSetPosition(userId, realX, realY));
                         }
                         break;
                     case BLINK_OPPONENT:
                         if (!thereIsFriend && !thereIsPlayer) {
-                            //instance.send(new MessageSetPosition(userId, mX, mY));
                             messagesToSend.add(new MessageSetPosition(friend.getId(), realX, realY));
                         }
                         break;
@@ -122,14 +119,13 @@ public class MouseController implements MouseListener, MouseMotionListener {
                     case BLOODCOST:
                     case DRAW_CARD:
                         if ((thereIsFriend || thereIsPlayer) && !attackMessageSent) {
-                            //instance.send(new MessageAttack(userId, targetId, justUsedCardId));
-                            messagesToSend.add(new MessageAttack(userId, targetId, justUsedCardId));
+                            messagesToSend.add(new MessageAttack(userId, targetId, raisedCardId));
                             attackMessageSent = true;
                         }
                         break;
                     case UNDRAW_CARD:
                         if (!attackMessageSent) {
-                            messagesToSend.add(new MessageAttack(userId, friend.getId(), justUsedCardId));
+                            messagesToSend.add(new MessageAttack(userId, friend.getId(), raisedCardId));
                             attackMessageSent = true;
                         }
                         break;
@@ -142,21 +138,20 @@ public class MouseController implements MouseListener, MouseMotionListener {
             } catch (IOException ex) {
                 System.out.println("Cannot send network message.");
             }
-            Main.addToChat("You used a " + deck.getJustUsedCard().getName() + "\r\n");
-            deck.getJustUsedCard().setEffects(new Effect[]{new Effect(BasicCard.EffectType.NONE, 0)});
-            user.decreaseActionPoint(deck.getJustUsedCard().getCost());
+            Main.addToChat("You used a " + raisedCard.getName() + "\r\n");
+            user.subtractActionPoints(raisedCard.getApcost());
 
             user.setCanMove(true);
             core.setCardJustUsed(true);
             core.setTileSelectionMode(false);
-//            user.getHand().removeCard(deck.getJustUsedCard());
-            user.getHand().setJustUsedCard(null);
+            user.getHand().removeCard(raisedCard.toDrawableCard());
+            user.resetRaisedCard();
         }
 
         //activate selection mode after click on a thumbnail
         if (e.getButton() == MouseEvent.BUTTON1 && deck.getActiveCard() != null
-                && !core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
-            deck.getActiveCard().setAsSelectedCard(user, target);
+                && !core.isTileSelectionMode() && core.isNextTurnAvailable()) {
+            user.setRaisedCard(deck.getActiveCard().toCard());
         }
 
         if (mouseRect.x < 64 && mouseRect.y < 64) try {

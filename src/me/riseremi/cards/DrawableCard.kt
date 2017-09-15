@@ -1,5 +1,9 @@
 package me.riseremi.cards
 
+import me.riseremi.utils.Shift
+import me.riseremi.utils.scaleImage
+import java.awt.Color
+import java.awt.Font
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
 
@@ -18,11 +22,76 @@ class DrawableCard(var card: Card) {
         preview = createPreview(cover)
     }
 
+    companion object {
+        const val PREVIEW_WIDTH: Int = 42
+        const val PREVIEW_HEIGHT: Int = 60
+    }
+
+    fun toCard(): Card {
+        return card
+    }
+
     private fun createPreview(image: BufferedImage): BufferedImage {
-        return BasicCard.scaleImage(image, BasicCard.WIDTH, BasicCard.HEIGHT)
+        return scaleImage(image, PREVIEW_WIDTH, PREVIEW_HEIGHT)
     }
 
     private fun createCover(appearance: BufferedImage, art: BufferedImage, s: String, name: String): BufferedImage {
-        return BasicCard.buildBigCard(appearance, art, s, name)
+        return buildBigCard(appearance, art, s, name)
+    }
+
+    private fun buildBigCard(img: BufferedImage, art: BufferedImage, s: String, name: String): BufferedImage {
+        val sb = StringBuilder(s)
+
+        val i = 0
+        while (i + 30 < sb.length && (sb.lastIndexOf(" ", i + 30)) != -1) {
+            sb.replace(i, i + 1, "\n")
+        }
+
+        var temp = sb.toString().replace("|", "\n").replace("=", ": ")
+        temp = temp.replace("_", " ")
+        val strings = temp.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+
+        val newImage = BufferedImage(img.width, img.height, BufferedImage.TYPE_INT_RGB)
+        val g = newImage.createGraphics()
+
+        g.drawImage(img, null, 0, 0)
+        g.drawImage(art, null, 36, 36)
+
+        g.color = Color.RED
+        g.font = Font("Arial", Font.BOLD, 28)
+
+        //determine X position to center the title
+        val cardWidth = img.width
+        var titleWidth = g.fontMetrics.stringWidth(name)
+
+        if (titleWidth > cardWidth - 32) {
+            g.font = Font("Arial", Font.BOLD, 18)
+            titleWidth = g.fontMetrics.stringWidth(name)
+        }
+
+        val xPosition = cardWidth / 2 - titleWidth / 2
+        val yPosition = 32
+        val shiftValue = 2
+
+        //outline
+        g.color = Color.BLACK
+        g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue))
+        g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftSouth(yPosition, shiftValue))
+        g.drawString(name, Shift.ShiftEast(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue))
+        g.drawString(name, Shift.ShiftEast(xPosition, shiftValue), Shift.ShiftSouth(yPosition, shiftValue))
+
+        //actual title
+        g.color = Color.WHITE
+        g.drawString(name, xPosition, 32)
+
+        g.font = Font("Arial", Font.PLAIN, 12)
+
+        g.color = Color.WHITE
+
+        for (j in strings.indices) {
+            g.drawString(strings[j], 40, 305 + j * 14)
+        }
+
+        return newImage
     }
 }

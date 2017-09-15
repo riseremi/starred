@@ -1,13 +1,12 @@
 package me.riseremi.network.messages;
 
-import me.riseremi.cards.BasicCard;
+import me.riseremi.cards.Card;
 import me.riseremi.cards.CardsArchive;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import org.rising.framework.network.Message;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public class MessageAttack extends Message {
@@ -43,17 +42,14 @@ public class MessageAttack extends Message {
         MessageAttack msgA = ((MessageAttack) message);
         Core_v1 core = Core_v1.getInstance();
 
-        BasicCard card;
-        try {
-            card = CardsArchive.get(msgA.getCardId());
-            
-            final Entity user = core.getPlayerById(msgA.getUserId());
-            final Entity target = core.getPlayerById(msgA.getTargetId());
-            
-            //card.applyEffectFromTo(user, target);
-            card.use(user, target, true);
-        } catch (CloneNotSupportedException ex) {
-        }
-    }
+        Card card;
+        card = CardsArchive.Companion.getInstance().getCard(msgA.getCardId());
 
+        final Entity user = core.getPlayerById(msgA.getUserId());
+        final Entity target = core.getPlayerById(msgA.getTargetId());
+
+//        card.applyEffectFromTo(user, target);
+//        card.use(user, target, true);
+        user.applyEffects(card, target);
+    }
 }

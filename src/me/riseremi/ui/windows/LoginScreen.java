@@ -1,26 +1,21 @@
 package me.riseremi.ui.windows;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import lombok.Getter;
+import me.riseremi.main.Main;
+import me.riseremi.ui.RButton;
+import me.riseremi.ui.RTextField;
+import me.riseremi.utils.NameGenerator;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import lombok.Getter;
-import me.riseremi.main.Main;
+
 import static me.riseremi.main.Main.setUIFont;
-import me.riseremi.ui.RButton;
-import me.riseremi.ui.RTextField;
-import me.riseremi.utils.NameGenerator;
 
 /**
  *
@@ -40,7 +35,8 @@ public class LoginScreen extends JPanel implements ActionListener {
     //
     @Getter private static final JButton hostButton = new RButton("Host", false),
             joinButton = new RButton("Join", false), newNickButton = new RButton("<", false);
-    @Getter private static final JTextField nickField = new RTextField(NameGenerator.getName()),
+    @Getter
+    private static final JTextField nickField = new RTextField(NameGenerator.INSTANCE.getName()),
             ipField = new RTextField("127.0.0.1");
 
     //Colors
@@ -156,7 +152,7 @@ public class LoginScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newNickButton) {
-            nickField.setText(NameGenerator.getName());
+            nickField.setText(NameGenerator.INSTANCE.getName());
         }
         if (e.getSource() == next) {
             previewIndex = previewIndex == NUM_OF_HEROES - 1 ? 0 : previewIndex + 1;

@@ -1,7 +1,6 @@
 package me.riseremi.cards;
 
 import lombok.Getter;
-import lombok.Setter;
 import me.riseremi.main.Main;
 import me.riseremi.utils.Shift;
 
@@ -19,34 +18,30 @@ public final class Hand {
     public static final int SIZE = 8;
     @Getter
     private final List<DrawableCard> cards = new ArrayList<>();
-    @Getter
-    @Setter
-    private BasicCard justUsedCard;
 
     public void paint(Graphics2D g) {
         for (int i = 0; i < cards.size(); i++) {
-            int x = Main.getFrames()[0].getWidth() - BasicCard.WIDTH - 12;
-            int y = 32 + i * (BasicCard.HEIGHT + 4);
+            int x = Main.getFrames()[0].getWidth() - DrawableCard.PREVIEW_WIDTH - 12;
+            int y = 32 + i * (DrawableCard.PREVIEW_HEIGHT + 4);
             final DrawableCard card = cards.get(i);
 
-//            card.setRect(new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT));
-            Rectangle paintRect = new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT);
+            Rectangle paintRect = new Rectangle(x, y, DrawableCard.PREVIEW_WIDTH, DrawableCard.PREVIEW_HEIGHT);
             card.setCollisionRectangle(paintRect);
 
             g.drawImage(card.getPreview(), x, y, null);
             g.drawRect(paintRect.x, paintRect.y, paintRect.width, paintRect.height);
-            g.drawRect(x, y, BasicCard.WIDTH, BasicCard.HEIGHT);
+            g.drawRect(x, y, DrawableCard.PREVIEW_WIDTH, DrawableCard.PREVIEW_HEIGHT);
 
             Font trb = new Font("Arial", Font.BOLD, 28);
             g.setFont(trb);
 
-            y += BasicCard.HEIGHT / 3;
+            y += DrawableCard.PREVIEW_HEIGHT / 3;
 
             g.setColor(Color.BLACK);
-            g.drawString("" + card.getCard().getApcost(), Shift.ShiftWest(x, 1), Shift.ShiftNorth(y, 1));
-            g.drawString("" + card.getCard().getApcost(), Shift.ShiftWest(x, 1), Shift.ShiftSouth(y, 1));
-            g.drawString("" + card.getCard().getApcost(), Shift.ShiftEast(x, 1), Shift.ShiftNorth(y, 1));
-            g.drawString("" + card.getCard().getApcost(), Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.Companion.ShiftWest(x, 1), Shift.Companion.ShiftNorth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.Companion.ShiftWest(x, 1), Shift.Companion.ShiftSouth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.Companion.ShiftEast(x, 1), Shift.Companion.ShiftNorth(y, 1));
+            g.drawString("" + card.getCard().getApcost(), Shift.Companion.ShiftEast(x, 1), Shift.Companion.ShiftSouth(y, 1));
 
             //red color for cards with blood cost
             g.setColor(Color.WHITE);
@@ -89,12 +84,12 @@ public final class Hand {
             cards.remove(cards.size() - 1);
         }
     }
-
-    public void removeCard(int slot) {
-        if (cards.size() > 0) {
-            cards.remove(cards.get(slot));
-        }
-    }
+//
+//    public void removeCard(int slot) {
+//        if (cards.size() > 0) {
+//            cards.remove(cards.get(slot));
+//        }
+//    }
 
     public int size() {
         return cards.size();

@@ -1,8 +1,5 @@
 package me.riseremi.controller;
 
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.Random;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Player;
@@ -10,6 +7,10 @@ import me.riseremi.map.world.CheckObstacles;
 import me.riseremi.map.world.World;
 import me.riseremi.network.messages.MessageSetPosition;
 import org.rising.framework.network.Client;
+
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.Random;
 
 /**
  *
@@ -36,28 +37,28 @@ public class HeroController {
                     && !(CheckObstacles.checkObstacle(world, hero_xx, hero_yy + 1))
                     && player.canDoIt(Entity.MOVE_COST)) {
                 Client.getInstance().send(new MessageSetPosition(player1.getId(), x1, y1 + 1));
-                player.decreaseActionPoint(Entity.MOVE_COST);
+                player.subtractActionPoints(Entity.MOVE_COST);
             }
 
             if (ke.getKeyCode() == KeyEvent.VK_UP
                     && !(CheckObstacles.checkObstacle(world, hero_xx, hero_yy - 1))
                     && player.canDoIt(Entity.MOVE_COST)) {
                 Client.getInstance().send(new MessageSetPosition(player1.getId(), x1, y1 - 1));
-                player.decreaseActionPoint(Entity.MOVE_COST);
+                player.subtractActionPoints(Entity.MOVE_COST);
             }
             //
             if (ke.getKeyCode() == KeyEvent.VK_LEFT
                     && !(CheckObstacles.checkObstacle(world, hero_xx - 1, hero_yy))
                     && player.canDoIt(Entity.MOVE_COST)) {
                 Client.getInstance().send(new MessageSetPosition(player1.getId(), x1 - 1, y1));
-                player.decreaseActionPoint(Entity.MOVE_COST);
+                player.subtractActionPoints(Entity.MOVE_COST);
             }
             //
             if (ke.getKeyCode() == KeyEvent.VK_RIGHT
                     && !(CheckObstacles.checkObstacle(world, hero_xx + 1, hero_yy))
                     && player.canDoIt(Entity.MOVE_COST)) {
                 Client.getInstance().send(new MessageSetPosition(player1.getId(), x1 + 1, y1));
-                player.decreaseActionPoint(Entity.MOVE_COST);
+                player.subtractActionPoints(Entity.MOVE_COST);
             }
             //end turn
             if (ke.getKeyCode() == KeyEvent.VK_F11) {

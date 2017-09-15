@@ -1,7 +1,7 @@
 package me.riseremi.controller;
 
 import me.riseremi.cards.Card;
-import me.riseremi.cards.CardsArchivev3;
+import me.riseremi.cards.CardsArchive;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
@@ -59,7 +59,7 @@ public class Controller implements KeyListener {
 
             try {
                 final int cardId = Integer.parseInt(response);
-                final Card card = CardsArchivev3.Companion.getInstance().getCard(cardId);
+                final Card card = CardsArchive.Companion.getInstance().getCard(cardId);
 
                 Core_v1.getInstance().getPlayer().getHand().addCard(card.toDrawableCard());
             } catch (NumberFormatException ex) {

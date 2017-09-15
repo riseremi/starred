@@ -3,7 +3,7 @@ package me.riseremi.entities;
 import lombok.Getter;
 import lombok.Setter;
 import me.riseremi.cards.Card;
-import me.riseremi.cards.CardsArchivev3;
+import me.riseremi.cards.CardsArchive;
 import me.riseremi.cards.Hand;
 import me.riseremi.core.Camera;
 import me.riseremi.core.Core_v1;
@@ -129,22 +129,6 @@ public class Entity {
         }
     }
 
-    public void moveDown() {
-        y += 1;
-    }
-
-    public void moveUp() {
-        y -= 1;
-    }
-
-    public void moveLeft() {
-        x -= 1;
-    }
-
-    public void moveRight() {
-        x += 1;
-    }
-
     /**
      * @param yAdd
      * @deprecated @param xAdd
@@ -192,7 +176,7 @@ public class Entity {
         return actionPoints - cost >= 0;
     }
 
-    public void decreaseActionPoint(float cost) {
+    public void subtractActionPoints(float cost) {
         actionPoints -= cost;
     }
 
@@ -232,7 +216,7 @@ public class Entity {
 
     public void drawCards(int value) {
         for (int i = 0; i < value; i++) {
-            Card card = CardsArchivev3.Companion.getInstance().getRandomCard();
+            Card card = CardsArchive.Companion.getInstance().getRandomCard();
             hand.addCard(card.toDrawableCard());
             Core_v1.getInstance().incrementCardsDrawn();
         }
@@ -241,8 +225,47 @@ public class Entity {
     public void undrawCards(int value) {
         for (int i = 0; i < value; i++) {
             hand.removeLastCard();
-//            Core_v1.getInstance().incrementCardsDrawn();
         }
     }
+
+
+    public void useCard(Card card, Entity target) {
+        if (actionPoints >= card.getApcost()) {
+            subtractActionPoints(card.getApcost());
+            applyEffects(card, target);
+        }
+    }
+
+    public void applyEffects(Card card, Entity target) {
+        card.getEffects().forEach(effect -> {
+            Card.Companion.EffectType type = effect.getEffectType();
+            int value = effect.getValue();
+
+            switch (type) {
+                case DAMAGE:
+                    target.dealPhysicalDamage(value);
+                    break;
+                case DRAW_CARD:
+                    drawCards(value);
+                    break;
+                case UNDRAW_CARD:
+                    target.undrawCards(value);
+                    break;
+                case HEAL:
+                    target.heal(value);
+                    break;
+                case ADD_AP:
+                    target.addAPInNextTurn(value);
+                    break;
+                case BLOODCOST:
+                    decreaseBloodCostHP(value);
+                    break;
+                default:
+                    Main.addToChat("BUT NOTHING HAPPENED\r\n");
+                    break;
+            }
+        });
+    }
+
 
 }

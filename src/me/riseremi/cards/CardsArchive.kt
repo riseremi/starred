@@ -7,16 +7,16 @@ import kotlin.NoSuchElementException
  * by riseremi on 14.09.17
  * riseremi@icloud.com
  */
-class CardsArchivev3 {
+class CardsArchive {
     private var cards: HashMap<Int, Card> = HashMap()
     private val random = Random()
 
     private object Holder {
-        val INSTANCE = CardsArchivev3()
+        val INSTANCE = CardsArchive()
     }
 
     companion object {
-        val instance: CardsArchivev3 by lazy { Holder.INSTANCE }
+        val instance: CardsArchive by lazy { Holder.INSTANCE }
     }
 
     fun addCard(card: Card) {

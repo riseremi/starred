@@ -1,8 +1,7 @@
 package me.riseremi.json
 
-import me.riseremi.cards.BasicCard
 import me.riseremi.cards.Card
-import me.riseremi.cards.CardsArchivev3
+import me.riseremi.cards.CardsArchive
 import me.riseremi.cards.Effect
 import org.json.JSONArray
 import org.json.JSONObject
@@ -31,10 +30,10 @@ class CardsLoader {
                 range = parseRange(jsonCard.getString("range"))
                 effects = parseEffects(jsonCard.getJSONArray("effects"))
             }
-            CardsArchivev3.instance.addCard(card)
+            CardsArchive.instance.addCard(card)
         }
 
-        println(CardsArchivev3.instance)
+        println(CardsArchive.instance)
     }
 
     private fun parseRange(range: String): IntArray {
@@ -48,7 +47,7 @@ class CardsLoader {
         return effectsSrc.map { effect ->
             val jsonEffect = JSONObject(effect.toString())
             Effect(
-                    BasicCard.EffectType.valueOf(jsonEffect.getString(("name"))),
+                    Card.Companion.EffectType.valueOf(jsonEffect.getString(("name"))),
                     jsonEffect.getInt("value")
             )
         }

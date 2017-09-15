@@ -4,7 +4,7 @@ package me.riseremi.cards
  *
  * @author riseremi <riseremi at icloud.com>
 </riseremi> */
-class Effect(private val effectType: BasicCard.EffectType, private val value: Int) {
+class Effect(private val effectType: Card.Companion.EffectType, private val value: Int) {
 
     override fun toString(): String {
         return effectType.name + " = " + value.toString()
@@ -12,13 +12,13 @@ class Effect(private val effectType: BasicCard.EffectType, private val value: In
 
     // NOTE: for compatibility only
     // TODO: remove in flavor of new Card class
-    fun getEffectType(): BasicCard.EffectType {
-        return BasicCard.EffectType.NONE
+    fun getEffectType(): Card.Companion.EffectType {
+        return effectType
     }
 
     // NOTE: for compatibility only
     // TODO: remove in flavor of new Card class
     fun getValue(): Int {
-        return 0
+        return value
     }
 }

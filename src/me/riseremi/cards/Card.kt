@@ -44,6 +44,25 @@ class Card(
 
     companion object {
         inline fun build(block: Builder.() -> Unit) = Builder().apply(block).build()
+
+        // Card IDs.
+        const val MAGICAL_SLAIN: Int = 1
+        const val SWORD_ATTACK: Int = 2
+        const val FIREBALL: Int = 3
+        const val BLINK: Int = 4
+        const val HEALING_WORD: Int = 5
+        const val BLOOD_CRUSH: Int = 6
+        const val ADD_AP_ID: Int = 7
+        const val SACRIFICE: Int = 8
+        const val GREATER_HEAL: Int = 9
+        const val BLOOD_RITUAL: Int = 10
+
+        enum class EffectType {
+            DAMAGE, HEAL, BLINK, WAIT, ADD_AP, BLOODCOST, BLINK_OPPONENT,
+            DRAW_CARD, UNDRAW_CARD,
+            NONE
+        }
+
     }
 
     class Builder {

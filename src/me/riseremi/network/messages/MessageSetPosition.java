@@ -34,13 +34,12 @@ public class MessageSetPosition extends Message {
 
     @Override
     public void processServer(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void processClient(Message message) {
         MessageSetPosition msgSP = ((MessageSetPosition) message);
-        System.out.println(msgSP.getId());
         final Entity entity = Core_v1.getInstance().getPlayerById(msgSP.getId());
         final int xx = msgSP.getX();
         final int yy = msgSP.getY();
