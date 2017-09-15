@@ -6,7 +6,7 @@ import me.riseremi.cards.BasicCard;
 import me.riseremi.cards.CardsArchivev3;
 import me.riseremi.cards.DrawableCard;
 import me.riseremi.cards.Hand;
-import me.riseremi.controller.mouse.MouseControllerv2;
+import me.riseremi.controller.mouse.MouseController;
 import me.riseremi.controller.mouse.SelectionCursor;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Friend;
@@ -136,8 +136,8 @@ public final class Core_v1 extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        addMouseListener(new MouseController());
-//        addMouseMotionListener(new MouseController());
+        addMouseListener(new MouseController());
+        addMouseMotionListener(new MouseController());
     }
 
     // init both server and client
@@ -179,8 +179,7 @@ public final class Core_v1 extends JPanel {
         Graphics2D g = (Graphics2D) g2;
 
         g.setFont(walkwayBold);
-        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         try {
             Thread.sleep(15L);
@@ -210,8 +209,9 @@ public final class Core_v1 extends JPanel {
         //draw card use radius
         final BasicCard justUsedCard = player.getHand().getJustUsedCard();
         if (activeCard != null || (justUsedCard != null && !Arrays.equals(justUsedCard.getEffects(), new BasicCard.EffectType[]{BasicCard.EffectType.NONE}))) {
-            final int minRadius = activeCard != null ? activeCard.getCard().getRange()[0] : justUsedCard.getMinRange();
-            final int radius = activeCard != null ? activeCard.getCard().getRange()[1] : justUsedCard.getMaxRange();
+            assert activeCard != null;
+            final int minRadius = activeCard.getCard().getRange()[0];
+            final int radius = activeCard.getCard().getRange()[1];
 
             final int x = player.getX();
             final int y = player.getY();
@@ -332,13 +332,11 @@ public final class Core_v1 extends JPanel {
 
         if (cardJustUsed && !gameOver) {
             g.setColor(Color.MAGENTA);
-            g.drawString("[PEWPEW AMAZING EFFECTS]", MouseControllerv2.getMouseRect().x - 64, MouseControllerv2.getMouseRect().y - 8);
+            g.drawString("[PEWPEW AMAZING EFFECTS]", MouseController.getMouseRect().x - 64, MouseController.getMouseRect().y - 8);
             if (System.currentTimeMillis() - effectStartTime > 2000) {
                 cardJustUsed = false;
             }
         }
-
-//        g.drawImage(CardsArchivev3.Companion.getInstance().getRandomCard().toDrawableCard().getImage(), 32, 32, null);
 
         repaint();
     }

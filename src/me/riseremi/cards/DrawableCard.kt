@@ -1,7 +1,7 @@
 package me.riseremi.cards
 
+import java.awt.Rectangle
 import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 
 /**
  * by riseremi on 14.09.17
@@ -11,19 +11,11 @@ class DrawableCard(var card: Card) {
     var hover: Boolean = false
     var cover: BufferedImage
     var preview: BufferedImage
+    var collisionRectangle: Rectangle = Rectangle()
 
     init {
-        val appearanceImage = ImageIO.read(DrawableCard::class.java.getResourceAsStream(card.appearancePath))
-        val artImage = ImageIO.read(DrawableCard::class.java.getResourceAsStream(card.artPath))
-        this.cover = createCover(appearanceImage, artImage, "What is S?", card.name)
-        this.preview = createPreview(cover)
-    }
-
-    fun getImage(): BufferedImage? {
-        val appearanceImage = ImageIO.read(DrawableCard::class.java.getResourceAsStream(card.appearancePath))
-        val artImage = ImageIO.read(DrawableCard::class.java.getResourceAsStream(card.artPath))
-        cover = createCover(appearanceImage, artImage, "What is S?", card.name)
-        return cover
+        cover = createCover(card.frame, card.art, "What is S?", card.name)
+        preview = createPreview(cover)
     }
 
     private fun createPreview(image: BufferedImage): BufferedImage {

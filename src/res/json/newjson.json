@@ -55,7 +55,7 @@
     "art": "/res/cards/arts/blink.png",
     "description": "Teleports you to the desired point.",
     "apcost": "3",
-    "range": "5",
+    "range": "0-5",
     "type": "NONE",
     "class": "unknown",
     "effects": [
@@ -110,7 +110,7 @@
     "art": "/res/cards/arts/objection.png",
     "description": "IDK WATZ ZET M8 RLY IDK. AP_boost=3",
     "apcost": "0",
-    "range": "0",
+    "range": "0-0",
     "type": "NONE",
     "class": "unknown",
     "effects": [
@@ -127,7 +127,7 @@
     "art": "/res/cards/arts/art_test.png",
     "description": "Sacrifices 3 HP, but gives you 3 bonus AP.",
     "apcost": "0",
-    "range": "0",
+    "range": "0-0",
     "type": "NONE",
     "class": "Bloody Mage",
     "effects": [
@@ -165,7 +165,7 @@
     "art": "/res/cards/arts/scare.png",
     "description": "Scare an enemy so he will be less able to do anything (-5 AP).",
     "apcost": "4",
-    "range": "7",
+    "range": "0-7",
     "type": "NONE",
     "class": "Head Hunter",
     "effects": [
@@ -203,7 +203,7 @@
     "art": "/res/cards/arts/scare.png",
     "description": "Draws 2 cards into your hand.",
     "apcost": "3",
-    "range": "0",
+    "range": "0-0",
     "type": "NONE",
     "class": "Jr. Painter",
     "effects": [
@@ -220,7 +220,7 @@
     "art": "/res/cards/arts/scare.png",
     "description": "Removes 1 card from the hand.",
     "apcost": "9",
-    "range": "0",
+    "range": "0-0",
     "type": "NONE",
     "class": "Jr. Painter",
     "effects": [

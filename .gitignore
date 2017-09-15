@@ -1,11 +1,4 @@
-/nbproject/private/
-/build/
-/dist/
-src/devlist.txt
-map_dump.json
 out
-nbproject
 lib
-workspace.xml
 .idea/workspace.xml
-.idea/libraries/
+.idea/libraries

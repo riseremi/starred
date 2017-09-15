@@ -1,6 +1,7 @@
 package me.riseremi.cards
 
 import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
 
 /**
  * by riseremi on 14.09.17
@@ -11,10 +12,8 @@ class Card(
         val name: String,
         val description: String,
         val type: String,
-        //        val appearance: BufferedImage,
-        val appearancePath: String,
-        //        val art: BufferedImage,
-        val artPath: String,
+        val frame: BufferedImage,
+        val art: BufferedImage,
         val apcost: Int,
         val range: IntArray,
         val effects: List<Effect>
@@ -24,8 +23,8 @@ class Card(
             builder.name,
             builder.description,
             builder.type,
-            builder.appearancePath,
-            builder.artPath,
+            ImageIO.read(Card::class.java.getResourceAsStream(builder.framePath)),
+            ImageIO.read(Card::class.java.getResourceAsStream(builder.artPath)),
             builder.apcost,
             builder.range,
             builder.effects
@@ -52,13 +51,11 @@ class Card(
         var name: String = ""
         var description: String = ""
         var type: String = ""
-        var appearancePath: String = ""
+        var framePath: String = ""
         var artPath: String = ""
         var apcost: Int = 0
         var range: IntArray = intArrayOf(0, 0)
         var effects: List<Effect> = listOf()
-        var appearance: BufferedImage = BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
-        var art: BufferedImage = BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
 
         fun build() = Card(this)
     }

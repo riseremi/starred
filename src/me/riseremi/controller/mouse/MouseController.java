@@ -156,7 +156,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         //activate selection mode after click on a thumbnail
         if (e.getButton() == MouseEvent.BUTTON1 && deck.getActiveCard() != null
                 && !core.isTileSelectionMode() && core.isNextTurnAvailable() /*&& core.isConnected()*/) {
-//            deck.getActiveCard().setAsSelectedCard(user, target);
+            deck.getActiveCard().setAsSelectedCard(user, target);
         }
 
         if (mouseRect.x < 64 && mouseRect.y < 64) try {
@@ -199,6 +199,6 @@ public class MouseController implements MouseListener, MouseMotionListener {
             core.getSelectionCursor().setPosition(e.getX() / 32 * 32, e.getY() / 32 * 32);
         }
         //rect intersections
-//        deck.switchPaint(mouseRect);
+        deck.switchPaint(mouseRect);
     }
 }

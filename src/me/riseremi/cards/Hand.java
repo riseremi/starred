@@ -31,9 +31,10 @@ public final class Hand {
 
 //            card.setRect(new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT));
             Rectangle paintRect = new Rectangle(x, y, BasicCard.WIDTH, BasicCard.HEIGHT);
+            card.setCollisionRectangle(paintRect);
 
             g.drawImage(card.getPreview(), x, y, null);
-//            g.drawRect(card.getX(), card.getY(), card.getWidth(), card.getHeight());
+            g.drawRect(paintRect.x, paintRect.y, paintRect.width, paintRect.height);
             g.drawRect(x, y, BasicCard.WIDTH, BasicCard.HEIGHT);
 
             Font trb = new Font("Arial", Font.BOLD, 28);
@@ -100,11 +101,11 @@ public final class Hand {
     }
 
     public void switchPaint(Rectangle mouseRect) {
-        for (BasicCard card : getCards()) {
-            if (mouseRect.intersects(card.getRect())) {
-                card.setPaintBig(true);
+        for (DrawableCard card : getCards()) {
+            if (mouseRect.intersects(card.getCollisionRectangle())) {
+                card.setHover(true);
             } else {
-                card.setPaintBig(false);
+                card.setHover(false);
             }
         }
     }

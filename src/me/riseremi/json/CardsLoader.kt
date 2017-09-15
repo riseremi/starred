@@ -24,7 +24,7 @@ class CardsLoader {
                 name = jsonCard.getString("name")
                 description = jsonCard.getString("description")
                 type = jsonCard.getString("type")
-                appearancePath = jsonCard.getString("image")
+                framePath = jsonCard.getString("image")
                 artPath = jsonCard.getString("art")
                 apcost = jsonCard.getInt("apcost")
                 // TODO: replace this by normal JSON array
