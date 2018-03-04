@@ -1,7 +1,5 @@
 package me.riseremi.entities;
 
-import lombok.Getter;
-import lombok.Setter;
 import me.riseremi.cards.Card;
 import me.riseremi.cards.CardsArchive;
 import me.riseremi.cards.Hand;
@@ -22,55 +20,200 @@ import java.io.IOException;
  */
 public class Entity {
 
-    @Getter
-    @Setter
     protected int hp, maxHp, verticalSpeed, horizontalSpeed, pDef, mDef, pAtk, mAtk;
-    @Getter
-    @Setter
     protected String name;
     //координаты измеряются в тайлах
-    @Getter
-    @Setter
     private int x, y; //straight from the top-left corner, 0:0, no offset
-    @Getter
-    @Setter
     protected BufferedImage sprite;
-    @Getter
-    @Setter
     protected boolean isPaint = false;
-    @Getter
-    @Setter
     protected int invSize = 20;
-    @Getter
-    @Setter
     protected int actionPoints;
     //action costs
     public static final float MOVE_COST = 1F;
-    @Getter
     protected Hand hand;
-    @Getter
-    @Setter
     private boolean canMove = true;
-    @Getter
-    @Setter
     private HPBar hpBar;
     private int additionalAP;
-    @Setter
     private boolean drawHPBar = true;
-    @Setter
-    @Getter
     int id;
-    @Getter
     int imgId;
-    @Getter
-    @Setter
     Type type;
-    @Getter
-    @Setter
     int classId;
     private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
             "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
             "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter"};
+
+    public int getHp() {
+        return this.hp;
+    }
+
+    public int getMaxHp() {
+        return this.maxHp;
+    }
+
+    public int getVerticalSpeed() {
+        return this.verticalSpeed;
+    }
+
+    public int getHorizontalSpeed() {
+        return this.horizontalSpeed;
+    }
+
+    public int getPDef() {
+        return this.pDef;
+    }
+
+    public int getMDef() {
+        return this.mDef;
+    }
+
+    public int getPAtk() {
+        return this.pAtk;
+    }
+
+    public int getMAtk() {
+        return this.mAtk;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public BufferedImage getSprite() {
+        return this.sprite;
+    }
+
+    public boolean isPaint() {
+        return this.isPaint;
+    }
+
+    public int getInvSize() {
+        return this.invSize;
+    }
+
+    public int getActionPoints() {
+        return this.actionPoints;
+    }
+
+    public Hand getHand() {
+        return this.hand;
+    }
+
+    public boolean isCanMove() {
+        return this.canMove;
+    }
+
+    public HPBar getHpBar() {
+        return this.hpBar;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public int getImgId() {
+        return this.imgId;
+    }
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public int getClassId() {
+        return this.classId;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
+    public void setVerticalSpeed(int verticalSpeed) {
+        this.verticalSpeed = verticalSpeed;
+    }
+
+    public void setHorizontalSpeed(int horizontalSpeed) {
+        this.horizontalSpeed = horizontalSpeed;
+    }
+
+    public void setPDef(int pDef) {
+        this.pDef = pDef;
+    }
+
+    public void setMDef(int mDef) {
+        this.mDef = mDef;
+    }
+
+    public void setPAtk(int pAtk) {
+        this.pAtk = pAtk;
+    }
+
+    public void setMAtk(int mAtk) {
+        this.mAtk = mAtk;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setSprite(BufferedImage sprite) {
+        this.sprite = sprite;
+    }
+
+    public void setPaint(boolean isPaint) {
+        this.isPaint = isPaint;
+    }
+
+    public void setInvSize(int invSize) {
+        this.invSize = invSize;
+    }
+
+    public void setActionPoints(int actionPoints) {
+        this.actionPoints = actionPoints;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+
+    public void setHpBar(HPBar hpBar) {
+        this.hpBar = hpBar;
+    }
+
+    public void setDrawHPBar(boolean drawHPBar) {
+        this.drawHPBar = drawHPBar;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
 
     public enum Type {
 

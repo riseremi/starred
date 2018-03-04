@@ -1,6 +1,5 @@
 package me.riseremi.main;
 
-import lombok.Getter;
 import me.riseremi.controller.Controller;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
@@ -41,7 +40,6 @@ public class Main extends JFrame implements ActionListener {
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
     private static LoginScreen loginScreen;
-    @Getter
     private static LobbyScreen lobbyScreen;
     private static DefaultCaret caret;
 
@@ -161,6 +159,10 @@ public class Main extends JFrame implements ActionListener {
             main.add(core);
             main.requestFocus();
         });
+    }
+
+    public static LobbyScreen getLobbyScreen() {
+        return Main.lobbyScreen;
     }
 
     @Override

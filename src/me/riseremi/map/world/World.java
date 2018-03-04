@@ -1,11 +1,11 @@
 package me.riseremi.map.world;
 
-import me.riseremi.map.layer.TiledLayer;
 import me.riseremi.core.Global;
+import me.riseremi.map.layer.TiledLayer;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.*;
-import javax.imageio.*;
-import lombok.*;
+import java.io.IOException;
 
 /**
  *
@@ -13,9 +13,9 @@ import lombok.*;
  */
 public final class World {
 
-    private @Getter TiledLayer backgroundLayer;
-    private @Getter TiledLayer decorationsLayer;
-    private @Getter TiledLayer obstaclesLayer;
+    private TiledLayer backgroundLayer;
+    private TiledLayer decorationsLayer;
+    private TiledLayer obstaclesLayer;
 
     public World(int tileWidth, int tileHeight, int width, int height) {
         try {
@@ -41,4 +41,15 @@ public final class World {
         return backgroundLayer.getBlocksY();
     }
 
+    public TiledLayer getBackgroundLayer() {
+        return this.backgroundLayer;
+    }
+
+    public TiledLayer getDecorationsLayer() {
+        return this.decorationsLayer;
+    }
+
+    public TiledLayer getObstaclesLayer() {
+        return this.obstaclesLayer;
+    }
 }

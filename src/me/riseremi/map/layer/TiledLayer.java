@@ -2,11 +2,10 @@ package me.riseremi.map.layer;
 
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
-import java.awt.Color;
-import java.awt.Graphics;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import lombok.Setter;
 
 /**
  *
@@ -15,7 +14,7 @@ import lombok.Setter;
  */
 public final class TiledLayer extends Layer {
 
-    private @Setter int[][] map;//[x][y]
+    private int[][] map;//[x][y]
 //    private final int[][] visiblity;//[x][y] 
     private final BufferedImage[] tiles;
     private final int tileWidth, tileHeight;
@@ -152,5 +151,9 @@ public final class TiledLayer extends Layer {
 
     public void moveRight() {
         super.setBlocksX(super.getBlocksX() - 1);
+    }
+
+    public void setMap(int[][] map) {
+        this.map = map;
     }
 }

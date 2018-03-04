@@ -1,6 +1,5 @@
 package me.riseremi.cards;
 
-import lombok.Getter;
 import me.riseremi.main.Main;
 import me.riseremi.utils.Shift;
 
@@ -16,7 +15,6 @@ import java.util.List;
 public final class Hand {
 
     public static final int SIZE = 8;
-    @Getter
     private final List<DrawableCard> cards = new ArrayList<>();
 
     public void paint(Graphics2D g) {
@@ -67,6 +65,10 @@ public final class Hand {
 
     public DrawableCard getCard(int slot) {
         return cards.get(slot);
+    }
+
+    public List<DrawableCard> getCards() {
+        return cards;
     }
 
     public void addCard(DrawableCard card) {
