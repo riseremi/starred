@@ -1,13 +1,10 @@
 package me.riseremi.controller.mouse;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import lombok.Getter;
-import lombok.Setter;
 import me.riseremi.core.Core_v1;
 import me.riseremi.core.Global;
 import me.riseremi.map.world.World;
+
+import java.awt.*;
 
 /**
  * Rectangle cursor that appears only when you use a card (tile/target
@@ -18,7 +15,7 @@ import me.riseremi.map.world.World;
 public class SelectionCursor {
 
     private final Rectangle rectangle;
-    @Getter @Setter private int realX, realY;
+    private int realX, realY;
     private final Color color = new Color(231, 76, 60);
     private static Core_v1 core;
 
@@ -53,4 +50,19 @@ public class SelectionCursor {
         g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 
+    public int getRealX() {
+        return this.realX;
+    }
+
+    public int getRealY() {
+        return this.realY;
+    }
+
+    public void setRealX(int realX) {
+        this.realX = realX;
+    }
+
+    public void setRealY(int realY) {
+        this.realY = realY;
+    }
 }

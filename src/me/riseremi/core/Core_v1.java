@@ -1,7 +1,5 @@
 package me.riseremi.core;
 
-import lombok.Getter;
-import lombok.Setter;
 import me.riseremi.cards.Card;
 import me.riseremi.cards.CardsArchive;
 import me.riseremi.cards.DrawableCard;
@@ -36,55 +34,33 @@ import java.util.logging.Logger;
  */
 public final class Core_v1 extends JPanel {
 
-    private @Getter
-    @Setter
-    Player player;
-    private @Getter
-    Friend friend;
-    private @Getter
-    World world;
-    private @Getter
-    Server server;
-    private @Getter
-    Client client;
+    private Player player;
+    private Friend friend;
+    private World world;
+    private Server server;
+    private Client client;
     private final ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private @Getter
-    @Setter
+    private
     boolean connected = false;
     private BufferedImage waitingImage;
-    @Getter
-    @Setter
     private boolean nextTurnAvailable;
     private Font walkwayBold;
     //
-    @Setter
-    @Getter
     private boolean cardJustUsed;
     private long effectStartTime;
     //
-    @Getter
-    @Setter
     private boolean tileSelectionMode = false;
     private long turnStartTime;
     private long timeLeft = 1;
-    @Getter
     private boolean serverMode;
     //
     private boolean initialized = false;
     private final long TURN_TIME_LIMIT = 3 * 60 * 1000; //3 minutes
-    @Getter
-    @Setter
     private Camera camera;
-    @Getter
-    @Setter
     private SelectionCursor selectionCursor;
-    @Getter
-    @Setter
     private int cardsDrawn = 0, cardsDrawnLimit = 30;
-    @Setter
     private boolean gameOver;
-    @Setter
     private int winnerId;
 
     public static Core_v1 getInstance() {
@@ -399,4 +375,103 @@ public final class Core_v1 extends JPanel {
         cardsDrawn++;
     }
 
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public Friend getFriend() {
+        return this.friend;
+    }
+
+    public World getWorld() {
+        return this.world;
+    }
+
+    public Server getServer() {
+        return this.server;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public boolean isConnected() {
+        return this.connected;
+    }
+
+    public boolean isNextTurnAvailable() {
+        return this.nextTurnAvailable;
+    }
+
+    public boolean isCardJustUsed() {
+        return this.cardJustUsed;
+    }
+
+    public boolean isTileSelectionMode() {
+        return this.tileSelectionMode;
+    }
+
+    public boolean isServerMode() {
+        return this.serverMode;
+    }
+
+    public Camera getCamera() {
+        return this.camera;
+    }
+
+    public SelectionCursor getSelectionCursor() {
+        return this.selectionCursor;
+    }
+
+    public int getCardsDrawn() {
+        return this.cardsDrawn;
+    }
+
+    public int getCardsDrawnLimit() {
+        return this.cardsDrawnLimit;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
+    public void setNextTurnAvailable(boolean nextTurnAvailable) {
+        this.nextTurnAvailable = nextTurnAvailable;
+    }
+
+    public void setCardJustUsed(boolean cardJustUsed) {
+        this.cardJustUsed = cardJustUsed;
+    }
+
+    public void setTileSelectionMode(boolean tileSelectionMode) {
+        this.tileSelectionMode = tileSelectionMode;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public void setSelectionCursor(SelectionCursor selectionCursor) {
+        this.selectionCursor = selectionCursor;
+    }
+
+    public void setCardsDrawn(int cardsDrawn) {
+        this.cardsDrawn = cardsDrawn;
+    }
+
+    public void setCardsDrawnLimit(int cardsDrawnLimit) {
+        this.cardsDrawnLimit = cardsDrawnLimit;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public void setWinnerId(int winnerId) {
+        this.winnerId = winnerId;
+    }
 }

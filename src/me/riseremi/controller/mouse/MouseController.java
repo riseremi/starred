@@ -1,6 +1,5 @@
 package me.riseremi.controller.mouse;
 
-import lombok.Getter;
 import me.riseremi.cards.Card;
 import me.riseremi.cards.Effect;
 import me.riseremi.cards.Hand;
@@ -28,7 +27,6 @@ import java.util.List;
  */
 public class MouseController implements MouseListener, MouseMotionListener {
 
-    @Getter
     private static final Rectangle mouseRect = new Rectangle(1, 1);
 
     @Override
@@ -163,6 +161,10 @@ public class MouseController implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+    }
+
+    public static Rectangle getMouseRect() {
+        return mouseRect;
     }
 
     @Override
