@@ -1,7 +1,6 @@
 package me.riseremi.cards
 
 import java.util.*
-import kotlin.NoSuchElementException
 
 /**
  * by riseremi on 14.09.17
@@ -26,7 +25,7 @@ class CardsArchive {
     fun getRandomCard(): Card? {
         val randomIndex = random.nextInt(cards.size - 1)
         // TODO: add error reporting
-        return cards[randomIndex] ?: throw NoSuchElementException("Requested random card not found in CardsArchive")
+        return cards[randomIndex] ?: throw Exception("Requested random card not found in CardsArchive")
     }
 
     fun getCard(id: Int): Card {
