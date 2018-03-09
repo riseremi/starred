@@ -1,9 +1,8 @@
 package me.riseremi.ui;
 
 import me.riseremi.entities.Entity;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 
 /**
  *

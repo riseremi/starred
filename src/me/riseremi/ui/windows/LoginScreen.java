@@ -1,6 +1,5 @@
 package me.riseremi.ui.windows;
 
-import lombok.Getter;
 import me.riseremi.main.Main;
 import me.riseremi.ui.RButton;
 import me.riseremi.ui.RTextField;
@@ -31,11 +30,10 @@ public class LoginScreen extends JPanel implements ActionListener {
     private final String POSTFIX = "";
     private final JButton preview;
     private final RButton next, previous;
-    @Getter private int previewIndex = 0;
+    private int previewIndex = 0;
     //
-    @Getter private static final JButton hostButton = new RButton("Host", false),
+    private static final JButton hostButton = new RButton("Host", false),
             joinButton = new RButton("Join", false), newNickButton = new RButton("<", false);
-    @Getter
     private static final JTextField nickField = new RTextField(NameGenerator.INSTANCE.getName()),
             ipField = new RTextField("127.0.0.1");
 
@@ -127,6 +125,26 @@ public class LoginScreen extends JPanel implements ActionListener {
 
     }
 
+    public static JButton getHostButton() {
+        return LoginScreen.hostButton;
+    }
+
+    public static JButton getJoinButton() {
+        return LoginScreen.joinButton;
+    }
+
+    public static JButton getNewNickButton() {
+        return LoginScreen.newNickButton;
+    }
+
+    public static JTextField getNickField() {
+        return LoginScreen.nickField;
+    }
+
+    public static JTextField getIpField() {
+        return LoginScreen.ipField;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -167,4 +185,7 @@ public class LoginScreen extends JPanel implements ActionListener {
         }
     }
 
+    public int getPreviewIndex() {
+        return this.previewIndex;
+    }
 }

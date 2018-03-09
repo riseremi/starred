@@ -1,8 +1,8 @@
 package me.riseremi.ui.windows;
 
 import me.riseremi.core.Global;
-import java.awt.Color;
-import java.awt.Graphics;
+
+import java.awt.*;
 
 /**
  *
