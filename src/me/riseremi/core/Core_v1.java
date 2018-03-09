@@ -39,11 +39,8 @@ public final class Core_v1 extends JPanel {
     private World world;
     private Server server;
     private Client client;
-    private final ArrayList<Window> windows = new ArrayList<>();
     private static Core_v1 instance;
-    private
-    boolean connected = false;
-    private BufferedImage waitingImage;
+    private boolean connected = false;
     private boolean nextTurnAvailable;
     private Font walkwayBold;
     //
