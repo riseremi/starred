@@ -92,17 +92,13 @@ class Hand {
     }
 
     fun switchPaint(mouseRect: Rectangle) {
-        for (card in getCards()) {
-            if (mouseRect.intersects(card.collisionRectangle)) {
-                card.hover = true
-            } else {
-                card.hover = false
-            }
+        for (card in this.cards) {
+            card.hover = mouseRect.intersects(card.collisionRectangle)
+            if (card.hover) return
         }
     }
 
     companion object {
-
-        val SIZE = 8
+        const val SIZE = 8
     }
 }

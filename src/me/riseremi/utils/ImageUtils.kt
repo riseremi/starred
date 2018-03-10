@@ -14,7 +14,7 @@ fun scaleImage(img: BufferedImage, width: Int, height: Int): BufferedImage {
     if (img.width * height < img.width * width) {
         scaledWidth = img.width * height / img.width
     } else {
-        scaledHeight = img.width * width / img.width
+        scaledHeight = img.height * height / img.height
     }
     val scaledImage = BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB)
     val g = scaledImage.createGraphics()

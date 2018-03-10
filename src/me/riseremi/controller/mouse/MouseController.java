@@ -192,7 +192,6 @@ public class MouseController implements MouseListener, MouseMotionListener {
         final Hand deck = core.getPlayer().getHand();
 
         if (core.isTileSelectionMode()) {
-            //core.setSelectionCursor(new Rectangle(e.getX() / 32 * 32, e.getY() / 32 * 32, 32, 32));
             core.getSelectionCursor().setPosition(e.getX() / 32 * 32, e.getY() / 32 * 32);
         }
         //rect intersections

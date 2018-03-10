@@ -64,7 +64,7 @@ public class HeroController {
             if (ke.getKeyCode() == KeyEvent.VK_F11) {
                 try {
                     core.endTurn();
-                } catch (IOException ex) {
+                } catch (IOException ignored) {
                 }
             }
         }
