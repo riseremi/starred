@@ -41,7 +41,7 @@ public class Controller implements KeyListener {
         if (!isChat && Core_v1.getInstance().isNextTurnAvailable()) {
             try {
                 HeroController.heroController(player, world, ke);
-            } catch (CloneNotSupportedException ex) {
+            } catch (CloneNotSupportedException ignored) {
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
