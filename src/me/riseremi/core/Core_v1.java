@@ -16,15 +16,12 @@ import me.riseremi.mreader.WrongFormatException;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageEndTurn;
 import me.riseremi.network.messages.MessageGameOver;
-import me.riseremi.ui.windows.Window;
 import org.rising.framework.network.Client;
 import org.rising.framework.network.Server;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,7 +86,7 @@ public final class Core_v1 extends JPanel {
         player = new Player("Server", 0, -1, Entity.Type.PLAYER);
         friend = new Friend("Client", 0, -1, Entity.Type.PLAYER);
         camera = new Camera();
-        selectionCursor = new SelectionCursor(world, this);
+        selectionCursor = new SelectionCursor(this);
 
         try {
             StarredMap map = new StarredMap(Global.pathToTheMap);
