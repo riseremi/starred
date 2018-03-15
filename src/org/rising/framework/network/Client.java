@@ -1,17 +1,14 @@
 package org.rising.framework.network;
 
+import me.riseremi.main.Main;
+
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import me.riseremi.main.Main;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public class Client {
@@ -39,7 +36,7 @@ public class Client {
         out = new ObjectOutputStream(s.getOutputStream());
         out.flush();
         in = new ObjectInputStream(s.getInputStream());
-        
+
         Thread t = new Thread() {
             @Override
             public void run() {
@@ -47,11 +44,14 @@ public class Client {
                     try {
                         Message s = (Message) in.readObject();
                         if (Main.ENABLE_DEBUG_TOOLS) {
-                            System.out.println("CLIENT RECIEVED: " + s.getType().name());
+                            System.out.println("CLIENT RECEIVED: " + s.getType().name());
                         }
                         Protocol.processMessageOnClientSide(s);
                     } catch (IOException | ClassNotFoundException ex) {
-                        System.out.println(ex);
+                        if (ex instanceof EOFException) {
+                            System.out.println("Server has disconnected. The game will be closed.");
+                            System.exit(-1);
+                        }
                     }
                 }
             }
