@@ -113,7 +113,7 @@ public final class Core_v1 extends JPanel {
 
     // init both server and client
     // need to recode to get standalone server
-    public void initServer(int imgId, String name) {
+    private void initServer(int imgId, String name) {
         player.setImage(imgId);
         Main.main.setTitle(Main.GAME_TITLE + " - Server");
 
