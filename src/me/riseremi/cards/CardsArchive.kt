@@ -1,6 +1,7 @@
 package me.riseremi.cards
 
 import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * by riseremi on 14.09.17
@@ -21,16 +22,19 @@ class CardsArchive {
     fun addCard(card: Card) {
         cards[card.id] = card
     }
-
+ 
     fun getRandomCard(): Card? {
-        val randomIndex = random.nextInt(cards.size - 1)
+        val indices = cards.keys
+        val id = random.nextInt(indices.size - 1)
+
         // TODO: add error reporting
-        return cards[randomIndex] ?: throw Exception("Requested random card not found in CardsArchive")
+        return cards[indices.elementAt(id)]
+                ?: throw Exception("Requested random card not found in CardsArchive (id=$id).")
     }
 
     fun getCard(id: Int): Card {
         // TODO: add error reporting
-        return cards[id] ?: throw NoSuchElementException("Requested card not found in CardsArchive.")
+        return cards[id] ?: throw NoSuchElementException("Requested card not found in CardsArchive (id=$id).")
     }
 
     override fun toString(): String {
