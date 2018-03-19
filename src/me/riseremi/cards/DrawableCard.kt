@@ -2,6 +2,7 @@ package me.riseremi.cards
 
 import me.riseremi.utils.Shift
 import me.riseremi.utils.scaleImage
+import me.riseremi.utils.splitInChunks
 import java.awt.Color
 import java.awt.Font
 import java.awt.Rectangle
@@ -40,16 +41,7 @@ class DrawableCard(var card: Card) {
     }
 
     private fun buildBigCard(img: BufferedImage, art: BufferedImage, description: String, name: String): BufferedImage {
-        val sb = StringBuilder(description)
-
-        val i = 0
-//        while (i + 30 < sb.length && (sb.lastIndexOf(" ", i + 30)) != -1) {
-//            sb.replace(i, i + 1, "\n")
-//        }
-
-        var temp = sb.toString().replace("|", "\n").replace("=", ": ")
-        temp = temp.replace("_", " ")
-        val strings = temp.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val strings = splitInChunks(30, description)
 
         val newImage = BufferedImage(img.width, img.height, BufferedImage.TYPE_INT_RGB)
         val g = newImage.createGraphics()
