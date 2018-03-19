@@ -18,7 +18,7 @@ class DrawableCard(var card: Card) {
     var collisionRectangle: Rectangle = Rectangle()
 
     init {
-        cover = createCover(card.frame, card.art, "What is S?", card.name)
+        cover = createCover(card.frame, card.art, card.description, card.name)
         preview = createPreview(cover)
     }
 
@@ -35,17 +35,17 @@ class DrawableCard(var card: Card) {
         return scaleImage(image, PREVIEW_WIDTH, PREVIEW_HEIGHT)
     }
 
-    private fun createCover(appearance: BufferedImage, art: BufferedImage, s: String, name: String): BufferedImage {
-        return buildBigCard(appearance, art, s, name)
+    private fun createCover(appearance: BufferedImage, art: BufferedImage, description: String, name: String): BufferedImage {
+        return buildBigCard(appearance, art, description, name)
     }
 
-    private fun buildBigCard(img: BufferedImage, art: BufferedImage, s: String, name: String): BufferedImage {
-        val sb = StringBuilder(s)
+    private fun buildBigCard(img: BufferedImage, art: BufferedImage, description: String, name: String): BufferedImage {
+        val sb = StringBuilder(description)
 
         val i = 0
-        while (i + 30 < sb.length && (sb.lastIndexOf(" ", i + 30)) != -1) {
-            sb.replace(i, i + 1, "\n")
-        }
+//        while (i + 30 < sb.length && (sb.lastIndexOf(" ", i + 30)) != -1) {
+//            sb.replace(i, i + 1, "\n")
+//        }
 
         var temp = sb.toString().replace("|", "\n").replace("=", ": ")
         temp = temp.replace("_", " ")

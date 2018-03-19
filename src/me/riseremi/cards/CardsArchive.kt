@@ -22,7 +22,7 @@ class CardsArchive {
     fun addCard(card: Card) {
         cards[card.id] = card
     }
- 
+
     fun getRandomCard(): Card? {
         val indices = cards.keys
         val id = random.nextInt(indices.size - 1)
