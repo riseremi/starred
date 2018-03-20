@@ -127,14 +127,14 @@ public class Main extends JFrame implements ActionListener {
                             try {
                                 MessageSetName msgSetName = new MessageSetName(msgBody, Core_v1.getInstance().getPlayer().getId());
                                 Client.getInstance().send(msgSetName);
-                            } catch (IOException ex) {
+                            } catch (IOException ignored) {
                             }
                             break;
                     }
                 } else {
                     try {
                         Client.getInstance().send(new MessageChat(msgText + "\n\r", core.getPlayer().getId()));
-                    } catch (IOException ex) {
+                    } catch (IOException ignored) {
                     }
                 }
             }
@@ -169,7 +169,7 @@ public class Main extends JFrame implements ActionListener {
         if (e.getSource() == LobbyScreen.getGoButton()) {
             try {
                 Server.getInstance().sendToAll(new MessageGo());
-            } catch (Exception ex) {
+            } catch (Exception ignored) {
             }
         }
         if (e.getSource() == LoginScreen.getHostButton()) {
