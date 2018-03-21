@@ -28,26 +28,24 @@ public class Main extends JFrame implements ActionListener {
 
     public static final String GAME_TITLE = "Starred Classic";
     public static boolean ENABLE_DEBUG_TOOLS;
-    public static boolean CARD_DUMP;
+    private static boolean CARD_DUMP;
     public static Main main;
     private static JTextField chatField;
     private static JPanel panel;
     private static boolean enabled = false;
     private static JTextArea textArea;
     private static Core_v1 core;
-    private final Controller controller = new Controller(false);
-    private final Controller chatController = new Controller(true);
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 14);
     private static final int MAX_NAME_LENGTH = 32;
     private static LoginScreen loginScreen;
     private static LobbyScreen lobbyScreen;
-    private static DefaultCaret caret;
 
     public Main(String title) {
         setTitle(title);
         setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        Controller controller = new Controller(false);
         addKeyListener(controller);
 
         this.setLayout(new BorderLayout());
@@ -62,13 +60,14 @@ public class Main extends JFrame implements ActionListener {
 
         JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        caret = (DefaultCaret) textArea.getCaret();
+        DefaultCaret caret = (DefaultCaret) textArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         panel.add(chatField, BorderLayout.SOUTH);
         panel.add(scroll);
         chatField.setEnabled(enabled);
         textArea.setLineWrap(true);
+        Controller chatController = new Controller(true);
         chatField.addKeyListener(chatController);
         add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);

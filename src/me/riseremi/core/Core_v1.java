@@ -22,6 +22,7 @@ import org.rising.framework.network.Server;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -244,7 +245,7 @@ public final class Core_v1 extends JPanel {
             try {
                 endTurn();
                 timeLeft = TURN_TIME_LIMIT;
-            } catch (IOException ex) {
+            } catch (IOException ignored) {
             }
         }
 
@@ -264,7 +265,7 @@ public final class Core_v1 extends JPanel {
 
             try {
                 Client.getInstance().send(message);
-            } catch (IOException ex) {
+            } catch (IOException ignored) {
             }
         }
 
@@ -329,7 +330,7 @@ public final class Core_v1 extends JPanel {
      * Enable all actions, add a new card
      */
     public void startTurn() {
-        player.getHand().addCard(CardsArchive.Companion.getInstance().getRandomCard().toDrawableCard());
+        player.getHand().addCard(Objects.requireNonNull(CardsArchive.Companion.getInstance().getRandomCard()).toDrawableCard());
         incrementCardsDrawn();
         nextTurnAvailable = true;
         turnStartTime = System.currentTimeMillis();
