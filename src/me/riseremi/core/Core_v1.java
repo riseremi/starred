@@ -382,32 +382,12 @@ public final class Core_v1 extends JPanel {
         return this.world;
     }
 
-    public Server getServer() {
-        return this.server;
-    }
-
-    public Client getClient() {
-        return this.client;
-    }
-
-    public boolean isConnected() {
-        return this.connected;
-    }
-
     public boolean isNextTurnAvailable() {
         return this.nextTurnAvailable;
     }
 
-    public boolean isCardJustUsed() {
-        return this.cardJustUsed;
-    }
-
     public boolean isTileSelectionMode() {
         return this.tileSelectionMode;
-    }
-
-    public boolean isServerMode() {
-        return this.serverMode;
     }
 
     public Camera getCamera() {
@@ -418,48 +398,12 @@ public final class Core_v1 extends JPanel {
         return this.selectionCursor;
     }
 
-    public int getCardsDrawn() {
-        return this.cardsDrawn;
-    }
-
-    public int getCardsDrawnLimit() {
-        return this.cardsDrawnLimit;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public void setConnected(boolean connected) {
-        this.connected = connected;
-    }
-
-    public void setNextTurnAvailable(boolean nextTurnAvailable) {
-        this.nextTurnAvailable = nextTurnAvailable;
-    }
-
     public void setCardJustUsed(boolean cardJustUsed) {
         this.cardJustUsed = cardJustUsed;
     }
 
     public void setTileSelectionMode(boolean tileSelectionMode) {
         this.tileSelectionMode = tileSelectionMode;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
-    public void setSelectionCursor(SelectionCursor selectionCursor) {
-        this.selectionCursor = selectionCursor;
-    }
-
-    public void setCardsDrawn(int cardsDrawn) {
-        this.cardsDrawn = cardsDrawn;
-    }
-
-    public void setCardsDrawnLimit(int cardsDrawnLimit) {
-        this.cardsDrawnLimit = cardsDrawnLimit;
     }
 
     public void setGameOver(boolean gameOver) {
