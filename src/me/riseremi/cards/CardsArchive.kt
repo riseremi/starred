@@ -32,12 +32,8 @@ class CardsArchive {
                 ?: throw Exception("Requested random card not found in CardsArchive (id=$id).")
     }
 
-    fun getCard(id: Int): Card {
-        // TODO: add error reporting
-        return cards[id] ?: throw NoSuchElementException("Requested card not found in CardsArchive (id=$id).")
-    }
+    fun getCard(id: Int): Card = cards[id]
+            ?: throw NoSuchElementException("Requested card not found in CardsArchive (id=$id).")
 
-    override fun toString(): String {
-        return cards.toString()
-    }
+    override fun toString(): String = cards.toString()
 }

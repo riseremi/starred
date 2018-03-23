@@ -6,19 +6,13 @@ package me.riseremi.cards
 </riseremi> */
 class Effect(private val effectType: Card.Companion.EffectType, private val value: Int) {
 
-    override fun toString(): String {
-        return effectType.name + " = " + value.toString()
-    }
+    override fun toString(): String = effectType.name + " = " + value.toString()
 
     // NOTE: for compatibility only
     // TODO: remove in flavor of new Card class
-    fun getEffectType(): Card.Companion.EffectType {
-        return effectType
-    }
+    fun getEffectType(): Card.Companion.EffectType = effectType
 
     // NOTE: for compatibility only
     // TODO: remove in flavor of new Card class
-    fun getValue(): Int {
-        return value
-    }
+    fun getValue(): Int = value
 }

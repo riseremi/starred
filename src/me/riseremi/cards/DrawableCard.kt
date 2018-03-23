@@ -28,17 +28,11 @@ class DrawableCard(var card: Card) {
         const val PREVIEW_HEIGHT: Int = 60
     }
 
-    fun toCard(): Card {
-        return card
-    }
+    fun toCard(): Card = card
 
-    private fun createPreview(image: BufferedImage): BufferedImage {
-        return scaleImage(image, PREVIEW_WIDTH, PREVIEW_HEIGHT)
-    }
+    private fun createPreview(image: BufferedImage): BufferedImage = scaleImage(image, PREVIEW_WIDTH, PREVIEW_HEIGHT)
 
-    private fun createCover(appearance: BufferedImage, art: BufferedImage, description: String, name: String): BufferedImage {
-        return buildBigCard(appearance, art, description, name)
-    }
+    private fun createCover(appearance: BufferedImage, art: BufferedImage, description: String, name: String): BufferedImage = buildBigCard(appearance, art, description, name)
 
     private fun buildBigCard(img: BufferedImage, art: BufferedImage, description: String, name: String): BufferedImage {
         val strings = splitInChunks(30, description)
