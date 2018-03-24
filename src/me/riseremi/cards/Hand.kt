@@ -45,10 +45,10 @@ class Hand {
             y += DrawableCard.PREVIEW_HEIGHT / 3
 
             g.color = Color.BLACK
-            g.drawString("" + card.card.apcost, Shift.ShiftWest(x, 1), Shift.ShiftNorth(y, 1))
-            g.drawString("" + card.card.apcost, Shift.ShiftWest(x, 1), Shift.ShiftSouth(y, 1))
-            g.drawString("" + card.card.apcost, Shift.ShiftEast(x, 1), Shift.ShiftNorth(y, 1))
-            g.drawString("" + card.card.apcost, Shift.ShiftEast(x, 1), Shift.ShiftSouth(y, 1))
+            g.drawString("" + card.card.apcost, Shift.shiftWest(x, 1), Shift.shiftNorth(y, 1))
+            g.drawString("" + card.card.apcost, Shift.shiftWest(x, 1), Shift.shiftSouth(y, 1))
+            g.drawString("" + card.card.apcost, Shift.shiftEast(x, 1), Shift.shiftNorth(y, 1))
+            g.drawString("" + card.card.apcost, Shift.shiftEast(x, 1), Shift.shiftSouth(y, 1))
 
             //red color for cards with blood cost
             g.color = Color.WHITE

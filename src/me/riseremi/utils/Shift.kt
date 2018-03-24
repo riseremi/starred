@@ -6,21 +6,9 @@ package me.riseremi.utils
 </riseremi> */
 class Shift {
     companion object {
-        fun ShiftNorth(p: Int, distance: Int): Int {
-            return p - distance
-        }
-
-        fun ShiftSouth(p: Int, distance: Int): Int {
-            return p + distance
-        }
-
-        fun ShiftEast(p: Int, distance: Int): Int {
-            return p + distance
-        }
-
-        fun ShiftWest(p: Int, distance: Int): Int {
-            return p - distance
-        }
+        fun shiftNorth(p: Int, distance: Int): Int = p - distance
+        fun shiftSouth(p: Int, distance: Int): Int = p + distance
+        fun shiftEast(p: Int, distance: Int): Int = p + distance
+        fun shiftWest(p: Int, distance: Int): Int = p - distance
     }
-
 }

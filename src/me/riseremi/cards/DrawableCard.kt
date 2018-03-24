@@ -61,10 +61,10 @@ class DrawableCard(var card: Card) {
 
         //outline
         g.color = Color.BLACK
-        g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue))
-        g.drawString(name, Shift.ShiftWest(xPosition, shiftValue), Shift.ShiftSouth(yPosition, shiftValue))
-        g.drawString(name, Shift.ShiftEast(xPosition, shiftValue), Shift.ShiftNorth(yPosition, shiftValue))
-        g.drawString(name, Shift.ShiftEast(xPosition, shiftValue), Shift.ShiftSouth(yPosition, shiftValue))
+        g.drawString(name, Shift.shiftWest(xPosition, shiftValue), Shift.shiftNorth(yPosition, shiftValue))
+        g.drawString(name, Shift.shiftWest(xPosition, shiftValue), Shift.shiftSouth(yPosition, shiftValue))
+        g.drawString(name, Shift.shiftEast(xPosition, shiftValue), Shift.shiftNorth(yPosition, shiftValue))
+        g.drawString(name, Shift.shiftEast(xPosition, shiftValue), Shift.shiftSouth(yPosition, shiftValue))
 
         //actual title
         g.color = Color.WHITE
