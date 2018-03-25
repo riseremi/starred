@@ -41,6 +41,8 @@ public class Main extends JFrame implements ActionListener {
     private static LobbyScreen lobbyScreen;
 
     public Main(String title) {
+        System.setProperty("sun.java2d.opengl", "True");
+
         setTitle(title);
         setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
