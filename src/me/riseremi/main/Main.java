@@ -76,10 +76,9 @@ public class Main extends JFrame implements ActionListener {
         LoginScreen.getHostButton().addActionListener(this);
         LoginScreen.getJoinButton().addActionListener(this);
         LobbyScreen.getGoButton().addActionListener(this);
-
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
         if (args.length > 0 && "--debug".equals(args[0])) {
