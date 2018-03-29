@@ -13,11 +13,13 @@ import org.rising.framework.network.Client;
 import org.rising.framework.network.Server;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 /**
@@ -27,8 +29,8 @@ import java.util.Enumeration;
 public class Main extends JFrame implements ActionListener {
 
     public static final String GAME_TITLE = "Starred Classic";
-    public static boolean ENABLE_DEBUG_TOOLS;
-    private static boolean CARD_DUMP;
+    public static boolean ENABLE_DEBUG_TOOLS = false;
+    public static boolean ENABLE_SERVERLESS_MODE = false;
     public static Main main;
     private static JTextField chatField;
     private static JPanel panel;
@@ -43,15 +45,55 @@ public class Main extends JFrame implements ActionListener {
     public Main(String title) {
         System.setProperty("sun.java2d.opengl", "True");
 
-        setTitle(title);
-        setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        createWindow(this, title);
+        createChatUI(this);
+
         Controller controller = new Controller(false);
-        addKeyListener(controller);
+        this.addKeyListener(controller);
 
-        this.setLayout(new BorderLayout());
+        LoginScreen.getHostButton().addActionListener(this);
+        LoginScreen.getJoinButton().addActionListener(this);
+        LobbyScreen.getGoButton().addActionListener(this);
+    }
 
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+
+        if (args.length > 0) {
+            if (Arrays.asList(args).contains("--debug")) {
+                ENABLE_DEBUG_TOOLS = true;
+            }
+
+            if (Arrays.asList(args).contains("--serverless")) {
+                ENABLE_SERVERLESS_MODE = true;
+            }
+        }
+
+        CardsLoader cardsLoader = new CardsLoader();
+        cardsLoader.loadCards("/res/json/newjson.json");
+
+        main = new Main(GAME_TITLE);
+        core = Core_v1.getInstance();
+        loginScreen = new LoginScreen();
+
+        main.add(loginScreen, BorderLayout.CENTER);
+        loginScreen.setVisible(true);
+
+        core.initBase();
+        main.setVisible(true);
+
+        System.out.println("\nStarted in " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    private static void createWindow(JFrame frame, String title) {
+        frame.setTitle(title);
+        frame.setBounds(10, 10, Global.WINDOW_WIDTH, Global.WINDOW_HEIGHT);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLayout(new BorderLayout());
+    }
+
+    private static void createChatUI(JFrame frame) {
         chatField = new JTextField("");
         panel = new JPanel(new BorderLayout());
         textArea = new JTextArea();
@@ -71,39 +113,9 @@ public class Main extends JFrame implements ActionListener {
         textArea.setLineWrap(true);
         Controller chatController = new Controller(true);
         chatField.addKeyListener(chatController);
-        add(panel, BorderLayout.SOUTH);
         panel.setVisible(false);
 
-        LoginScreen.getHostButton().addActionListener(this);
-        LoginScreen.getJoinButton().addActionListener(this);
-        LobbyScreen.getGoButton().addActionListener(this);
-    }
-
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-
-        if (args.length > 0 && "--debug".equals(args[0])) {
-            ENABLE_DEBUG_TOOLS = true;
-        }
-
-        if (args.length > 0 && "--dump".equals(args[0])) {
-            CARD_DUMP = true;
-        }
-
-        CardsLoader cardsLoader = new CardsLoader();
-        cardsLoader.loadCards("/res/json/newjson.json");
-
-        main = new Main(GAME_TITLE);
-        core = Core_v1.getInstance();
-        loginScreen = new LoginScreen();
-
-        main.add(loginScreen, BorderLayout.CENTER);
-        loginScreen.setVisible(true);
-
-        core.initBase();
-        main.setVisible(true);
-
-        System.out.println("\nStarted in " + (System.currentTimeMillis() - start) + " ms");
+        frame.add(panel, BorderLayout.SOUTH);
     }
 
     // Enter pressed
@@ -173,26 +185,31 @@ public class Main extends JFrame implements ActionListener {
             } catch (Exception ignored) {
             }
         }
-        if (e.getSource() == LoginScreen.getHostButton()) {
-            lobbyScreen = new LobbyScreen(true);
-            core.init(loginScreen.getPreviewIndex(), LoginScreen.getIpField().getText(), LoginScreen.getNickField().getText(), true);
-            loginScreen.setVisible(false);
-            main.add(lobbyScreen, BorderLayout.CENTER);
-            lobbyScreen.setVisible(true);
-            panel.setVisible(true);
-        }
-
-        if (e.getSource() == LoginScreen.getJoinButton()) {
-            lobbyScreen = new LobbyScreen(false);
-            core.init(loginScreen.getPreviewIndex(), LoginScreen.getIpField().getText(), LoginScreen.getNickField().getText(), false);
-            loginScreen.setVisible(false);
-            main.add(lobbyScreen, BorderLayout.CENTER);
-            lobbyScreen.setVisible(true);
-            panel.setVisible(true);
-        }
+        if (e.getSource() == LoginScreen.getHostButton()) initAsServer();
+        if (e.getSource() == LoginScreen.getJoinButton()) initAsClient();
     }
 
-    public static void setUIFont(javax.swing.plaf.FontUIResource f) {
+    private void init(boolean isServer) {
+        String ip = LoginScreen.getIpField().getText();
+        String nickname = LoginScreen.getNickField().getText();
+
+        lobbyScreen = new LobbyScreen(isServer);
+        core.init(loginScreen.getPreviewIndex(), ip, nickname, isServer);
+        loginScreen.setVisible(false);
+        main.add(lobbyScreen, BorderLayout.CENTER);
+        lobbyScreen.setVisible(true);
+        panel.setVisible(true);
+    }
+
+    private void initAsServer() {
+        init(true);
+    }
+
+    private void initAsClient() {
+        init(false);
+    }
+
+    public static void setUIFont(FontUIResource f) {
         Enumeration keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
