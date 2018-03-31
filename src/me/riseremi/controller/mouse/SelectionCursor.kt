@@ -11,7 +11,7 @@ import java.awt.Rectangle
  * selection).
  *
  * @author riseremi <riseremi at icloud.com>
-</riseremi> */
+ */
 class SelectionCursor(core: Core_v1) {
     private val core: Core_v1
     private val rectangle: Rectangle = Rectangle()

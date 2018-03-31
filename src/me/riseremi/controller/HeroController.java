@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public class HeroController {
