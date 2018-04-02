@@ -181,15 +181,6 @@ public class Entity {
         }
     }
 
-    /**
-     * @param yAdd
-     * @deprecated @param xAdd
-     */
-    public void addToPosition(int xAdd, int yAdd) {
-        x += xAdd;
-        y += yAdd;
-    }
-
     public void setPosition(int x, int y) {
         setPosition(x, y, true);
     }
@@ -204,20 +195,6 @@ public class Entity {
             camera.setX(-(x * Global.tileWidth - Global.CENTER_X * Global.tileWidth));
             camera.setY(-(y * Global.tileHeight - Global.CENTER_Y * Global.tileHeight));
         }
-    }
-
-    /**
-     * @deprecated @param addX
-     */
-    public void changeX(int addX) {
-        x += addX;
-    }
-
-    /**
-     * @deprecated @param addY
-     */
-    public void changeY(int addY) {
-        y += addY;
     }
 
     public boolean isDead() {
