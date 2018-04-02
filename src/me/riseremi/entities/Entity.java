@@ -20,21 +20,18 @@ import java.io.IOException;
  */
 public class Entity {
 
-    protected int hp, maxHp, verticalSpeed, horizontalSpeed, pDef, mDef, pAtk, mAtk;
+    protected int hp, maxHp, pDef, mDef, pAtk;
     protected String name;
     //координаты измеряются в тайлах
     private int x, y; //straight from the top-left corner, 0:0, no offset
     protected BufferedImage sprite;
     protected boolean isPaint = false;
-    protected int invSize = 20;
     protected int actionPoints;
     //action costs
     public static final float MOVE_COST = 1F;
     protected Hand hand;
     private boolean canMove = true;
     private HPBar hpBar;
-    private int additionalAP;
-    private boolean drawHPBar = true;
     int id;
     int imgId;
     Type type;
@@ -51,30 +48,6 @@ public class Entity {
         return this.maxHp;
     }
 
-    public int getVerticalSpeed() {
-        return this.verticalSpeed;
-    }
-
-    public int getHorizontalSpeed() {
-        return this.horizontalSpeed;
-    }
-
-    public int getPDef() {
-        return this.pDef;
-    }
-
-    public int getMDef() {
-        return this.mDef;
-    }
-
-    public int getPAtk() {
-        return this.pAtk;
-    }
-
-    public int getMAtk() {
-        return this.mAtk;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -85,18 +58,6 @@ public class Entity {
 
     public int getY() {
         return this.y;
-    }
-
-    public BufferedImage getSprite() {
-        return this.sprite;
-    }
-
-    public boolean isPaint() {
-        return this.isPaint;
-    }
-
-    public int getInvSize() {
-        return this.invSize;
     }
 
     public int getActionPoints() {
@@ -127,42 +88,6 @@ public class Entity {
         return this.type;
     }
 
-    public int getClassId() {
-        return this.classId;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
-    }
-
-    public void setVerticalSpeed(int verticalSpeed) {
-        this.verticalSpeed = verticalSpeed;
-    }
-
-    public void setHorizontalSpeed(int horizontalSpeed) {
-        this.horizontalSpeed = horizontalSpeed;
-    }
-
-    public void setPDef(int pDef) {
-        this.pDef = pDef;
-    }
-
-    public void setMDef(int mDef) {
-        this.mDef = mDef;
-    }
-
-    public void setPAtk(int pAtk) {
-        this.pAtk = pAtk;
-    }
-
-    public void setMAtk(int mAtk) {
-        this.mAtk = mAtk;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -183,24 +108,8 @@ public class Entity {
         this.isPaint = isPaint;
     }
 
-    public void setInvSize(int invSize) {
-        this.invSize = invSize;
-    }
-
-    public void setActionPoints(int actionPoints) {
-        this.actionPoints = actionPoints;
-    }
-
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
-    }
-
-    public void setHpBar(HPBar hpBar) {
-        this.hpBar = hpBar;
-    }
-
-    public void setDrawHPBar(boolean drawHPBar) {
-        this.drawHPBar = drawHPBar;
     }
 
     public void setId(int id) {
@@ -336,22 +245,10 @@ public class Entity {
         hp = (hp - (amount - pDef) < 0) ? 0 : (hp - (amount - pDef));
     }
 
-    public void dealMagicalDamage(int amount) {
-        Main.addToChat("Got " + (amount - mDef) + " damage\r\n");
-        hp = (hp - (amount - mDef) < 0) ? 0 : (hp - (amount - pDef));
-    }
-
-    public void dealPureDamage(int amount) {
-        hp = (hp - amount <= maxHp) ? 0 : hp - amount;
-    }
-
     public void heal(int power) {
         hp = (hp + power <= maxHp) ? hp + power : maxHp;
     }
 
-    public void waitTurn() {
-        Main.addToChat("Turn skipped.\r\n");
-    }
 
     public void addAPInNextTurn(int value) {
         actionPoints += value;
@@ -368,14 +265,6 @@ public class Entity {
     public void undrawCards(int value) {
         for (int i = 0; i < value; i++) {
             hand.removeLastCard();
-        }
-    }
-
-
-    public void useCard(Card card, Entity target) {
-        if (actionPoints >= card.getApcost()) {
-            subtractActionPoints(card.getApcost());
-            applyEffects(card, target);
         }
     }
 
