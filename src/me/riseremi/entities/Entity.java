@@ -20,22 +20,22 @@ import java.io.IOException;
  */
 public class Entity {
 
-    protected int hp, maxHp, pDef, mDef, pAtk;
+    private int hp, maxHp, pDef;
     protected String name;
     //координаты измеряются в тайлах
     private int x, y; //straight from the top-left corner, 0:0, no offset
-    protected BufferedImage sprite;
-    protected boolean isPaint = false;
-    protected int actionPoints;
+    private BufferedImage sprite;
+    private boolean isPaint = false;
+    private int actionPoints;
     //action costs
     public static final float MOVE_COST = 1F;
-    protected Hand hand;
+    private Hand hand;
     private boolean canMove = true;
     private HPBar hpBar;
-    int id;
-    int imgId;
-    Type type;
-    int classId;
+    private int id;
+    private int imgId;
+    private Type type;
+    private int classId;
     private final String CLASS_NAMES[] = {"Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
             "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter",
             "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter", "Mage", "Blood Mage", "Head Hunter"};
@@ -100,11 +100,11 @@ public class Entity {
         this.y = y;
     }
 
-    public void setSprite(BufferedImage sprite) {
+    private void setSprite(BufferedImage sprite) {
         this.sprite = sprite;
     }
 
-    public void setPaint(boolean isPaint) {
+    private void setPaint(boolean isPaint) {
         this.isPaint = isPaint;
     }
 
@@ -137,9 +137,7 @@ public class Entity {
         this.hand = new Hand();
         this.actionPoints = 10;
         this.hp = this.maxHp = 30;
-        this.pAtk = 0;
         this.pDef = 0;
-        this.mDef = 0;
         this.type = type;
         this.setPaint(true);
         //this.setName(name + " (id: " + id + ")");
@@ -209,7 +207,7 @@ public class Entity {
         actionPoints -= cost;
     }
 
-    public void decreaseBloodCostHP(int cost) {
+    private void decreaseBloodCostHP(int cost) {
         hp = (hp - cost < 0) ? 0 : (hp - cost);
     }
 
@@ -217,21 +215,20 @@ public class Entity {
         actionPoints = actionPoints > 0 ? 10 + 1 : 10;
     }
 
-    public void dealPhysicalDamage(int amount) {
+    private void dealPhysicalDamage(int amount) {
         Main.addToChat("Got " + (amount - pDef) + " damage\r\n");
         hp = (hp - (amount - pDef) < 0) ? 0 : (hp - (amount - pDef));
     }
 
-    public void heal(int power) {
+    private void heal(int power) {
         hp = (hp + power <= maxHp) ? hp + power : maxHp;
     }
 
-
-    public void addAPInNextTurn(int value) {
+    private void addAPInNextTurn(int value) {
         actionPoints += value;
     }
 
-    public void drawCards(int value) {
+    private void drawCards(int value) {
         for (int i = 0; i < value; i++) {
             Card card = CardsArchive.Companion.getInstance().getRandomCard();
             hand.addCard(card.toDrawableCard());
@@ -239,7 +236,7 @@ public class Entity {
         }
     }
 
-    public void undrawCards(int value) {
+    private void undrawCards(int value) {
         for (int i = 0; i < value; i++) {
             hand.removeLastCard();
         }
