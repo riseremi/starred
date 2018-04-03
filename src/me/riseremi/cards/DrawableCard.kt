@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage
  */
 class DrawableCard(var card: Card) {
     var hover: Boolean = false
-    var cover: BufferedImage
-    var preview: BufferedImage
+    val cover: BufferedImage
+    val preview: BufferedImage
     var collisionRectangle: Rectangle = Rectangle()
 
     init {

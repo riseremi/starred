@@ -12,7 +12,7 @@ import java.util.*
  * Колода карт, которые находятся на руках у героя.
  *
  * @author riseremi <riseremi at icloud.com>
-</riseremi> */
+ */
 class Hand {
     private val cards = ArrayList<DrawableCard>()
 
