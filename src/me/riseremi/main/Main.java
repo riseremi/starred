@@ -33,7 +33,7 @@ public class Main extends JFrame implements ActionListener {
     public static boolean ENABLE_SERVERLESS_MODE = false;
     public static Main main;
     private static JTextField chatField;
-    private static JPanel panel;
+    private static JPanel chatPanel;
     private static boolean enabled = false;
     private static JTextArea textArea;
     private static Core_v1 core;
@@ -95,27 +95,28 @@ public class Main extends JFrame implements ActionListener {
 
     private static void createChatUI(JFrame frame) {
         chatField = new JTextField("");
-        panel = new JPanel(new BorderLayout());
+        chatPanel = new JPanel(new BorderLayout());
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setEnabled(false);
         textArea.setDisabledTextColor(Color.BLACK);
-        panel.setPreferredSize(new Dimension(0, 100));
+        chatPanel.setPreferredSize(new Dimension(0, 100));
 
         JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         DefaultCaret caret = (DefaultCaret) textArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-        panel.add(chatField, BorderLayout.SOUTH);
-        panel.add(scroll);
+        chatPanel.add(chatField, BorderLayout.SOUTH);
+        chatPanel.add(scroll);
         chatField.setEnabled(enabled);
         textArea.setLineWrap(true);
         Controller chatController = new Controller(true);
         chatField.addKeyListener(chatController);
-        panel.setVisible(false);
+        chatPanel.setVisible(false);
 
-        frame.add(panel, BorderLayout.SOUTH);
+        frame.add(chatPanel, BorderLayout.SOUTH);
+        chatPanel.setVisible(true);
     }
 
     // Enter pressed
@@ -159,6 +160,8 @@ public class Main extends JFrame implements ActionListener {
     }
 
     public static void addToChat(String msg) {
+        if (Main.chatField == null) return;
+
         textArea.setBackground(Color.GRAY);
         textArea.append(msg);
         textArea.setBackground(Color.WHITE);
@@ -198,7 +201,6 @@ public class Main extends JFrame implements ActionListener {
         loginScreen.setVisible(false);
         main.add(lobbyScreen, BorderLayout.CENTER);
         lobbyScreen.setVisible(true);
-        panel.setVisible(true);
     }
 
     private void initAsServer() {
