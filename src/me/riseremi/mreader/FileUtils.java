@@ -11,10 +11,10 @@ import java.io.InputStreamReader;
  */
 class FileUtils {
 
-    protected static String getFileContent(String fileName, boolean debug) throws IOException {
+    protected static String getFileContent(String fileName) throws IOException {
         long start = System.currentTimeMillis();
 
-        Logger.debug("\nReading file...", debug);
+        System.out.println("\nReading file...");
 
         InputStream reader = FileUtils.class.getResourceAsStream(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(reader));
@@ -23,7 +23,7 @@ class FileUtils {
         while ((line = br.readLine()) != null) {
             fileContent += line;
         }
-        Logger.debug("Lapsed: " + (System.currentTimeMillis() - start) + " ms", debug);
+        System.out.println("Lapsed: " + (System.currentTimeMillis() - start) + " ms");
 
         return fileContent;
     }
