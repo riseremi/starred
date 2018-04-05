@@ -3,7 +3,6 @@ package me.riseremi.mreader;
 import java.util.ArrayList;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 class RLE {
@@ -14,7 +13,7 @@ class RLE {
     }
 
     //decompress input array
-    public static String decompress(String data, String separator) throws WrongFormatException {
+    private static String decompress(String data, String separator) throws WrongFormatException {
         if (!isStringValid(data)) {
             throw new WrongFormatException();
         }
@@ -45,19 +44,19 @@ class RLE {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < decoded.length; i++) {
-            sb.append(String.valueOf(decoded[i])).append(separator);
+        for (int aDecoded : decoded) {
+            sb.append(String.valueOf(aDecoded)).append(separator);
         }
 
         return sb.toString().trim();
     }
 
     // check if given string is valid, try to catch most common error cases
-    public static boolean isStringValid(String str) {
+    private static boolean isStringValid(String str) {
         boolean noIllegalChars = str.matches("^[0-9\\s:-]+$");
-        boolean noSeuqenceOfColons = !str.matches("^.*\\:{2,}.*$");
+        boolean noSequenceOfColons = !str.matches("^.*:{2,}.*$");
         boolean containsSpaces = str.contains(" ");
 
-        return noIllegalChars && noSeuqenceOfColons && containsSpaces;
+        return noIllegalChars && noSequenceOfColons && containsSpaces;
     }
 }
