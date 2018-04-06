@@ -1,12 +1,9 @@
 package me.riseremi.mreader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public final class StarredMap {
@@ -20,20 +17,6 @@ public final class StarredMap {
     private StarredMap(String fileName, boolean debug) {
         this.fileName = fileName;
         this.debug = debug;
-    }
-
-    public StarredMap(Reader reader) throws IOException, WrongFormatException {
-        this("not specified", false);
-        BufferedReader br = new BufferedReader(reader);
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-
-        String fileContent = sb.toString();
-        parse(fileContent);
     }
 
     public StarredMap(String fileName) throws IOException, WrongFormatException {
@@ -55,7 +38,7 @@ public final class StarredMap {
     }
 
     private void parse() throws IOException, WrongFormatException {
-        String fileContent = FileUtils.getFileContent(fileName, debug);
+        String fileContent = FileUtils.getFileContent(fileName);
         parse(fileContent);
     }
 
