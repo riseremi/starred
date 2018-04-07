@@ -3,12 +3,11 @@ package me.riseremi.mreader;
 import java.util.ArrayList;
 
 /**
- *
  * @author riseremi <riseremi at icloud.com>
  */
 public class XMLUtils {
 
-    protected static ArrayList<int[][]> parse(String fileContent, int width, int height, boolean debug) throws WrongFormatException {
+    protected static ArrayList<int[][]> parse(String fileContent, int width, int height) throws WrongFormatException {
         ArrayList<int[][]> layers = new ArrayList<>();
         int[][] obstaclesLayerArr = new int[width][height],
                 backgroundLayerArr = new int[width][height],

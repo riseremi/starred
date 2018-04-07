@@ -12,7 +12,6 @@ import me.riseremi.entities.Player;
 import me.riseremi.main.Main;
 import me.riseremi.map.world.World;
 import me.riseremi.mreader.StarredMap;
-import me.riseremi.mreader.WrongFormatException;
 import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageEndTurn;
 import me.riseremi.network.messages.MessageGameOver;
@@ -24,8 +23,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author riseremi <riseremi at icloud.com>
@@ -89,25 +86,19 @@ public final class Core_v1 extends JPanel {
         camera = new Camera();
         selectionCursor = new SelectionCursor(this);
 
-        try {
-            StarredMap map = new StarredMap(Global.pathToTheMap);
+        StarredMap map = new StarredMap(Global.pathToTheMap);
 
-            world.getObstaclesLayer().setMap(map.getObstaclesLayer());
-            world.getBackgroundLayer().setMap(map.getBackgroundLayer());
-            world.getDecorationsLayer().setMap(map.getDecorationsLayer());
+        world.getObstaclesLayer().setMap(map.getObstaclesLayer());
+        world.getBackgroundLayer().setMap(map.getBackgroundLayer());
+        world.getDecorationsLayer().setMap(map.getDecorationsLayer());
 
-            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
-            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
-            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.FIREBALL).toDrawableCard());
-            player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.FIREBALL).toDrawableCard());
+        player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
+        player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.BLINK).toDrawableCard());
+        player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.FIREBALL).toDrawableCard());
+        player.getHand().addCard(CardsArchive.Companion.getInstance().getCard(Card.FIREBALL).toDrawableCard());
 
-            Main.addToChat("System: Listen closely.\n\r");
-            Main.addToChat("System: The highways call my name.\n\r");
-        } catch (WrongFormatException ex) {
-            Logger.getLogger(Core_v1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Main.addToChat("System: Listen closely.\n\r");
+        Main.addToChat("System: The highways call my name.\n\r");
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseController());
     }
