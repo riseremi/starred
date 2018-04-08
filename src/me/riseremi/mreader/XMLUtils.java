@@ -70,8 +70,7 @@ public class XMLUtils {
         text = text.substring(startIndex);
 
         int endIndex = text.indexOf(closeTag);
-        String result = text.substring(0, endIndex);
 
-        return result;
+        return text.substring(0, endIndex);
     }
 }
