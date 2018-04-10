@@ -13,7 +13,7 @@ import java.util.*
  */
 class TiledLayer(image: BufferedImage, private val tileWidth: Int, private val tileHeight: Int, width: Int, height: Int) : Layer(width * tileWidth, height * tileHeight) {
 
-    var map: Array<IntArray>? = null
+    var map: Array<IntArray>
     private val tiles: Array<BufferedImage>
 
     init {
@@ -25,7 +25,7 @@ class TiledLayer(image: BufferedImage, private val tileWidth: Int, private val t
 
         for (i in 0 until width) {
             for (j in 0 until height) {
-                map!![i][j] = 0
+                map[i][j] = 0
             }
         }
     }
@@ -53,7 +53,7 @@ class TiledLayer(image: BufferedImage, private val tileWidth: Int, private val t
         return list.toTypedArray()
     }
 
-    fun getTile(x: Int, y: Int): Int = map!![x][y]
+    fun getTile(x: Int, y: Int): Int = map[x][y]
 
     // отрисовка слоя, при этом рисуются только помещающиеся на экран тайлы
     fun paintLayer(g: Graphics) {
@@ -62,12 +62,13 @@ class TiledLayer(image: BufferedImage, private val tileWidth: Int, private val t
         // новая отрисовка
         for (i in xStart until Global.paintWidth + xStart) {
             for (j in yStart until Global.paintHeight + yStart) {
-                paintTile(g, i * tileWidth, j * tileHeight, map!![i][j])
+                paintTile(g, i * tileWidth, j * tileHeight, map[i][j])
             }
         }
     }
 
     private fun paintTile(g: Graphics, x: Int, y: Int, id: Int) {
+        if (id == -1) return
         g.drawImage(tiles[id], x, y, null)
         g.color = Color.white
     }
