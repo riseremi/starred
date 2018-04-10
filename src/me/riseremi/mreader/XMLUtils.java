@@ -60,17 +60,17 @@ public class XMLUtils {
         }
     }
 
-    protected static String getProperty(String tag, String text) {
+    protected static String getProperty(String tag, String fileContent) {
         String openTag = "<" + tag + ">";
         String closeTag = "</" + tag + ">";
 
-        int startIndex = text.indexOf(openTag);
+        int startIndex = fileContent.indexOf(openTag);
 
-        text = text.substring(openTag.length(), text.length());
-        text = text.substring(startIndex);
+        fileContent = fileContent.substring(openTag.length(), fileContent.length());
+        fileContent = fileContent.substring(startIndex);
 
-        int endIndex = text.indexOf(closeTag);
+        int endIndex = fileContent.indexOf(closeTag);
 
-        return text.substring(0, endIndex);
+        return fileContent.substring(0, endIndex);
     }
 }
