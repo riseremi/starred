@@ -1,0 +1,35 @@
+buildscript {
+    ext.kotlinVersion = '1.2.51'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+group 'me.starred'
+version '0.1'
+
+sourceSets {
+    main {
+        java.srcDir 'src/main/java'
+        kotlin.srcDir 'src/main/kotlin'
+        resources.srcDir 'src/main/res'
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    compile 'org.json:json:20180813'
+    compile 'org.projectlombok:lombok:1.18.2'
+}
