@@ -45,5 +45,4 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-runtime:$kotlinVersion"
     compile 'org.json:json:20180813'
-    compile 'org.projectlombok:lombok:1.18.2'
 }
