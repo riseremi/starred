@@ -13,7 +13,8 @@ import org.json.JSONTokener
  */
 class CardsLoader {
     fun loadCards(filePath: String) {
-        val tokener = JSONTokener(CardsLoader::class.java.getResourceAsStream(filePath))
+        val inputStream = ClassLoader.getSystemResourceAsStream(filePath)
+        val tokener = JSONTokener(inputStream)
         val cards = JSONArray(tokener)
 
         repeat(cards.length()) { i ->

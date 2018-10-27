@@ -15,7 +15,7 @@ public final class Global {
     public final static int paintWidth = WINDOW_WIDTH / tileWidth / 1, paintHeight = WINDOW_HEIGHT / tileHeight / 1;
     public static final int CENTER_Y = (Global.WINDOW_HEIGHT - Global.CHAT_HEIGHT) / Global.tileHeight / 2;
     public static final int CENTER_X = Global.WINDOW_WIDTH / Global.tileWidth / 2;
-    public final static String pathToTheMap = "/res/new_map2.m";
-    public final static String pathToTheTiles = "/res/new_tiles.png";
+    public final static String pathToTheMap = "new_map2.m";
+    public final static String pathToTheTiles = "new_tiles.png";
 
 }

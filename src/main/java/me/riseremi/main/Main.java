@@ -70,7 +70,7 @@ public class Main extends JFrame implements ActionListener {
         }
 
         CardsLoader cardsLoader = new CardsLoader();
-        cardsLoader.loadCards("/res/json/newjson.json");
+        cardsLoader.loadCards("json/newjson.json");
 
         main = new Main(GAME_TITLE);
         core = Core_v1.getInstance();

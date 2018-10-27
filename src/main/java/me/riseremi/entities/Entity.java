@@ -143,7 +143,7 @@ public class Entity {
         //this.setName(name + " (id: " + id + ")");
         this.setName(name);
         try {
-            this.setSprite(ImageIO.read(getClass().getResourceAsStream("/res/sprites/hero" + imgId + ".png")));
+            this.setSprite(ImageIO.read(getClass().getResourceAsStream("sprites/hero" + imgId + ".png")));
         } catch (IOException ex) {
             System.out.println("cannot load sprite");
         }
@@ -172,7 +172,7 @@ public class Entity {
 
     public void setImage(int imgId) {
         try {
-            this.setSprite(ImageIO.read(getClass().getResourceAsStream("/res/sprites/hero" + imgId + ".png")));
+            this.setSprite(ImageIO.read(getClass().getResourceAsStream("sprites/hero" + imgId + ".png")));
             this.imgId = imgId;
             this.classId = imgId;
         } catch (IOException ignored) {

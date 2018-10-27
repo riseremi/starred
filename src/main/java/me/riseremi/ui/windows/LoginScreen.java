@@ -26,7 +26,7 @@ public class LoginScreen extends JPanel implements ActionListener {
     private BufferedImage back;
     private final int NUM_OF_HEROES = 15;
     private final BufferedImage[] heroPreviews = new BufferedImage[NUM_OF_HEROES];
-    private final String PREFIX = "/res/sprites/hero";
+    private final String PREFIX = "sprites/hero";
     private final String POSTFIX = "";
     private final JButton preview;
     private final RButton next, previous;
@@ -75,7 +75,7 @@ public class LoginScreen extends JPanel implements ActionListener {
         //
         heroPreview = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
         try {
-            back = ImageIO.read(getClass().getResourceAsStream("/res/back0.png"));
+            back = ImageIO.read(getClass().getResourceAsStream("back0.png"));
         } catch (IOException ex) {
         }
 
@@ -90,8 +90,8 @@ public class LoginScreen extends JPanel implements ActionListener {
         String imageName1 = "next";
         String imageName2 = "previous";
 
-        String imgLocation1 = "/res/buttons/" + imageName1 + ".png";
-        String imgLocation2 = "/res/buttons/" + imageName2 + ".png";
+        String imgLocation1 = "buttons/" + imageName1 + ".png";
+        String imgLocation2 = "buttons/" + imageName2 + ".png";
 
         URL imageURL1 = LoginScreen.class.getResource(imgLocation1);
         URL imageURL2 = LoginScreen.class.getResource(imgLocation2);
