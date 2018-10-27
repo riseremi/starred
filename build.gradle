@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
-group 'me.starred'
+group 'me.riseremi'
 version '0.1'
 
 sourceSets {
