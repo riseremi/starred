@@ -1,6 +1,6 @@
 package me.riseremi.mreader
 
-import java.io.File
+import me.riseremi.utils.loadStream
 
 /**
  * @author riseremi <riseremi at icloud.com>
@@ -12,9 +12,8 @@ internal object FileUtils {
 
         println("\nReading file...")
 
-        val path = javaClass.getResource(fileName)
-        val inputStream = File(path.path).inputStream()
-        val inputString = inputStream.bufferedReader().use({ it.readText() })
+        val inputStream = loadStream(fileName)
+        val inputString = inputStream.bufferedReader().use { it.readText() }
 
 //        val reader = FileUtils::class.java.getResourceAsStream(fileName)
 //        val br = BufferedReader(InputStreamReader(reader))

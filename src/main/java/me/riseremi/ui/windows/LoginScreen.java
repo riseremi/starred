@@ -15,7 +15,7 @@ import java.net.URL;
 
 import static me.riseremi.main.Main.setUIFont;
 import static me.riseremi.utils.ResourceUtilsKt.loadImage;
-import static me.riseremi.utils.ResourceUtilsKt.readUrl;
+import static me.riseremi.utils.ResourceUtilsKt.loadUrl;
 
 /**
  *
@@ -94,8 +94,8 @@ public class LoginScreen extends JPanel implements ActionListener {
         String imgLocation1 = "buttons/" + imageName1 + ".png";
         String imgLocation2 = "buttons/" + imageName2 + ".png";
 
-        URL imageURL1 = LoginScreen.class.getResource(imgLocation1);
-        URL imageURL2 = LoginScreen.class.getResource(imgLocation2);
+        URL imageURL1 = loadUrl(imgLocation1);
+        URL imageURL2 = loadUrl(imgLocation2);
 
         next = new RButton("", true);
         next.addActionListener(this);
