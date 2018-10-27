@@ -1,7 +1,7 @@
 package me.riseremi.cards
 
+import me.riseremi.utils.loadImage
 import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 
 /**
  * by riseremi on 14.09.17
@@ -23,8 +23,8 @@ class Card(
             builder.name,
             builder.description,
             builder.type,
-            ImageIO.read(Card::class.java.getResourceAsStream(builder.framePath)),
-            ImageIO.read(Card::class.java.getResourceAsStream(builder.artPath)),
+            loadImage(builder.framePath),
+            loadImage(builder.artPath),
             builder.apcost,
             builder.range,
             builder.effects

@@ -3,9 +3,10 @@ package me.riseremi.map.world;
 import me.riseremi.core.Global;
 import me.riseremi.map.layer.TiledLayer;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+
+import static me.riseremi.utils.ResourceUtilsKt.loadImage;
 
 /**
  *
@@ -19,9 +20,13 @@ public final class World {
 
     public World(int tileWidth, int tileHeight, int width, int height) {
         try {
-            obstaclesLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
-            backgroundLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
-            decorationsLayer = new TiledLayer(ImageIO.read(getClass().getResourceAsStream(Global.pathToTheTiles)), tileWidth, tileHeight, width, height);
+            TiledLayer layer = new TiledLayer(
+                    loadImage(Global.pathToTheTiles),
+                    tileWidth, tileHeight, width, height
+            );
+            obstaclesLayer = layer;
+            backgroundLayer = layer;
+            decorationsLayer = layer;
         } catch (IOException ex) {
         }
     }

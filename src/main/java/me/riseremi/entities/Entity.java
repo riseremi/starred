@@ -10,10 +10,11 @@ import me.riseremi.main.Main;
 import me.riseremi.map.world.World;
 import me.riseremi.ui.HPBar;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import static me.riseremi.utils.ResourceUtilsKt.loadImage;
 
 /**
  * @author riseremi <riseremi at icloud.com>
@@ -143,7 +144,7 @@ public class Entity {
         //this.setName(name + " (id: " + id + ")");
         this.setName(name);
         try {
-            this.setSprite(ImageIO.read(getClass().getResourceAsStream("sprites/hero" + imgId + ".png")));
+            setSprite(loadImage("sprites/hero" + imgId + ".png"));
         } catch (IOException ex) {
             System.out.println("cannot load sprite");
         }
@@ -172,7 +173,7 @@ public class Entity {
 
     public void setImage(int imgId) {
         try {
-            this.setSprite(ImageIO.read(getClass().getResourceAsStream("sprites/hero" + imgId + ".png")));
+            this.setSprite(loadImage("sprites/hero" + imgId + ".png"));
             this.imgId = imgId;
             this.classId = imgId;
         } catch (IOException ignored) {

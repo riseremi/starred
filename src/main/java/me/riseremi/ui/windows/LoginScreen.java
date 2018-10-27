@@ -5,7 +5,6 @@ import me.riseremi.ui.RButton;
 import me.riseremi.ui.RTextField;
 import me.riseremi.utils.NameGenerator;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import static me.riseremi.main.Main.setUIFont;
+import static me.riseremi.utils.ResourceUtilsKt.loadImage;
+import static me.riseremi.utils.ResourceUtilsKt.readUrl;
 
 /**
  *
@@ -75,13 +76,13 @@ public class LoginScreen extends JPanel implements ActionListener {
         //
         heroPreview = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
         try {
-            back = ImageIO.read(getClass().getResourceAsStream("back0.png"));
+            back = loadImage("back0.png");
         } catch (IOException ex) {
         }
 
         for (int i = 0; i < NUM_OF_HEROES; i++) {
             try {
-                heroPreviews[i] = ImageIO.read(getClass().getResourceAsStream(PREFIX + i + ".png"));
+                heroPreviews[i] = loadImage(PREFIX + i + ".png");
             } catch (IOException ex) {
             }
 
