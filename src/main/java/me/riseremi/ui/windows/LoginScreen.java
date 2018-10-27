@@ -88,22 +88,16 @@ public class LoginScreen extends JPanel implements ActionListener {
 
         }
 
-        String imageName1 = "next";
-        String imageName2 = "previous";
-
-        String imgLocation1 = "buttons/" + imageName1 + ".png";
-        String imgLocation2 = "buttons/" + imageName2 + ".png";
-
-        URL imageURL1 = loadUrl(imgLocation1);
-        URL imageURL2 = loadUrl(imgLocation2);
+        URL nextImage = loadUrl("buttons/next.png");
+        URL prevImage = loadUrl("buttons/previous.png");
 
         next = new RButton("", true);
         next.addActionListener(this);
-        next.setIcon(new ImageIcon(imageURL1, "Next"));
+        next.setIcon(new ImageIcon(nextImage, "Next"));
 
         previous = new RButton("", true);
         previous.addActionListener(this);
-        previous.setIcon(new ImageIcon(imageURL2, "Previous"));
+        previous.setIcon(new ImageIcon(prevImage, "Previous"));
 
         preview = new RButton("", true);
         preview.setIcon(new ImageIcon(heroPreviews[0]));
