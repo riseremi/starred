@@ -8,6 +8,7 @@ buildscript {
     }
 }
 
+apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
@@ -22,6 +23,18 @@ sourceSets {
     }
 }
 
+mainClassName = "me.riseremi.main.Main"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
 repositories {
     jcenter()
     mavenCentral()
@@ -30,6 +43,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlinVersion"
     compile 'org.json:json:20180813'
     compile 'org.projectlombok:lombok:1.18.2'
 }
