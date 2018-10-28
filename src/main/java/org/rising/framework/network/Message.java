@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public abstract class Message implements Serializable {
 
+    private static final long serialVersionUID = -7838861924374435661L;
     private final Type type;
 
     public Message(Type type) {
