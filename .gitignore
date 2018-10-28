@@ -1,4 +1,33 @@
-out
-lib
-.idea/workspace.xml
-.idea/libraries
+# Compiled class file
+*.class
+out/
+gen/
+build/
+
+# Log file
+*.log
+
+# Intellij files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+lib/*
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Gradle Files
+.gradle
+/gradle.properties
+/gradlew
+/gradlew.bat
+gradle/

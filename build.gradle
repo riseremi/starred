@@ -1,0 +1,48 @@
+buildscript {
+    ext.kotlinVersion = '1.2.71'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+group 'me.riseremi'
+version '0.1'
+
+sourceSets {
+    main {
+        java.srcDir 'src/main/java'
+        kotlin.srcDir 'src/main/kotlin'
+        resources.srcDir 'src/main/res'
+    }
+}
+
+mainClassName = "me.riseremi.main.Main"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlinVersion"
+    compile 'org.json:json:20180813'
+}
