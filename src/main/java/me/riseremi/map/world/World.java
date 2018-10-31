@@ -4,6 +4,7 @@ import me.riseremi.core.Global;
 import me.riseremi.map.layer.TiledLayer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static me.riseremi.utils.ResourceUtilsKt.loadImage;
@@ -20,13 +21,11 @@ public final class World {
 
     public World(int tileWidth, int tileHeight, int width, int height) {
         try {
-            TiledLayer layer = new TiledLayer(
-                    loadImage(Global.pathToTheTiles),
-                    tileWidth, tileHeight, width, height
-            );
-            obstaclesLayer = layer;
-            backgroundLayer = layer;
-            decorationsLayer = layer;
+            BufferedImage tileset = loadImage(Global.pathToTheTiles);
+
+            obstaclesLayer = new TiledLayer(tileset, tileWidth, tileHeight, width, height);
+            backgroundLayer = new TiledLayer(tileset, tileWidth, tileHeight, width, height);
+            decorationsLayer = new TiledLayer(tileset, tileWidth, tileHeight, width, height);
         } catch (IOException ex) {
         }
     }
