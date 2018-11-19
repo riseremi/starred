@@ -19,12 +19,13 @@ import me.riseremi.network.messages.MessageSetPlayerId;
  *
  * @author riseremi <riseremi at icloud.com>
  */
-public class Protocol {
+public class ClientSeverProtocol implements Protocol {
 
     private static final Random rnd = new Random();
     private static final ArrayList<Entity> players = new ArrayList<>();
 
-    public static void processMessageOnServerSide(final Message message, int id) throws IOException {
+    @Override
+    public void processMessageOnServerSide(final Message message, int id) throws IOException {
         Message.Type type = message.getType();
 
         switch (type) {
@@ -71,7 +72,8 @@ public class Protocol {
         }
     }
 
-    public static void processMessageOnClientSide(Message message) {
+    @Override
+    public void processMessageOnClientSide(Message message) {
         Message.Type type = message.getType();
         Core_v1 core = Core_v1.getInstance();
         int id;

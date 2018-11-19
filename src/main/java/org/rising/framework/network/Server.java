@@ -17,9 +17,10 @@ public class Server {
     public static String SERVER_IP;
     private ServerSocket serverSocket;
     private ArrayList<Connection> clients = new ArrayList<>();
-    //
-    private int i;
+    private int connections;
     private static Server instance;
+    // TODO: 11/19/18 Inject a single instance
+    private final Protocol protocol = new ClientSeverProtocol();
 
     public static Server getInstance() {
         if (instance == null) {
@@ -35,19 +36,16 @@ public class Server {
     private Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
 
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Socket socket = serverSocket.accept();
-                        final Connection connection = new Connection(socket, i++);
-                        clients.add(connection);
-                    } catch (IOException ex) {
-                    }
+        Thread t = new Thread(() -> {
+            while (true) {
+                try {
+                    Socket socket = serverSocket.accept();
+                    final Connection connection = new Connection(socket, connections++);
+                    clients.add(connection);
+                } catch (IOException ex) {
                 }
             }
-        };
+        });
         t.start();
     }
 
@@ -70,7 +68,7 @@ public class Server {
         clients.get(index).send(message);
     }
 
-    static class Connection {
+    class Connection {
 
         private ObjectInputStream in;
         private ObjectOutputStream out;
@@ -82,21 +80,18 @@ public class Server {
             out.flush();
             in = new ObjectInputStream(socket.getInputStream());
 
-            Thread t = new Thread() {
-                @Override
-                public void run() {
-                    while (true) {
-                        try {
-                            Message s = (Message) in.readObject();
-                            if (Main.ENABLE_DEBUG_TOOLS) {
-                                System.out.println("SERVER RECIEVED: " + s.getType().name());
-                            }
-                            Protocol.processMessageOnServerSide(s, id);
-                        } catch (IOException | ClassNotFoundException ex) {
+            Thread t = new Thread(() -> {
+                while (true) {
+                    try {
+                        Message s = (Message) in.readObject();
+                        if (Main.ENABLE_DEBUG_TOOLS) {
+                            System.out.println("SERVER RECIEVED: " + s.getType().name());
                         }
+                        protocol.processMessageOnServerSide(s, id);
+                    } catch (IOException | ClassNotFoundException ex) {
                     }
                 }
-            };
+            });
             t.start();
         }
 

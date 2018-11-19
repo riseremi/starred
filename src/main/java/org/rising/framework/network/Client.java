@@ -17,6 +17,8 @@ public class Client {
     private ObjectOutputStream out;
     private static Client instance;
     private int id;
+    // TODO: 11/19/18 Inject a single instance
+    private final Protocol protocol = new ClientSeverProtocol();
 
     public static Client getInstance() {
         if (instance == null) {
@@ -37,25 +39,22 @@ public class Client {
         out.flush();
         in = new ObjectInputStream(s.getInputStream());
 
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Message s = (Message) in.readObject();
-                        if (Main.ENABLE_DEBUG_TOOLS) {
-                            System.out.println("CLIENT RECEIVED: " + s.getType().name());
-                        }
-                        Protocol.processMessageOnClientSide(s);
-                    } catch (IOException | ClassNotFoundException ex) {
-                        if (ex instanceof EOFException) {
-                            System.out.println("Server has disconnected. The game will be closed.");
-                            System.exit(-1);
-                        }
+        Thread t = new Thread(() -> {
+            while (true) {
+                try {
+                    Message s1 = (Message) in.readObject();
+                    if (Main.ENABLE_DEBUG_TOOLS) {
+                        System.out.println("CLIENT RECEIVED: " + s1.getType().name());
+                    }
+                    protocol.processMessageOnClientSide(s1);
+                } catch (IOException | ClassNotFoundException ex) {
+                    if (ex instanceof EOFException) {
+                        System.out.println("Server has disconnected. The game will be closed.");
+                        System.exit(-1);
                     }
                 }
             }
-        };
+        });
         t.start();
     }
 
