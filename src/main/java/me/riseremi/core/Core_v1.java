@@ -53,12 +53,21 @@ public final class Core_v1 extends JPanel {
     private int cardsDrawn = 0, cardsDrawnLimit = 30;
     private boolean gameOver;
     private int winnerId;
+    private String serverIp = "localhost";
 
     public static Core_v1 getInstance() {
         if (instance == null) {
             instance = new Core_v1();
         }
         return instance;
+    }
+
+    public static Server getServer() {
+        return getInstance().server;
+    }
+
+    public static Client getClient() {
+        return getInstance().client;
     }
 
     private Core_v1() {
@@ -71,7 +80,6 @@ public final class Core_v1 extends JPanel {
         if (isServer) {
             initServer(imgId, name);
         } else {
-            Server.SERVER_IP = ip;
             initClient(imgId, ip, name);
         }
     }
@@ -108,9 +116,13 @@ public final class Core_v1 extends JPanel {
         player.setImage(imgId);
         Main.main.setTitle(Main.GAME_TITLE + " - Server");
 
-        Server.SERVER_IP = "localhost";
-        server = Server.getInstance();
-        client = Client.getInstance();
+        serverIp = "localhost";
+        try {
+            server = new Server(1234);
+            client = new Client(1234, serverIp);
+        } catch (IOException e) {
+            System.err.println("Cannot establish a connection!");
+        }
 
         try {
             client.send(new MessageConnect(player.getName(), imgId));
@@ -122,9 +134,14 @@ public final class Core_v1 extends JPanel {
     }
 
     public void initClient(int imgId, String ip, String name) {
+        serverIp = ip;
         player.setImage(imgId);
         Main.main.setTitle(Main.GAME_TITLE + " - Client");
-        client = Client.getInstance();
+        try {
+            client = new Client(1234, serverIp);
+        } catch (IOException e) {
+            System.err.println("Client initialization failure");
+        }
         try {
             client.send(new MessageConnect(player.getName(), imgId));
             Main.getLobbyScreen().getPlayersListModel().addElement(player.getName());
@@ -254,7 +271,7 @@ public final class Core_v1 extends JPanel {
             MessageGameOver message = new MessageGameOver(winner);
 
             try {
-                Client.getInstance().send(message);
+                Core_v1.getClient().send(message);
             } catch (IOException ignored) {
             }
         }
@@ -311,7 +328,7 @@ public final class Core_v1 extends JPanel {
      */
     public void endTurn() throws IOException {
         Main.addToChat("DEBUG: Ending turn...\r\n");
-        Client.getInstance().send(new MessageEndTurn());
+        Core_v1.getClient().send(new MessageEndTurn());
         player.resetActionPoints();
         nextTurnAvailable = !nextTurnAvailable;
     }

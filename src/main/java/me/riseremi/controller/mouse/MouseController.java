@@ -87,7 +87,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         System.out.println("Range valid: " + near);
 
         if (near && !thereIsObstacle) {
-            final Client instance = Client.getInstance();
+            final Client instance = Core_v1.getClient();
             final int raisedCardId = raisedCard.getId();
             final int userId = user.getId();
             final int targetId = target.getId();

@@ -14,26 +14,13 @@ import java.util.ArrayList;
 public class Server {
 
     private static final boolean DEBUG = false;
-    public static String SERVER_IP;
     private ServerSocket serverSocket;
     private ArrayList<Connection> clients = new ArrayList<>();
     private int connections;
-    private static Server instance;
     // TODO: 11/19/18 Inject a single instance
     private final Protocol protocol = new ClientSeverProtocol();
 
-    public static Server getInstance() {
-        if (instance == null) {
-            try {
-                instance = new Server(1234);
-                return instance;
-            } catch (IOException ex) {
-            }
-        }
-        return instance;
-    }
-
-    private Server(int port) throws IOException {
+    public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
 
         Thread t = new Thread(() -> {

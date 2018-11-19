@@ -29,28 +29,28 @@ public class HeroController {
             if (ke.getKeyCode() == KeyEvent.VK_DOWN
                     && !(CheckObstacles.checkObstacle(world, hero_xx, y1 + 1))
                     && player.canDoIt(Entity.MOVE_COST)) {
-                Client.getInstance().send(new MessageSetPosition(player1.getId(), x1, y1 + 1));
+                Core_v1.getClient().send(new MessageSetPosition(player1.getId(), x1, y1 + 1));
                 player.subtractActionPoints(Entity.MOVE_COST);
             }
 
             if (ke.getKeyCode() == KeyEvent.VK_UP
                     && !(CheckObstacles.checkObstacle(world, hero_xx, y1 - 1))
                     && player.canDoIt(Entity.MOVE_COST)) {
-                Client.getInstance().send(new MessageSetPosition(player1.getId(), x1, y1 - 1));
+                Core_v1.getClient().send(new MessageSetPosition(player1.getId(), x1, y1 - 1));
                 player.subtractActionPoints(Entity.MOVE_COST);
             }
             //
             if (ke.getKeyCode() == KeyEvent.VK_LEFT
                     && !(CheckObstacles.checkObstacle(world, hero_xx - 1, y1))
                     && player.canDoIt(Entity.MOVE_COST)) {
-                Client.getInstance().send(new MessageSetPosition(player1.getId(), x1 - 1, y1));
+                Core_v1.getClient().send(new MessageSetPosition(player1.getId(), x1 - 1, y1));
                 player.subtractActionPoints(Entity.MOVE_COST);
             }
             //
             if (ke.getKeyCode() == KeyEvent.VK_RIGHT
                     && !(CheckObstacles.checkObstacle(world, hero_xx + 1, y1))
                     && player.canDoIt(Entity.MOVE_COST)) {
-                Client.getInstance().send(new MessageSetPosition(player1.getId(), x1 + 1, y1));
+                Core_v1.getClient().send(new MessageSetPosition(player1.getId(), x1 + 1, y1));
                 player.subtractActionPoints(Entity.MOVE_COST);
             }
             //end turn

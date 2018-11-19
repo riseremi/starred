@@ -13,24 +13,11 @@ public class Client {
     private static final boolean DEBUG = false;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private static Client instance;
     private int id;
     // TODO: 11/19/18 Inject a single instance
     private final Protocol protocol = new ClientSeverProtocol();
 
-    public static Client getInstance() {
-        if (instance == null) {
-            try {
-                System.out.println("Connecting to " + Server.SERVER_IP + "...");
-                instance = new Client(1234, Server.SERVER_IP);
-                return instance;
-            } catch (IOException ex) {
-            }
-        }
-        return instance;
-    }
-
-    private Client(int port, String ip) throws IOException {
+    public Client(int port, String ip) throws IOException {
         Socket s = new Socket(ip, port);
 
         out = new ObjectOutputStream(s.getOutputStream());
