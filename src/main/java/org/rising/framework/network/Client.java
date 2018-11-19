@@ -1,7 +1,5 @@
 package org.rising.framework.network;
 
-import me.riseremi.main.Main;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,7 +10,7 @@ import java.net.Socket;
  * @author riseremi <riseremi at icloud.com>
  */
 public class Client {
-
+    private static final boolean DEBUG = false;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private static Client instance;
@@ -43,7 +41,7 @@ public class Client {
             while (true) {
                 try {
                     Message s1 = (Message) in.readObject();
-                    if (Main.ENABLE_DEBUG_TOOLS) {
+                    if (DEBUG) {
                         System.out.println("CLIENT RECEIVED: " + s1.getType().name());
                     }
                     protocol.processMessageOnClientSide(s1);

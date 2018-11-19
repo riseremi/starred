@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import me.riseremi.main.Main;
 
 /**
  *
@@ -14,6 +13,7 @@ import me.riseremi.main.Main;
  */
 public class Server {
 
+    private static final boolean DEBUG = false;
     public static String SERVER_IP;
     private ServerSocket serverSocket;
     private ArrayList<Connection> clients = new ArrayList<>();
@@ -84,7 +84,7 @@ public class Server {
                 while (true) {
                     try {
                         Message s = (Message) in.readObject();
-                        if (Main.ENABLE_DEBUG_TOOLS) {
+                        if (DEBUG) {
                             System.out.println("SERVER RECIEVED: " + s.getType().name());
                         }
                         protocol.processMessageOnServerSide(s, id);
