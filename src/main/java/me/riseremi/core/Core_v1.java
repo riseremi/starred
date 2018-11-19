@@ -16,6 +16,8 @@ import me.riseremi.network.messages.MessageConnect;
 import me.riseremi.network.messages.MessageEndTurn;
 import me.riseremi.network.messages.MessageGameOver;
 import org.rising.framework.network.Client;
+import me.riseremi.network.ClientSeverProtocol;
+import org.rising.framework.network.Protocol;
 import org.rising.framework.network.Server;
 
 import javax.swing.*;
@@ -54,6 +56,7 @@ public final class Core_v1 extends JPanel {
     private boolean gameOver;
     private int winnerId;
     private String serverIp = "localhost";
+    private final Protocol protocol = new ClientSeverProtocol();
 
     public static Core_v1 getInstance() {
         if (instance == null) {
@@ -118,8 +121,8 @@ public final class Core_v1 extends JPanel {
 
         serverIp = "localhost";
         try {
-            server = new Server(1234);
-            client = new Client(1234, serverIp);
+            server = new Server(1234, protocol);
+            client = new Client(1234, serverIp, protocol);
         } catch (IOException e) {
             System.err.println("Cannot establish a connection!");
         }
@@ -138,7 +141,7 @@ public final class Core_v1 extends JPanel {
         player.setImage(imgId);
         Main.main.setTitle(Main.GAME_TITLE + " - Client");
         try {
-            client = new Client(1234, serverIp);
+            client = new Client(1234, serverIp, protocol);
         } catch (IOException e) {
             System.err.println("Client initialization failure");
         }

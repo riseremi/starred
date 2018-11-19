@@ -17,10 +17,10 @@ public class Server {
     private ServerSocket serverSocket;
     private ArrayList<Connection> clients = new ArrayList<>();
     private int connections;
-    // TODO: 11/19/18 Inject a single instance
-    private final Protocol protocol = new ClientSeverProtocol();
+    private final Protocol protocol;
 
-    public Server(int port) throws IOException {
+    public Server(int port, Protocol protocol) throws IOException {
+        this.protocol = protocol;
         serverSocket = new ServerSocket(port);
 
         Thread t = new Thread(() -> {

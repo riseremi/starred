@@ -1,4 +1,4 @@
-package org.rising.framework.network;
+package me.riseremi.network;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import me.riseremi.network.messages.MessageSetFriendId;
 import me.riseremi.network.messages.MessageSetIconId;
 import me.riseremi.network.messages.MessageSetName;
 import me.riseremi.network.messages.MessageSetPlayerId;
+import org.rising.framework.network.Message;
+import org.rising.framework.network.Protocol;
 
 /**
  *

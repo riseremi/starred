@@ -14,10 +14,8 @@ public class Client {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private int id;
-    // TODO: 11/19/18 Inject a single instance
-    private final Protocol protocol = new ClientSeverProtocol();
 
-    public Client(int port, String ip) throws IOException {
+    public Client(int port, String ip, Protocol protocol) throws IOException {
         Socket s = new Socket(ip, port);
 
         out = new ObjectOutputStream(s.getOutputStream());
