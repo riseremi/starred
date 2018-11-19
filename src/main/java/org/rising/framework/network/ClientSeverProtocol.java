@@ -2,7 +2,6 @@ package org.rising.framework.network;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 import me.riseremi.core.Core_v1;
 import me.riseremi.entities.Entity;
 import me.riseremi.entities.Player;
@@ -21,7 +20,6 @@ import me.riseremi.network.messages.MessageSetPlayerId;
  */
 public class ClientSeverProtocol implements Protocol {
 
-    private static final Random rnd = new Random();
     private static final ArrayList<Entity> players = new ArrayList<>();
 
     @Override

@@ -35,7 +35,6 @@ public final class Core_v1 extends JPanel {
     private Server server;
     private Client client;
     private static Core_v1 instance;
-    private boolean connected = false;
     private boolean nextTurnAvailable;
     private Font walkwayBold;
     //
